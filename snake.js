@@ -396,6 +396,15 @@ class SnakeGameGUI {
       arrowBtn.addEventListener('click', () => {
         this.setDirection(direction);
       });
+      arrowBtn.addEventListener('touchstart', event => {
+        event.preventDefault();
+        this.setDirection(direction);
+        arrowBtn.classList.add('active');
+        setTimeout(() => {
+          arrowBtn.classList.remove('active');
+        }, 100);
+      });
+
       arrowContainer.appendChild(arrowBtn);
     }
     inputContainer.appendChild(arrowContainer);
@@ -407,6 +416,14 @@ class SnakeGameGUI {
     startButton.textContent = 'START';
     startButton.addEventListener('click', () => {
       this.start();
+    });
+    startButton.addEventListener('touchstart', event => {
+      event.preventDefault();
+      this.start();
+      startButton.classList.add('active');
+      setTimeout(() => {
+        startButton.classList.remove('active');
+      }, 100);
     });
     buttonsContainer.appendChild(startButton);
     inputContainer.appendChild(buttonsContainer);
@@ -433,7 +450,6 @@ class SnakeGameGUI {
       });
       this.#gameModeSelection.appendChild(modeButton);
     }
-    console.log(this.#gameModeButtons);
   }
 
   #updateScore() {
@@ -616,8 +632,6 @@ const highScoreManager = {
       JSON.parse(localStorage.getItem(`highScores-${gameMode}`)) ?? [];
     highScores.push(score);
     highScores = highScores.sort((a, b) => b - a).slice(0, 10);
-    console.log(highScores);
-
     localStorage.setItem(`highScores-${gameMode}`, JSON.stringify(highScores));
     return highScores;
   },

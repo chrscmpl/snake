@@ -232,7 +232,8 @@ body {
   height: 3rem;
 }
 
-.snake-arrow-button:active {
+.snake-arrow-button:active,
+.snake-arrow-button.active {
   border: 1px solid yellow;
 }
 
@@ -243,12 +244,14 @@ body {
   height: 100%;
 }
 
-.snake-arrow-button:active > svg {
+.snake-arrow-button:active > svg,
+.snake-arrow-button.active > svg {
   fill: black;
   background-color: yellow;
 }
 
-.snake-arrows-container .snake-arrow-button:active {
+.snake-arrows-container .snake-arrow-button:active,
+.snake-arrows-container .snake-arrow-button.active {
   background-color: white;
   color: black;
 }
@@ -289,7 +292,8 @@ body {
   width: 100%;
 }
 
-.snake-inputs .snake-start-button:active {
+.snake-inputs .snake-start-button:active,
+.snake-inputs .snake-start-button.active {
   background-color: yellow;
   border: 1px solid yellow;
   color: black;
@@ -437,6 +441,8 @@ body {
 
   .snake-arrows-container {
     flex: 1;
+    width: 100%;
+    aspect-ratio: 1;
   }
 
   .snake-arrows-container .snake-arrow-button {
@@ -445,7 +451,8 @@ body {
     border: 5px solid white;
   }
 
-  .snake-arrows-container .snake-arrow-button:active {
+  .snake-arrows-container .snake-arrow-button:active,
+  .snake-arrows-container .snake-arrow-button.active {
     border: 5px solid yellow;
   }
 
@@ -458,9 +465,11 @@ body {
   .snake-inputs .snake-start-button {
     width: 100%;
     border: 5px solid white;
+    font-size: 3rem;
   }
 
-  .snake-inputs .snake-start-button:active {
+  .snake-inputs .snake-start-button:active,
+  .snake-inputs .snake-start-button.active {
     border: 5px solid yellow;
   }
 
