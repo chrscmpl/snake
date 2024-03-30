@@ -532,7 +532,7 @@ class SnakeGameGUI {
   }
 
   start(gameMode = this.#gameMode) {
-    if (this.#lockStart) return;
+    if (this.#lockStart || this.isGameRunning()) return;
     this.#lockStart = true;
     const gameModeParams = this.#getGameModeParams(gameMode);
     if (this.isGameStarted()) this.#restart(gameMode, gameModeParams);
@@ -574,10 +574,14 @@ class SnakeGameGUI {
 
   isGameStarted() {
     return (
-      this.#moveInterval !== null ||
+      this.#moveInterval != null ||
       this.#game.isGameOver() ||
       this.#game.isGameWon()
     );
+  }
+
+  isGameRunning() {
+    return this.#moveInterval != null;
   }
 
   stop() {
