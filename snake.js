@@ -308,6 +308,7 @@ class SnakeGameGUI {
   #cells;
   #moveInterval;
   #gameMode;
+  #lockStart;
 
   constructor(gameMode) {
     this.#gameMode = gameMode;
@@ -515,6 +516,8 @@ class SnakeGameGUI {
   }
 
   start(gameMode = this.#gameMode) {
+    if (this.#lockStart) return;
+    this.#lockStart = true;
     const gameModeParams = this.#getGameModeParams(gameMode);
     if (this.isGameStarted()) this.#restart(gameMode, gameModeParams);
     this.#displayCountdown();
@@ -522,6 +525,7 @@ class SnakeGameGUI {
       this.#startIntervals(gameModeParams);
       this.#container.classList.add('playing');
       this.#spawnFood();
+      this.#lockStart = false;
     }, this.countdownNumberDuration * 3);
   }
 
