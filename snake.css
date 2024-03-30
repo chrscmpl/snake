@@ -1,0 +1,468 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+html {
+  font-family: 'VT323', monospace;
+  background-color: black;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+}
+
+#snake-container {
+  width: 100%;
+}
+
+.snake-container {
+  display: grid;
+  grid-template:
+    'high-scores top-bar inputs' auto
+    'high-scores board inputs' 1fr /
+    1fr 1fr 1fr;
+  width: 100%;
+}
+
+.snake-container.game-over::after {
+  content: 'GAME OVER';
+  grid-area: board;
+  justify-self: center;
+  align-self: center;
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  background-color: black;
+  padding: 1rem;
+}
+
+.snake-container.game-won::after {
+  content: 'YOU WON!';
+  grid-area: board;
+  justify-self: center;
+  align-self: center;
+  font-size: 2rem;
+  font-weight: 900;
+  color: yellow;
+  background-color: black;
+  padding: 1rem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+header,
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  border-bottom: 5px solid black;
+  padding: 1rem;
+}
+
+header {
+  margin-bottom: 1rem;
+}
+
+header h1 {
+  color: white;
+  font-weight: 900;
+  font-size: 3rem;
+}
+
+footer p {
+  color: white;
+}
+
+footer strong:not(:first-child) {
+  font-weight: 900;
+  color: yellow;
+}
+
+body {
+  background: url('snake_assets/grass.png') repeat;
+  backdrop-filter: blur(1px);
+}
+
+.snake-top-bar {
+  grid-area: top-bar;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 2rem;
+  gap: 1ch;
+  background-color: black;
+}
+
+.snake-score {
+  font-weight: 900;
+  color: white;
+  display: flex;
+  gap: 0.5rem;
+  justify-self: start;
+  flex: 1;
+}
+
+.snake-score::before {
+  content: 'SCORE:';
+}
+
+.snake-score .score {
+  color: yellow;
+  min-width: 4ch;
+}
+
+.snake-game-mode-selection {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.snake-game-mode-selection .snake-game-mode-button {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: white;
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  height: 100%;
+}
+
+.snake-game-mode-selection .snake-game-mode-button.selected {
+  color: yellow;
+  border: 1px solid yellow;
+}
+
+.snake-high-scores {
+  counter-reset: number;
+  grid-area: high-scores;
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  background-color: black;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 90%;
+  justify-self: center;
+}
+
+.snake-high-scores .high-score {
+  padding-left: 0.55em;
+  counter-increment: number;
+  color: yellow;
+}
+
+.snake-high-scores .high-score::before {
+  content: counter(number) '. ';
+  color: white;
+}
+
+.snake-high-scores .high-score:nth-child(10) {
+  padding-left: 0;
+}
+
+.snake-board {
+  background: url('snake_assets/ground.png') repeat;
+  border: 5px solid black;
+  border-top: none;
+  grid-area: board;
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.playing .snake-board {
+  cursor: none;
+}
+
+.snake-inputs {
+  grid-area: inputs;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background-color: black;
+  margin-left: 5%;
+  width: fit-content;
+  align-self: center;
+}
+
+.snake-arrows-container {
+  display: grid;
+  grid-template:
+    '. up .' 1fr
+    'left . right' 1fr
+    '. down .' 1fr/
+    1fr 1fr 1fr;
+  background-color: black;
+  padding: 0.5rem;
+}
+
+.snake-arrows-container .snake-arrow-button {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background-color: black;
+  border: white solid 1px;
+  cursor: pointer;
+  padding: 0;
+  width: 3rem;
+  height: 3rem;
+}
+
+.snake-arrow-button:active {
+  border: 1px solid yellow;
+}
+
+.snake-arrow-button > svg {
+  fill: white;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+
+.snake-arrow-button:active > svg {
+  fill: black;
+  background-color: yellow;
+}
+
+.snake-arrows-container .snake-arrow-button:active {
+  background-color: white;
+  color: black;
+}
+
+.snake-arrows-container .snake-up-button {
+  grid-area: up;
+  transform: rotate(270deg);
+}
+
+.snake-arrows-container .snake-down-button {
+  grid-area: down;
+  transform: rotate(90deg);
+}
+
+.snake-arrows-container .snake-left-button {
+  grid-area: left;
+  transform: rotate(180deg);
+}
+
+.snake-arrows-container .snake-right-button {
+  grid-area: right;
+}
+
+.snake-inputs .snake-buttons-container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.snake-inputs .snake-start-button {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: white;
+  background-color: black;
+  border: white solid 1px;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.snake-inputs .snake-start-button:active {
+  background-color: yellow;
+  border: 1px solid yellow;
+  color: black;
+}
+
+.snake-container.countdown-1::after {
+  content: '1';
+  grid-area: board;
+  justify-self: center;
+  align-self: center;
+  font-size: 2rem;
+  font-weight: 900;
+  color: yellow;
+  background-color: black;
+  padding: 1rem;
+}
+
+.snake-container.countdown-2::after {
+  content: '2';
+  grid-area: board;
+  justify-self: center;
+  align-self: center;
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  background-color: black;
+  padding: 1rem;
+}
+
+.snake-container.countdown-3::after {
+  content: '3';
+  grid-area: board;
+  justify-self: center;
+  align-self: center;
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  background-color: black;
+  padding: 1rem;
+}
+
+.head.right {
+  background: url('snake_assets/head_right.png') center/cover no-repeat;
+}
+
+.head.down {
+  background: url('snake_assets/head_down.png') center/cover no-repeat;
+}
+
+.head.left {
+  background: url('snake_assets/head_left.png') center/cover no-repeat;
+}
+
+.head.up {
+  background: url('snake_assets/head_up.png') center/cover no-repeat;
+}
+
+.game-over .head.right {
+  background: url('snake_assets/head_dead_right.png') center/cover no-repeat;
+}
+
+.game-over .head.down {
+  background: url('snake_assets/head_dead_down.png') center/cover no-repeat;
+}
+
+.game-over .head.left {
+  background: url('snake_assets/head_dead_left.png') center/cover no-repeat;
+}
+
+.game-over .head.up {
+  background: url('snake_assets/head_dead_up.png') center/cover no-repeat;
+}
+
+.body.right-right,
+.body.left-left {
+  background: url('snake_assets/body_horizontal.png') center/cover no-repeat;
+}
+
+.body.up-up,
+.body.down-down {
+  background: url('snake_assets/body_vertical.png') center/cover no-repeat;
+}
+
+.body.up-left,
+.body.right-down {
+  background: url('snake_assets/body_bottomleft.png') center/cover no-repeat;
+}
+
+.body.up-right,
+.body.left-down {
+  background: url('snake_assets/body_bottomright.png') center/cover no-repeat;
+}
+
+.body.down-left,
+.body.right-up {
+  background: url('snake_assets/body_topleft.png') center/cover no-repeat;
+}
+
+.body.down-right,
+.body.left-up {
+  background: url('snake_assets/body_topright.png') center/cover no-repeat;
+}
+
+.tail.right {
+  background: url('snake_assets/tail_left.png') center/cover no-repeat;
+}
+
+.tail.down {
+  background: url('snake_assets/tail_up.png') center/cover no-repeat;
+}
+
+.tail.left {
+  background: url('snake_assets/tail_right.png') center/cover no-repeat;
+}
+
+.tail.up {
+  background: url('snake_assets/tail_down.png') center/cover no-repeat;
+}
+
+.food {
+  background: url('snake_assets/food.png') center/cover no-repeat;
+}
+
+::selection {
+  background-color: yellow;
+  color: black;
+}
+
+@media (min-width: 800px) and (max-width: 900px) {
+  .snake-high-scores {
+    font-size: 1.2rem;
+    height: fit-content;
+  }
+}
+
+@media (orientation: portrait) or (max-width: 800px) {
+  .snake-container {
+    grid-template:
+      'top-bar' auto
+      'board' 1fr
+      'inputs' auto
+      'high-scores' auto /
+      1fr;
+    padding: 2%;
+  }
+  .snake-inputs {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+  }
+  .snake-inputs .snake-buttons-container {
+    width: 50%;
+  }
+
+  .snake-board {
+    width: 100%;
+  }
+  .snake-high-scores {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  .snake-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .snake-game-mode-selection {
+    width: 100%;
+    justify-content: space-around;
+  }
+}

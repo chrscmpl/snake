@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Snake</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="snake.css" />
+    <script defer src="snake.js"></script>
+    <link rel="preload" href="snake_assets/body_bottomleft.png" as="image" />
+    <link rel="preload" href="snake_assets/body_bottomright.png" as="image" />
+    <link rel="preload" href="snake_assets/body_horizontal.png" as="image" />
+    <link rel="preload" href="snake_assets/body_topleft.png" as="image" />
+    <link rel="preload" href="snake_assets/body_topright.png" as="image" />
+    <link rel="preload" href="snake_assets/body_bottomright.png" as="image" />
+    <link rel="preload" href="snake_assets/body_vertical.png" as="image" />
+    <link rel="preload" href="snake_assets/food.png" as="image" />
+    <link rel="preload" href="snake_assets/head_down.png" as="image" />
+    <link rel="preload" href="snake_assets/head_left.png" as="image" />
+    <link rel="preload" href="snake_assets/head_right.png" as="image" />
+    <link rel="preload" href="snake_assets/head_up.png" as="image" />
+    <link rel="preload" href="snake_assets/tail_down.png" as="image" />
+    <link rel="preload" href="snake_assets/tail_left.png" as="image" />
+    <link rel="preload" href="snake_assets/tail_right.png" as="image" />
+    <link rel="preload" href="snake_assets/tail_up.png" as="image" />
+    <link rel="preload" href="snake_assets/grass.png" as="image" />
+    <link rel="preload" href="snake_assets/ground.png" as="image" />
+    <link rel="preload" href="snake_assets/head_dead_down.png" as="image" />
+    <link rel="preload" href="snake_assets/head_dead_left.png" as="image" />
+    <link rel="preload" href="snake_assets/head_dead_right.png" as="image" />
+    <link rel="preload" href="snake_assets/head_dead_up.png" as="image" />
+  </head>
+  <body>
+    <header>
+      <h1>Web Tech's Snake Game</h1>
+    </header>
+    <main id="snake-container"></main>
+    <footer>
+      <p>
+        <strong>Controls:</strong>
+        Press <strong>Space</strong> to change the difficulty.
+        Press <strong>Enter</strong> to start a new game. 
+        Use the <strong>arrow keys</strong> to move the snake.
+      </p>
+    <script>
+      window.onload = function () {
+        setupGame();
+      };
+    </script>
+  </body>
+</html>
