@@ -167,6 +167,10 @@ body {
   justify-self: center;
 }
 
+.snake-high-score-header > span:first-child:after {
+  content: ' - ';
+}
+
 .snake-high-scores .high-score {
   padding-left: 0.55em;
   counter-increment: number;
@@ -495,6 +499,15 @@ body {
 
   .snake-top-bar .snake-game-mode-button {
     font-size: 1.3em;
+  }
+
+  .snake-high-score-header > span:first-child:after {
+    content: '';
+  }
+
+  .snake-high-score-header {
+    display: flex;
+    flex-direction: column;
   }
 }
 

@@ -460,9 +460,9 @@ class SnakeGameGUI {
 
   #displayHighScores(highScores) {
     const highScoreHeader = this.#highScoresDisplay.children[0];
-    highScoreHeader.textContent = `HIGH SCORES - ${
+    highScoreHeader.innerHTML = `<span>HIGH SCORES</span><span>${
       this.#gameMode
-    }`.toUpperCase();
+    }</span>`.toUpperCase();
     const highScoresList = this.#highScoresDisplay.children[1];
     highScoresList.innerHTML = '';
     for (const score of highScores) {
