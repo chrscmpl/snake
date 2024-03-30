@@ -487,14 +487,15 @@ body {
   }
 
   .snake-top-bar {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: flex-start;
     font-size: 3em;
+    padding: 0.5rem 2ch;
   }
 
   .snake-game-mode-selection {
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 
   .snake-top-bar .snake-game-mode-button {
