@@ -396,18 +396,7 @@ class SnakeGameGUI {
       arrowBtn.classList.add('snake-arrow-button', `snake-${direction}-button`);
       arrowBtn.innerHTML =
         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/> </svg>';
-      arrowBtn.addEventListener('click', () => {
-        this.setDirection(direction);
-      });
-      arrowBtn.addEventListener('touchstart', event => {
-        event.preventDefault();
-        this.setDirection(direction);
-        arrowBtn.classList.add('active');
-        setTimeout(() => {
-          arrowBtn.classList.remove('active');
-        }, 100);
-      });
-
+      this.#addBtnEventListener(arrowBtn, this.setDirection, direction);
       arrowContainer.appendChild(arrowBtn);
     }
     inputContainer.appendChild(arrowContainer);
@@ -417,20 +406,27 @@ class SnakeGameGUI {
     const startButton = document.createElement('button');
     startButton.classList.add('snake-start-button');
     startButton.textContent = 'START';
-    startButton.addEventListener('click', () => {
-      this.start();
-    });
-    startButton.addEventListener('touchstart', event => {
-      event.preventDefault();
-      this.start();
-      startButton.classList.add('active');
-      setTimeout(() => {
-        startButton.classList.remove('active');
-      }, 100);
-    });
+    this.#addBtnEventListener(startButton, this.start);
     buttonsContainer.appendChild(startButton);
     inputContainer.appendChild(buttonsContainer);
     this.#container.appendChild(inputContainer);
+  }
+
+  #addBtnEventListener(btn, functionIn, ...args) {
+    const fun = functionIn.bind(this);
+    btn.addEventListener('click', () => {
+      fun(...args);
+    });
+    btn.addEventListener('touchstart', event => {
+      event.preventDefault();
+      fun(...args);
+      btn.classList.add('active');
+    });
+    btn.addEventListener('touchend', () => {
+      setTimeout(() => {
+        btn.classList.remove('active');
+      }, 100);
+    });
   }
 
   #createGameModeSelection() {
@@ -449,7 +445,8 @@ class SnakeGameGUI {
       }
       modeButton.textContent = mode.toUpperCase();
       modeButton.addEventListener('click', () => {
-        this.#restart(mode, this.#getGameModeParams(mode));
+        if (!this.isGameRunning())
+          this.#restart(mode, this.#getGameModeParams(mode));
       });
       this.#gameModeSelection.appendChild(modeButton);
     }
@@ -602,6 +599,7 @@ class SnakeGameGUI {
   }
 
   advanceGameMode() {
+    if (this.isGameRunning()) return;
     const gameModes = [...this.modes.keys()];
     this.#restart(
       gameModes[(gameModes.indexOf(this.#gameMode) + 1) % gameModes.length]

@@ -6,7 +6,7 @@
 :root {
   --primary-color: rgba(0, 61, 48, 0.5);
   --accent-color-1: rgb(115, 192, 0);
-  --accent-color-2: rgb(234, 0, 255);
+  --accent-color-2: #22d3ee;
   --background: url('snake_assets/background.png') repeat;
   --background-mobile: var(--background);
 }
@@ -184,7 +184,6 @@ body {
 }
 
 .snake-high-scores .high-score {
-  padding-left: 0.55em;
   counter-increment: number;
   color: var(--accent-color-2);
   display: flex;
@@ -192,13 +191,14 @@ body {
 }
 
 .snake-high-scores .high-score::before {
-  content: counter(number) '. ';
+  padding-left: 1ch;
+  content: counter(number) ')';
   color: var(--accent-color-1);
+  padding-right: 1ch;
 }
 
-.snake-high-scores .high-score:nth-child(10):before {
-  content: counter(number) '.';
-  color: var(--accent-color-1);
+.snake-high-scores .high-score:nth-child(10)::before {
+  padding-left: 0;
 }
 
 .snake-board {
@@ -653,9 +653,13 @@ body {
     content: "Web Tech's Snake Game";
     position: absolute;
     right: 1rem;
-    bottom: calc(0.63rem);
-    width: clamp(10ch, 30%, 30%);
+    bottom: 1rem;
+    width: clamp(10ch, 25ch, 40%);
     font-size: 50%;
     color: var(--accent-color-1);
+  }
+
+  .snake-high-scores .high-score::before {
+    padding-right: 0;
   }
 }
