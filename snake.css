@@ -570,6 +570,8 @@ body {
     width: 100%;
     max-height: 100vh;
     border: none;
+    border-top: 1px solid var(--accent-color-1);
+    border-bottom: 1px solid var(--accent-color-1);
   }
 
   .snake-top-bar {
