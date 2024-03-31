@@ -627,11 +627,13 @@ const highScoreManager = {
   getHighScores(gameMode) {
     if (!this.gameModes.includes(gameMode))
       throw new Error('Invalid game mode');
+    if (!localStorage) return [];
     return JSON.parse(localStorage.getItem(`highScores-${gameMode}`)) ?? [];
   },
   saveHighScore(gameMode, score) {
     if (!this.gameModes.includes(gameMode))
       throw new Error('Invalid game mode');
+    if (!localStorage) return [];
     let highScores =
       JSON.parse(localStorage.getItem(`highScores-${gameMode}`)) ?? [];
     highScores.push(score);
