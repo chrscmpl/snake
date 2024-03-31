@@ -604,17 +604,17 @@ SnakeGameGUI.prototype.modes = new Map();
 SnakeGameGUI.prototype.modes.set('easy', {
   size: 12,
   startingLength: 3,
-  moveTimeout: 120,
+  moveTimeout: 150,
 });
 SnakeGameGUI.prototype.modes.set('medium', {
   size: 16,
   startingLength: 3,
-  moveTimeout: 80,
+  moveTimeout: 100,
 });
 SnakeGameGUI.prototype.modes.set('hard', {
   size: 20,
   startingLength: 3,
-  moveTimeout: 50,
+  moveTimeout: 60,
 });
 // SnakeGameGUI.prototype.modes.set('insane', {
 //   size: 24,
@@ -673,4 +673,7 @@ function setupGame() {
     }
     event.preventDefault();
   });
+  // if (window.innerHeight > window.innerWidth) {
+  //   window.scrollTo(0, document.getElementsByTagName('header')[0].scrollHeight);
+  // }
 }
