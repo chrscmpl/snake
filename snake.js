@@ -535,7 +535,6 @@ class SnakeGameGUI {
   }
 
   #initGame(gameModeParams = this.#getGameModeParams(this.#gameMode)) {
-    console.log(gameModeParams);
     this.#game = new SnakeGame(
       gameModeParams.size,
       gameModeParams.startingLength,
