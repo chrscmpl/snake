@@ -441,7 +441,7 @@ body {
   right: 0.5rem;
   bottom: 0.5rem;
   color: var(--accent-color-1);
-  font-size: 1rem;
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
   gap: 0.5ch;
@@ -630,9 +630,9 @@ body {
     content: "Web Tech's Snake Game";
     position: absolute;
     right: 1rem;
-    bottom: 0.63rem;
-    width: min(50%, fit-content);
-    font-size: 1rem;
+    bottom: calc(0.63rem);
+    width: clamp(10ch, 30%, 30%);
+    font-size: 50%;
     color: var(--accent-color-1);
   }
 }
