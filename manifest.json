@@ -2,6 +2,11 @@
   "name": "Snake",
   "short_name": "Snake",
   "lang": "en-US",
+  "start_url": "/snake/",
+  "display": "standalone",
+  "scope": "/snake/",
+  "background_color": "#51653a",
+  "theme_color": "#003d30",
   "icons": [
     {
       "src": "icons/icon-128.png",
@@ -34,9 +39,16 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/snake/",
-  "display": "standalone",
-  "scope": "/snake/",
-  "background_color": "#51653a",
-  "theme_color": "#003d30"
+  "screenshots": [
+    {
+      "src": "screenshots/mobile-1.jpg",
+      "sizes": "480x1004",
+      "type": "image/jpg"
+    },
+    {
+      "src": "screenshots/mobile-2.jpg",
+      "sizes": "480x1004",
+      "type": "image/jpg"
+    }
+  ]
 }
