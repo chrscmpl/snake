@@ -312,6 +312,7 @@ class SnakeGameGUI {
   #size;
   #cells;
   #moveInterval;
+  #moveTimeout;
   #gameMode;
   #lockStart;
 
@@ -479,6 +480,9 @@ class SnakeGameGUI {
     changes.forEach(change => {
       const [i, j] = change.position;
       this.#cells[i][j].className = change.status;
+      if (change.status !== 'food' && change.status !== 'empty') {
+        this.#startMoveAnimation(this.#cells[i][j]);
+      }
       const direction = change.direction.join('-');
       if (direction) {
         this.#cells[i][j].classList.add(direction);
@@ -490,6 +494,17 @@ class SnakeGameGUI {
       this.endGame(false);
     }
     this.#updateScore();
+  }
+
+  #startMoveAnimation(cell) {
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        cell.classList.add(`frame-${i}`);
+      }, i * (this.#moveTimeout / 5));
+    }
+    setTimeout(() => {
+      cell.className = cell.className.replace(/frame-\d/g, '');
+    }, this.#moveTimeout);
   }
 
   endGame(won = false) {
@@ -521,6 +536,7 @@ class SnakeGameGUI {
   }
 
   #startIntervals(gameModeParams) {
+    this.#moveTimeout = gameModeParams.moveTimeout;
     this.#moveInterval = setInterval(() => {
       this.move();
     }, gameModeParams.moveTimeout);
@@ -613,17 +629,17 @@ SnakeGameGUI.prototype.modes = new Map();
 SnakeGameGUI.prototype.modes.set('easy', {
   size: 12,
   startingLength: 3,
-  moveTimeout: 150,
+  moveTimeout: 200,
 });
 SnakeGameGUI.prototype.modes.set('medium', {
   size: 16,
   startingLength: 3,
-  moveTimeout: 100,
+  moveTimeout: 130,
 });
 SnakeGameGUI.prototype.modes.set('hard', {
   size: 20,
   startingLength: 3,
-  moveTimeout: 60,
+  moveTimeout: 80,
 });
 // SnakeGameGUI.prototype.modes.set('insane', {
 //   size: 24,

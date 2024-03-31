@@ -354,7 +354,20 @@ body {
   padding: 1rem;
 }
 
-.head.right {
+.snake-board > div {
+  overflow: visible;
+  position: relative;
+}
+
+.snake-board > div::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.head.right::before {
   background: url('snake_assets/head_right.png') center/cover no-repeat;
 }
 
@@ -362,7 +375,7 @@ body {
   background: url('snake_assets/head_down.png') center/cover no-repeat;
 }
 
-.head.left {
+.head.left::before {
   background: url('snake_assets/head_left.png') center/cover no-repeat;
 }
 
@@ -370,7 +383,7 @@ body {
   background: url('snake_assets/head_up.png') center/cover no-repeat;
 }
 
-.game-over .head.right {
+.game-over .head.right::before {
   background: url('snake_assets/head_dead_right.png') center/cover no-repeat;
 }
 
@@ -378,7 +391,7 @@ body {
   background: url('snake_assets/head_dead_down.png') center/cover no-repeat;
 }
 
-.game-over .head.left {
+.game-over .head.left::before {
   background: url('snake_assets/head_dead_left.png') center/cover no-repeat;
 }
 
@@ -386,14 +399,14 @@ body {
   background: url('snake_assets/head_dead_up.png') center/cover no-repeat;
 }
 
-.body.right-right,
-.body.left-left {
-  background: url('snake_assets/body_horizontal.png') center/cover no-repeat;
+.body.right-right::before,
+.body.left-left::before {
+  background: url('snake_assets/body_horizontal.png') center/contain repeat;
 }
 
 .body.up-up,
 .body.down-down {
-  background: url('snake_assets/body_vertical.png') center/cover no-repeat;
+  background: url('snake_assets/body_vertical.png') center/contain repeat;
 }
 
 .body.up-left,
@@ -416,7 +429,7 @@ body {
   background: url('snake_assets/body_topright.png') center/cover no-repeat;
 }
 
-.tail.right {
+.tail.right::before {
   background: url('snake_assets/tail_left.png') center/cover no-repeat;
 }
 
@@ -424,7 +437,7 @@ body {
   background: url('snake_assets/tail_up.png') center/cover no-repeat;
 }
 
-.tail.left {
+.tail.left::before {
   background: url('snake_assets/tail_right.png') center/cover no-repeat;
 }
 
@@ -434,6 +447,124 @@ body {
 
 .food {
   background: url('snake_assets/food.png') center/cover no-repeat;
+}
+
+.right::before {
+  left: 0;
+}
+
+.right-right::before {
+  top: 0;
+}
+
+.right.frame-0::before {
+  right: 50%;
+}
+
+.right-right.frame-0::before {
+  width: 150%;
+  height: 100%;
+  right: 0;
+}
+
+.right.frame-1::before {
+  right: 25%;
+}
+
+.right-right.frame-1::before {
+  width: 125%;
+  height: 100%;
+  right: 0;
+}
+
+.right.frame-2::before {
+  right: 0;
+}
+
+.right-right.frame-2::before {
+  width: 100%;
+  height: 100%;
+  right: 0;
+}
+
+.right.frame-3::before {
+  left: 25%;
+}
+
+.right-right.frame-3::before {
+  width: 125%;
+  height: 100%;
+  left: 0;
+}
+
+.right.frame-4::before {
+  left: 50%;
+}
+
+.right-right.frame-4::before {
+  width: 150%;
+  height: 100%;
+  left: 0;
+}
+
+/* left */
+
+.left::before {
+  right: 0;
+}
+
+.left-left::before {
+  top: 0;
+}
+
+.left.frame-0::before {
+  left: 50%;
+}
+
+.left-left.frame-0::before {
+  width: 150%;
+  height: 100%;
+  left: 0;
+}
+
+.left.frame-1::before {
+  left: 25%;
+}
+
+.left-left.frame-1::before {
+  width: 125%;
+  height: 100%;
+  left: 0;
+}
+
+.left.frame-2::before {
+  left: auto;
+}
+
+.left-left.frame-2::before {
+  width: 100%;
+  height: 100%;
+  left: auto;
+}
+
+.left.frame-3::before {
+  right: 25%;
+}
+
+.left-left.frame-3::before {
+  width: 125%;
+  height: 100%;
+  right: 0;
+}
+
+.left.frame-4::before {
+  right: 50%;
+}
+
+.left-left.frame-4::before {
+  width: 150%;
+  height: 100%;
+  right: 0;
 }
 
 ::selection {
