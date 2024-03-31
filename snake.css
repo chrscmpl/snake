@@ -436,6 +436,17 @@ body {
   color: var(--primary-color);
 }
 
+.link-github {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  color: var(--accent-color-1);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5ch;
+}
+
 @media (max-width: 900px) {
   .snake-container {
     grid-template:
@@ -609,5 +620,19 @@ body {
   header,
   footer {
     display: none;
+  }
+
+  .snake-top-bar {
+    position: relative;
+  }
+
+  .snake-top-bar::after {
+    content: "Web Tech's Snake Game";
+    position: absolute;
+    right: 1rem;
+    bottom: 0.63rem;
+    width: min(50%, fit-content);
+    font-size: 1rem;
+    color: var(--accent-color-1);
   }
 }
