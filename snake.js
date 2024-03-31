@@ -689,8 +689,3 @@ function setupGame() {
   //   window.scrollTo(0, document.getElementsByTagName('header')[0].scrollHeight);
   // }
 }
-
-//remove old scores
-localStorage.setItem('highScores-easy', null);
-localStorage.setItem('highScores-medium', null);
-localStorage.setItem('highScores-hard', null);
