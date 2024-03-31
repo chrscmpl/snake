@@ -36,7 +36,7 @@
   ],
   "start_url": "/snake/",
   "display": "standalone",
-  "scope": "/nake/",
+  "scope": "/snake/",
   "background_color": "#51653a",
   "theme_color": "#003d30"
 }
