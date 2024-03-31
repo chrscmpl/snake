@@ -690,6 +690,7 @@ function setupGame() {
   // }
 }
 
+//remove old scores
 localStorage.setItem('highScores-easy', null);
 localStorage.setItem('highScores-medium', null);
 localStorage.setItem('highScores-hard', null);

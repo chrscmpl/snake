@@ -460,6 +460,10 @@ body {
   display: inline-block;
 }
 
+.high-score::after {
+  margin-left: 0.5rem;
+}
+
 @media (max-width: 900px) {
   .snake-container {
     grid-template:

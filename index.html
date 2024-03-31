@@ -6,10 +6,21 @@
     <meta name="description" content="Snake game" />
     <meta name="author" content="chrscmpl" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#81b93b" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="icons/icon-152.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#51653a" />
+    <meta name="apple-mobile-web-app-title" content="Snake" />
+    <meta name="msapplication-TileImage" content="icons/icon-144.png" />
+    <meta name="msapplication-TileColor" content="#81b93b" />
     <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="snake.css" />
     <script defer src="snake.js"></script>
+    <link rel="preload" href="snake_assets/background.png" as="image" />
+    <link rel="preload" href="snake_assets/tile.png" as="image" />
     <link rel="preload" href="snake_assets/body_bottomleft.png" as="image" />
     <link rel="preload" href="snake_assets/body_bottomright.png" as="image" />
     <link rel="preload" href="snake_assets/body_horizontal.png" as="image" />
@@ -65,8 +76,14 @@
     </a>
     <script>
       window.onload = function () {
+        'use strict';
         setupGame();
+
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./sw.js');
+        }
       };
     </script>
+    <script></script>
   </body>
 </html>
