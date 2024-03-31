@@ -66,12 +66,6 @@ class SnakeGame {
         'right'
       );
     }
-    this.#scoreInterval = setInterval(
-      (() => {
-        this.#score += this.#timeScoreValue;
-      }).bind(this),
-      this.#scoreIntervalTimeValue
-    );
   }
 
   #getStatusValue(string) {
@@ -120,12 +114,12 @@ class SnakeGame {
   }
 
   #setGameOver() {
-    clearInterval(this.#scoreInterval);
+    this.stop();
     this.#gameOver = true;
   }
 
   #setGameWon() {
-    clearInterval(this.#scoreInterval);
+    this.stop();
     this.#gameWon = true;
   }
 
@@ -137,6 +131,17 @@ class SnakeGame {
       if (this.#setFood(i, j)) {
         return [i, j];
       }
+    }
+  }
+
+  start() {
+    if (this.#timeScoreValue > 0) {
+      this.#scoreInterval = setInterval(
+        (() => {
+          this.#score += this.#timeScoreValue;
+        }).bind(this),
+        this.#scoreIntervalTimeValue
+      );
     }
   }
 
@@ -313,10 +318,8 @@ class SnakeGameGUI {
   constructor(gameMode) {
     this.#gameMode = gameMode;
     const gameModeParams = this.#getGameModeParams(gameMode);
-    this.#game = new SnakeGame(
-      gameModeParams.size,
-      gameModeParams.startingLength
-    );
+
+    this.#initGame(gameModeParams);
     this.#createBoard(gameModeParams.size, gameModeParams.startingLength);
 
     this.#container = document.createElement('div');
@@ -531,6 +534,17 @@ class SnakeGameGUI {
     this.#cells[foodPosition[0]][foodPosition[1]].classList.add('food');
   }
 
+  #initGame(gameModeParams = this.#getGameModeParams(this.#gameMode)) {
+    console.log(gameModeParams);
+    this.#game = new SnakeGame(
+      gameModeParams.size,
+      gameModeParams.startingLength,
+      1,
+      0,
+      0
+    );
+  }
+
   start(gameMode = this.#gameMode) {
     if (this.#lockStart || this.isGameRunning()) return;
     this.#lockStart = true;
@@ -538,6 +552,7 @@ class SnakeGameGUI {
     if (this.isGameStarted()) this.#restart(gameMode, gameModeParams);
     this.#displayCountdown();
     setTimeout(() => {
+      this.#game.start();
       this.#startIntervals(gameModeParams);
       this.#container.classList.add('playing');
       this.#spawnFood();
@@ -554,10 +569,7 @@ class SnakeGameGUI {
     this.stop();
     this.#container.classList.remove('game-over');
     this.#container.classList.remove('game-won');
-    this.#game = new SnakeGame(
-      gameModeParams.size,
-      gameModeParams.startingLength
-    );
+    this.#initGame(gameModeParams);
     const oldBoard = this.#board;
     this.#createBoard(gameModeParams.size, gameModeParams.startingLength);
     this.#container.replaceChild(this.#board, oldBoard);
@@ -677,3 +689,7 @@ function setupGame() {
   //   window.scrollTo(0, document.getElementsByTagName('header')[0].scrollHeight);
   // }
 }
+
+localStorage.setItem('highScores-easy', null);
+localStorage.setItem('highScores-medium', null);
+localStorage.setItem('highScores-hard', null);

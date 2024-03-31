@@ -128,6 +128,9 @@ body {
   gap: 0.5rem;
   justify-self: start;
   flex: 1;
+  min-width: 13ch;
+  display: flex;
+  align-items: center;
 }
 
 .snake-score::before {
@@ -136,7 +139,6 @@ body {
 
 .snake-score .score {
   color: var(--accent-color-2);
-  min-width: 4ch;
 }
 
 .snake-game-mode-selection {
@@ -184,6 +186,8 @@ body {
   padding-left: 0.55em;
   counter-increment: number;
   color: var(--accent-color-2);
+  display: flex;
+  align-items: center;
 }
 
 .snake-high-scores .high-score::before {
@@ -447,6 +451,15 @@ body {
   gap: 0.5ch;
 }
 
+.snake-score::after,
+.high-score::after {
+  width: 2ch;
+  height: 2ch;
+  content: '';
+  background: url('snake_assets/food.png') center/cover no-repeat;
+  display: inline-block;
+}
+
 @media (max-width: 900px) {
   .snake-container {
     grid-template:
@@ -475,7 +488,7 @@ body {
   }
 
   .snake-board {
-    max-height: 90vh;
+    max-height: 98vh;
   }
 
   .snake-arrows-container {
