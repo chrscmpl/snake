@@ -22,7 +22,8 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  width: 100vw;
 }
 
 #snake-container {
@@ -96,7 +97,7 @@ footer strong:not(:first-child) {
 }
 
 body {
-  background: url('snake_assets/grass.png') repeat;
+  background: url('snake_assets/background.png') repeat;
   backdrop-filter: blur(1px);
 }
 
@@ -182,12 +183,13 @@ body {
   color: white;
 }
 
-.snake-high-scores .high-score:nth-child(10) {
-  padding-left: 0;
+.snake-high-scores .high-score:nth-child(10):before {
+  content: counter(number) '.';
+  color: white;
 }
 
 .snake-board {
-  background: url('snake_assets/ground.png') repeat;
+  background: url('snake_assets/tile.png') repeat;
   border: 5px solid black;
   border-top: none;
   grid-area: board;
@@ -427,26 +429,43 @@ body {
 }
 
 @media (max-width: 1000px) {
+  body {
+    background: black;
+  }
+
+  header > h1 {
+    font-size: 2rem;
+  }
+
   .snake-container {
     grid-template:
       'top-bar top-bar' auto
       'board board' 1fr
       'high-scores inputs' auto /
-      auto 1fr;
-    padding: 2%;
+      auto 2fr;
+    padding: 0;
+    min-height: 100vh;
   }
 
   .snake-inputs {
-    align-items: stretch;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 100%;
+    height: 50%;
+    align-self: start;
     margin: 0;
   }
 
   .snake-arrows-container {
-    flex: 1;
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 0;
+    background: none;
     width: 100%;
-    aspect-ratio: 1;
+    height: 100%;
   }
 
   .snake-arrows-container .snake-arrow-button {
@@ -461,15 +480,24 @@ body {
   }
 
   .snake-inputs .snake-buttons-container {
-    width: 100%;
-    justify-items: center;
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 1;
+    width: 33%;
+    height: 33%;
     align-items: center;
+    justify-self: center;
   }
 
   .snake-inputs .snake-start-button {
     width: 100%;
+    height: 100%;
     border: 5px solid white;
-    font-size: 3rem;
+    font-size: 1rem;
+    overflow: hidden;
+    display: grid;
+    justify-content: center;
+    align-content: center;
   }
 
   .snake-inputs .snake-start-button:active,
@@ -479,17 +507,14 @@ body {
 
   .snake-board {
     width: 100%;
-    max-height: 95vh;
-  }
-  .snake-high-scores {
-    width: 100%;
-    border-right: 1px solid white;
+    max-height: 100vh;
+    border: none;
   }
 
   .snake-top-bar {
     flex-direction: column-reverse;
     align-items: flex-start;
-    font-size: 3em;
+    font-size: 1.5rem;
     padding: 0.5rem 2ch;
   }
 
@@ -498,8 +523,27 @@ body {
     justify-content: space-between;
   }
 
-  .snake-top-bar .snake-game-mode-button {
-    font-size: 1.3em;
+  .snake-high-scores {
+    width: fit-content;
+    border-right: 1px solid white;
+    padding: 0.5rem 10px;
+    font-size: 1.3rem;
+    min-width: 9ch;
+  }
+
+  .snake-high-scores .high-score {
+    padding: 0;
+  }
+
+  .snake-high-score-header > span:first-child {
+    width: min-content;
+  }
+
+  .snake-high-score-header > span:nth-child(2) {
+    color: yellow;
+    border: 1px solid yellow;
+    width: min-content;
+    padding: 0 0.5rem;
   }
 
   .snake-high-score-header > span:first-child:after {
@@ -510,13 +554,13 @@ body {
     display: flex;
     flex-direction: column;
   }
-}
 
-@media (max-width: 550px) {
-  header h1 {
-    font-size: 2rem;
+  footer {
+    font-size: 0.8rem;
   }
-  .snake-top-bar .snake-game-mode-button {
-    font-size: 1em;
+
+  header,
+  footer {
+    display: none;
   }
 }
