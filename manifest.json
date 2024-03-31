@@ -34,9 +34,9 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/snake/index.html",
+  "start_url": "/snake/",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/nake/",
   "background_color": "#51653a",
   "theme_color": "#003d30"
 }
