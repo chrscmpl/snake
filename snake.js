@@ -491,9 +491,6 @@ class SnakeGameGUI {
       if (direction) {
         this.#cells[i][j].classList.add(direction);
       }
-      if (change.status === 'tail') {
-        this.#animateTail(i, j, change.direction[0]);
-      }
     });
     if (this.#game.isGameWon()) {
       this.endGame(true);
@@ -501,32 +498,6 @@ class SnakeGameGUI {
       this.endGame(false);
     }
     this.#updateScore();
-  }
-
-  #animateTail(i, j, direction) {
-    const [l, k] =
-      direction === 'up'
-        ? [-1, 0]
-        : direction === 'down'
-        ? [1, 0]
-        : direction === 'left'
-        ? [0, -1]
-        : [0, 1];
-    const opposite =
-      direction === 'up'
-        ? 'down'
-        : direction === 'down'
-        ? 'up'
-        : direction === 'left'
-        ? 'right'
-        : 'left';
-    this.#cells[i + l][j + k].classList.add(`reverse`);
-    if (
-      this.#cells[i + l][j + k].classList.contains(`${direction}-${direction}`)
-    ) {
-      this.#cells[i + l][j + k].classList.remove(`${direction}-${direction}`);
-      this.#cells[i + l][j + k].classList.add(`${opposite}-${opposite}`);
-    }
   }
 
   endGame(won = false) {
@@ -590,15 +561,7 @@ class SnakeGameGUI {
       this.#container.classList.add('playing');
       this.#spawnFood();
       this.#lockStart = false;
-      let styles = '';
-      for (const direction of this.#game.directions.keys()) {
-        styles += `
-        .${direction} {animation: move-${direction} ${gameModeParams.moveTimeout}ms linear;}
-        .${direction}-${direction} {animation: stretch-${direction} ${gameModeParams.moveTimeout}ms linear;}`;
-      }
-      this.#animationStyles = document.createElement('style');
-      this.#animationStyles.textContent = styles;
-      document.head.appendChild(this.#animationStyles);
+      this.#initAnimations(gameModeParams.moveTimeout);
     }, this.countdownNumberDuration * 3);
   }
 
@@ -625,6 +588,20 @@ class SnakeGameGUI {
       }
     }
     this.#animationStyles.remove();
+  }
+
+  #initAnimations(
+    moveTimeout = this.#getGameModeParams(this.#gameMode).moveTimeout
+  ) {
+    let styles = '';
+    for (const direction of this.#game.directions.keys()) {
+      styles += `.${direction} {animation: move-${direction} ${
+        moveTimeout + 10 // + 10 removes glitching effects
+      }ms linear;} `;
+    }
+    this.#animationStyles = document.createElement('style');
+    this.#animationStyles.textContent = styles;
+    document.head.appendChild(this.#animationStyles);
   }
 
   isGameStarted() {

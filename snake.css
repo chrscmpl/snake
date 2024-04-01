@@ -319,7 +319,7 @@ body {
 }
 
 .snake-container::after {
-  z-index: 2;
+  z-index: 1;
 }
 
 .snake-container.countdown-1::after {
@@ -358,10 +358,6 @@ body {
   padding: 1rem;
 }
 
-.head {
-  z-index: 1;
-}
-
 .head.right {
   background: url('snake_assets/head_right.png') center/cover no-repeat;
 }
@@ -376,6 +372,48 @@ body {
 
 .head.up {
   background: url('snake_assets/head_up.png') center/cover no-repeat;
+}
+
+.head.right::after,
+.head.left::after,
+.tail.right::after,
+.tail.left::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 50%;
+  background: url('snake_assets/body_horizontal.png') center/cover no-repeat;
+}
+
+.head.right::after,
+.tail.left::after {
+  transform: translateX(-100%);
+}
+
+.head.left::after,
+.tail.right::after {
+  transform: translateX(200%);
+}
+
+.head.down::after,
+.head.up::after,
+.tail.down::after,
+.tail.up::after {
+  content: '';
+  display: block;
+  height: 50%;
+  width: 100%;
+  background: url('snake_assets/body_vertical.png') center/cover no-repeat;
+}
+
+.head.down::after,
+.tail.up::after {
+  transform: translateY(-100%);
+}
+
+.head.up::after,
+.tail.down::after {
+  transform: translateY(200%);
 }
 
 .game-over .head.right {
@@ -498,7 +536,7 @@ body {
 
 @keyframes stretch-right {
   0% {
-    transform: scaleX(1);
+    transform: scaleX(0.5);
   }
   100% {
     transform: scaleX(1.5);
@@ -507,16 +545,16 @@ body {
 
 @keyframes stretch-left {
   0% {
-    transform: scaleX(1);
+    transform: translateX(-100%) scaleX(0.5);
   }
   100% {
-    transform: scaleX(1.5);
+    transform: translateX(-100%) scaleX(1.5);
   }
 }
 
 @keyframes stretch-up {
   0% {
-    transform: scaleY(1);
+    transform: scaleY(0.5);
   }
   100% {
     transform: scaleY(1.5);
@@ -525,7 +563,7 @@ body {
 
 @keyframes stretch-down {
   0% {
-    transform: scaleY(1);
+    transform: scaleY(0.5);
   }
   100% {
     transform: scaleY(1.5);
