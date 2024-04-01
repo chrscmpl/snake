@@ -595,9 +595,22 @@ class SnakeGameGUI {
   ) {
     let styles = '';
     for (const direction of this.#game.directions.keys()) {
-      styles += `.${direction} {animation: move-${direction} ${
+      const opposite =
+        direction === 'up'
+          ? 'down'
+          : direction === 'down'
+          ? 'up'
+          : direction === 'left'
+          ? 'right'
+          : 'left';
+      styles += `
+      .${direction} {animation: move-${direction} ${
         moveTimeout + 10 // + 10 removes glitching effects
-      }ms linear;} `;
+      }ms linear;} 
+      .head.${opposite}::after {animation: stretch-${direction} ${
+        moveTimeout + 10
+      }ms linear;}
+      .tail.${direction}::after {animation: stretch-${direction} ${moveTimeout}ms linear reverse;}`;
     }
     this.#animationStyles = document.createElement('style');
     this.#animationStyles.textContent = styles;

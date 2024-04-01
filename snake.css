@@ -388,11 +388,13 @@ body {
 .head.right::after,
 .tail.left::after {
   transform: translateX(-100%);
+  transform-origin: right center;
 }
 
 .head.left::after,
 .tail.right::after {
   transform: translateX(200%);
+  transform-origin: left center;
 }
 
 .head.down::after,
@@ -409,11 +411,13 @@ body {
 .head.down::after,
 .tail.up::after {
   transform: translateY(-100%);
+  transform-origin: center bottom;
 }
 
 .head.up::after,
 .tail.down::after {
   transform: translateY(200%);
+  transform-origin: center top;
 }
 
 .game-over .head.right {
@@ -536,10 +540,10 @@ body {
 
 @keyframes stretch-right {
   0% {
-    transform: scaleX(0.5);
+    transform: translateX(200%) scaleX(0.5);
   }
   100% {
-    transform: scaleX(1.5);
+    transform: translateX(200%) scaleX(1.5);
   }
 }
 
@@ -554,19 +558,19 @@ body {
 
 @keyframes stretch-up {
   0% {
-    transform: scaleY(0.5);
+    transform: translateY(-100%) scaleY(0.5);
   }
   100% {
-    transform: scaleY(1.5);
+    transform: translateY(-100%) scaleY(1.5);
   }
 }
 
 @keyframes stretch-down {
   0% {
-    transform: scaleY(0.5);
+    transform: translateY(200%) scaleY(0.5);
   }
   100% {
-    transform: scaleY(1.5);
+    transform: translateY(200%) scaleY(1.5);
   }
 }
 
