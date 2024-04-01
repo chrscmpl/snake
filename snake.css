@@ -318,6 +318,10 @@ body {
   color: var(--primary-color);
 }
 
+.snake-container::after {
+  z-index: 2;
+}
+
 .snake-container.countdown-1::after {
   content: '1';
   grid-area: board;
@@ -352,6 +356,10 @@ body {
   color: var(--accent-color-1);
   background-color: var(--primary-color);
   padding: 1rem;
+}
+
+.head {
+  z-index: 1;
 }
 
 .head.right {
@@ -472,47 +480,55 @@ body {
   }
 }
 
+.right-right {
+  transform-origin: left center;
+}
+
+.left-left {
+  transform-origin: right center;
+}
+
+.up-up {
+  transform-origin: center bottom;
+}
+
+.down-down {
+  transform-origin: center top;
+}
+
 @keyframes stretch-right {
   0% {
-    justify-self: start;
-    width: 100%;
+    transform: scaleX(1);
   }
   100% {
-    justify-self: start;
-    width: 200%;
+    transform: scaleX(1.5);
   }
 }
 
 @keyframes stretch-left {
   0% {
-    justify-self: end;
-    width: 100%;
+    transform: scaleX(1);
   }
   100% {
-    justify-self: end;
-    width: 200%;
+    transform: scaleX(1.5);
   }
 }
 
 @keyframes stretch-up {
   0% {
-    align-self: end;
-    height: 100%;
+    transform: scaleY(1);
   }
   100% {
-    align-self: end;
-    height: 200%;
+    transform: scaleY(1.5);
   }
 }
 
 @keyframes stretch-down {
   0% {
-    align-self: start;
-    height: 100%;
+    transform: scaleY(1);
   }
   100% {
-    align-self: start;
-    height: 200%;
+    transform: scaleY(1.5);
   }
 }
 
