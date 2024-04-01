@@ -388,12 +388,12 @@ body {
 
 .body.right-right,
 .body.left-left {
-  background: url('snake_assets/body_horizontal.png') center/cover no-repeat;
+  background: url('snake_assets/body_horizontal.png') center/contain repeat;
 }
 
 .body.up-up,
 .body.down-down {
-  background: url('snake_assets/body_vertical.png') center/cover no-repeat;
+  background: url('snake_assets/body_vertical.png') center/contain repeat;
 }
 
 .body.up-left,
@@ -434,6 +434,90 @@ body {
 
 .food {
   background: url('snake_assets/food.png') center/cover no-repeat;
+}
+
+@keyframes move-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+@keyframes move-left {
+  0% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes move-up {
+  0% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes move-down {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(50%);
+  }
+}
+
+@keyframes stretch-right {
+  0% {
+    justify-self: start;
+    width: 100%;
+  }
+  100% {
+    justify-self: start;
+    width: 200%;
+  }
+}
+
+@keyframes stretch-left {
+  0% {
+    justify-self: end;
+    width: 100%;
+  }
+  100% {
+    justify-self: end;
+    width: 200%;
+  }
+}
+
+@keyframes stretch-up {
+  0% {
+    align-self: end;
+    height: 100%;
+  }
+  100% {
+    align-self: end;
+    height: 200%;
+  }
+}
+
+@keyframes stretch-down {
+  0% {
+    align-self: start;
+    height: 100%;
+  }
+  100% {
+    align-self: start;
+    height: 200%;
+  }
+}
+
+.reverse {
+  animation-direction: reverse !important;
 }
 
 ::selection {

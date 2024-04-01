@@ -250,6 +250,10 @@ class SnakeGame {
     return this.#score;
   }
 
+  get snakeLength() {
+    return this.#snakeLength;
+  }
+
   isGameOver() {
     return this.#gameOver;
   }
@@ -314,6 +318,7 @@ class SnakeGameGUI {
   #moveInterval;
   #gameMode;
   #lockStart;
+  #animationStyles;
 
   constructor(gameMode) {
     this.#gameMode = gameMode;
@@ -374,12 +379,15 @@ class SnakeGameGUI {
       'head',
       'right'
     );
-    for (let i = 1; i < startingLength - 1; i++) {
+    for (let i = 1; i < startingLength - 2; i++) {
       this.#cells[headPosition[0]][headPosition[1] - i].classList.add(
         'body',
         'right-right'
       );
     }
+    this.#cells[headPosition[0]][
+      headPosition[1] - startingLength + 2
+    ].classList.add('body', 'left-left', 'reverse');
     this.#cells[headPosition[0]][
       headPosition[1] - startingLength + 1
     ].classList.add('tail', 'right');
@@ -483,6 +491,9 @@ class SnakeGameGUI {
       if (direction) {
         this.#cells[i][j].classList.add(direction);
       }
+      if (change.status === 'tail') {
+        this.#animateTail(i, j, change.direction[0]);
+      }
     });
     if (this.#game.isGameWon()) {
       this.endGame(true);
@@ -490,6 +501,32 @@ class SnakeGameGUI {
       this.endGame(false);
     }
     this.#updateScore();
+  }
+
+  #animateTail(i, j, direction) {
+    const [l, k] =
+      direction === 'up'
+        ? [-1, 0]
+        : direction === 'down'
+        ? [1, 0]
+        : direction === 'left'
+        ? [0, -1]
+        : [0, 1];
+    const opposite =
+      direction === 'up'
+        ? 'down'
+        : direction === 'down'
+        ? 'up'
+        : direction === 'left'
+        ? 'right'
+        : 'left';
+    this.#cells[i + l][j + k].classList.add(`reverse`);
+    if (
+      this.#cells[i + l][j + k].classList.contains(`${direction}-${direction}`)
+    ) {
+      this.#cells[i + l][j + k].classList.remove(`${direction}-${direction}`);
+      this.#cells[i + l][j + k].classList.add(`${opposite}-${opposite}`);
+    }
   }
 
   endGame(won = false) {
@@ -553,6 +590,15 @@ class SnakeGameGUI {
       this.#container.classList.add('playing');
       this.#spawnFood();
       this.#lockStart = false;
+      let styles = '';
+      for (const direction of this.#game.directions.keys()) {
+        styles += `
+        .${direction} {animation: move-${direction} ${gameModeParams.moveTimeout}ms linear;}
+        .${direction}-${direction} {animation: stretch-${direction} ${gameModeParams.moveTimeout}ms linear;}`;
+      }
+      this.#animationStyles = document.createElement('style');
+      this.#animationStyles.textContent = styles;
+      document.head.appendChild(this.#animationStyles);
     }, this.countdownNumberDuration * 3);
   }
 
@@ -578,6 +624,7 @@ class SnakeGameGUI {
         button[1].classList.remove('selected');
       }
     }
+    this.#animationStyles.remove();
   }
 
   isGameStarted() {
@@ -609,21 +656,44 @@ class SnakeGameGUI {
 
 SnakeGameGUI.prototype.countdownNumberDuration = 300;
 
+const gameModesManager = {
+  modes: {
+    easy: {
+      size: 12,
+      startingLength: 4,
+      moveTimeout: 200,
+    },
+    medium: {
+      size: 16,
+      startingLength: 4,
+      moveTimeout: 150,
+    },
+    hard: {
+      size: 20,
+      startingLength: 4,
+      moveTimeout: 100,
+    },
+  },
+  getGameModeParams(gameMode) {
+    return this.modes[gameMode];
+  },
+};
+
 SnakeGameGUI.prototype.modes = new Map();
 SnakeGameGUI.prototype.modes.set('easy', {
   size: 12,
-  startingLength: 3,
-  moveTimeout: 150,
+  startingLength: 4,
+  moveTimeout: 200,
 });
 SnakeGameGUI.prototype.modes.set('medium', {
   size: 16,
-  startingLength: 3,
-  moveTimeout: 100,
+  startingLength: 4,
+  moveTimeout: 150,
 });
 SnakeGameGUI.prototype.modes.set('hard', {
   size: 20,
-  startingLength: 3,
-  moveTimeout: 60,
+  startingLength: 4,
+  moveTimeout: 100,
 });
 // SnakeGameGUI.prototype.modes.set('insane', {
 //   size: 24,
