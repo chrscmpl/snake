@@ -5,8 +5,8 @@
   "start_url": "/snake/",
   "display": "standalone",
   "scope": "/snake/",
-  "background_color": "#946c4c",
-  "theme_color": "#003d30",
+  "background_color": "#8b6e52",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "icons/icon-128.png",
@@ -47,6 +47,11 @@
     },
     {
       "src": "screenshots/mobile-2.jpg",
+      "sizes": "480x1004",
+      "type": "image/jpg"
+    },
+    {
+      "src": "screenshots/mobile-3.jpg",
       "sizes": "480x1004",
       "type": "image/jpg"
     }

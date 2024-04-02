@@ -166,16 +166,19 @@ body {
 .snake-game-mode-selection {
   display: flex;
   justify-content: center;
+  font-size: 1.5rem;
+  gap: 0.5ch;
   height: 100%;
 }
 
 .snake-game-mode-selection .snake-game-mode-button {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 900;
   color: var(--accent-color-1);
   background-color: var(--primary-color);
   border: none;
   cursor: pointer;
+  width: max-content;
   padding: 0 0.5rem;
   height: 100%;
 }
@@ -202,10 +205,21 @@ body {
 
 .snake-high-score-header {
   font-size: 0.8em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1ch;
 }
 
-.snake-high-score-header > span:first-child:after {
-  content: ' - ';
+.snake-high-score-header > span:first-child {
+  width: fit-content;
+}
+
+.snake-high-score-header > span:nth-child(2) {
+  color: var(--accent-color-2);
+  border: 1px solid var(--accent-color-2);
+  width: fit-content;
+  padding: 0 0.2rem;
 }
 
 .snake-high-scores .high-score {
@@ -794,24 +808,9 @@ body {
     padding: 0;
   }
 
-  .snake-high-score-header > span:first-child {
-    width: fit-content;
-  }
-
-  .snake-high-score-header > span:nth-child(2) {
-    color: var(--accent-color-2);
-    border: 1px solid var(--accent-color-2);
-    width: fit-content;
-    padding: 0 0.2rem;
-  }
-
-  .snake-high-score-header > span:first-child:after {
-    content: '';
-  }
-
   .snake-high-score-header {
-    display: flex;
     flex-direction: column;
+    gap: 0;
   }
 
   footer {
