@@ -5,7 +5,7 @@
   "start_url": "/snake/",
   "display": "standalone",
   "scope": "/snake/",
-  "background_color": "#51653a",
+  "background_color": "#946c4c",
   "theme_color": "#003d30",
   "icons": [
     {
