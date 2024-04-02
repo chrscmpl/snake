@@ -149,7 +149,7 @@ export class SnakeGameGUI {
       if (mode === this.#gameMode) {
         modeButton.classList.add('selected');
       }
-      modeButton.textContent = mode.toUpperCase();
+      modeButton.textContent = mode.toUpperCase().split('-').join(' ');
       modeButton.addEventListener('click', () => {
         if (!this.isGameRunning())
           this.#restart(mode, this.#getGameModeParams(mode));
@@ -166,9 +166,10 @@ export class SnakeGameGUI {
 
   #displayHighScores(highScores) {
     const highScoreHeader = this.#highScoresDisplay.children[0];
-    highScoreHeader.innerHTML = `<span>HIGH SCORES</span><span>${
-      this.#gameMode
-    }</span>`.toUpperCase();
+    highScoreHeader.innerHTML = `<span>HIGH SCORES</span><span>${this.#gameMode
+      .toUpperCase()
+      .split('-')
+      .join(' ')}</span>`;
     const highScoresList = this.#highScoresDisplay.children[1];
     highScoresList.innerHTML = '';
     for (const score of highScores) {

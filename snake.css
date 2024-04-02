@@ -200,6 +200,10 @@ body {
   justify-self: center;
 }
 
+.snake-high-score-header {
+  font-size: 0.8em;
+}
+
 .snake-high-score-header > span:first-child:after {
   content: ' - ';
 }
@@ -770,6 +774,12 @@ body {
   .snake-game-mode-selection {
     width: 100%;
     justify-content: space-between;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .snake-game-mode-selection .snake-game-mode-button {
+    font-size: 1.3rem;
   }
 
   .snake-high-scores {
@@ -785,13 +795,13 @@ body {
   }
 
   .snake-high-score-header > span:first-child {
-    width: min-content;
+    width: fit-content;
   }
 
   .snake-high-score-header > span:nth-child(2) {
     color: var(--accent-color-2);
     border: 1px solid var(--accent-color-2);
-    width: min-content;
+    width: fit-content;
     padding: 0 0.2rem;
   }
 

@@ -8,6 +8,7 @@ var filesToCache = [
   '/js/snakeGameGUI.js',
   '/js/utils.js',
   '/manifest.json',
+  '/configuration.json',
   '/snake_assets/stage1/background.png',
   '/snake_assets/stage1/body_bottomleft.png',
   '/snake_assets/stage1/body_bottomright.png',
@@ -29,7 +30,7 @@ var filesToCache = [
   '/snake_assets/stage1/tail_right.png',
   '/snake_assets/stage1/tail_up.png',
   '/snake_assets/stage1/tile.png',
-  
+
   '/snake_assets/stage2/body_bottomleft.png',
   '/snake_assets/stage2/body_bottomright.png',
   '/snake_assets/stage2/body_horizontal.png',
@@ -50,7 +51,7 @@ var filesToCache = [
   '/snake_assets/stage2/tail_right.png',
   '/snake_assets/stage2/tail_up.png',
   '/snake_assets/stage2/tile.png',
-  
+
   '/snake_assets/stage3/body_bottomleft.png',
   '/snake_assets/stage3/body_bottomright.png',
   '/snake_assets/stage3/body_horizontal.png',
