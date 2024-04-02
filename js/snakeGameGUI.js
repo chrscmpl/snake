@@ -1,311 +1,12 @@
-'use strict';
+import { SnakeGame } from './snakeGame.js';
+import {
+  configuration,
+  fetchConfiguration,
+  highScoreManager,
+  gameModesManager,
+} from './utils.js';
 
-class SnakeGame {
-  #size;
-  #map;
-  #headPosition;
-  #tailPosition;
-  #headDirection;
-  #pastMoves;
-  #lastMovedDirection;
-  #gameOver;
-  #snakeLength;
-  #totalCells;
-  #gameWon;
-  #score;
-  #foodScoreValue;
-  #timeScoreValue;
-  #scoreIntervalTimeValue;
-  #scoreInterval;
-
-  constructor(
-    size,
-    startingLength,
-    foodScore = 100,
-    timeInterval = 1000,
-    timeScore = 10
-  ) {
-    if (startingLength > size / 2) {
-      throw new Error('Invalid starting length');
-    }
-    this.#size = size;
-    this.#totalCells = size ** 2;
-    this.#gameOver = false;
-    this.#gameWon = false;
-    this.#snakeLength = startingLength;
-    this.#score = 0;
-    this.#foodScoreValue = foodScore;
-    this.#timeScoreValue = timeScore;
-    this.#scoreIntervalTimeValue = timeInterval;
-    this.#map = Array.from({ length: this.#size }, () =>
-      Array.from({ length: this.#size }, () => 0)
-    );
-    this.#headPosition = [
-      Math.floor(this.#size / 2),
-      Math.floor(this.#size / 2),
-    ];
-    this.#setCellAt(this.#headPosition, 'head');
-    this.#tailPosition = [
-      this.#headPosition[0],
-      this.#headPosition[1] - startingLength + 1,
-    ];
-    this.#setCellAt(this.#tailPosition, 'tail');
-    this.#headDirection = 'right';
-    this.#lastMovedDirection = 'right';
-    this.#pastMoves = Array.from({ length: this.#size }, () =>
-      Array.from({ length: this.#size }, () => null)
-    );
-    this.#setPastMoveAt(this.#tailPosition, 'right');
-    for (let i = 1; i < startingLength - 1; i++) {
-      this.#setCellAt(
-        [this.#tailPosition[0], this.#tailPosition[1] + i],
-        'body'
-      );
-      this.#setPastMoveAt(
-        [this.#tailPosition[0], this.#tailPosition[1] + i],
-        'right'
-      );
-    }
-  }
-
-  #getStatusValue(string) {
-    return this.cellStatuses.get(string);
-  }
-
-  // #getStatusString(value) {
-  //   return [...this.cellStatuses.entries()].find(
-  //     ([key, val]) => val === value
-  //   )[0];
-  // }
-
-  #getDirectionValue(string) {
-    return this.directions.get(string);
-  }
-
-  // #getDirectionString(value) {
-  //   return [...this.directions.entries()].find(
-  //     ([key, val]) => val === value
-  //   )[0];
-  // }
-
-  #getCellIndexesAtDirection([i, j], direction) {
-    const [shiftRow, shiftColumn] = this.#getDirectionValue(direction);
-    return [(i + shiftRow) % this.#size][(j + shiftColumn) % this.#size];
-  }
-
-  #getCellAt(position) {
-    return position.reduce((arr, index) => arr[index], this.#map);
-  }
-
-  #setCellAt(position, value) {
-    this.#map[position[0]][position[1]] = this.#getStatusValue(value);
-  }
-
-  #getPastMoveAt(position) {
-    return position.reduce((arr, index) => arr[index], this.#pastMoves);
-  }
-
-  #setPastMoveAt(position, value) {
-    this.#pastMoves[position[0]][position[1]] = value;
-  }
-
-  #shiftIndex(startingIndex, movement) {
-    return startingIndex + movement;
-  }
-
-  #setGameOver() {
-    this.stop();
-    this.#gameOver = true;
-  }
-
-  #setGameWon() {
-    this.stop();
-    this.#gameWon = true;
-  }
-
-  spawnFood() {
-    if (this.#gameOver || this.#gameWon) return;
-    while (true) {
-      const i = Math.floor(Math.random() * this.#size);
-      const j = Math.floor(Math.random() * this.#size);
-      if (this.#setFood(i, j)) {
-        return [i, j];
-      }
-    }
-  }
-
-  start() {
-    if (this.#timeScoreValue > 0) {
-      this.#scoreInterval = setInterval(
-        (() => {
-          this.#score += this.#timeScoreValue;
-        }).bind(this),
-        this.#scoreIntervalTimeValue
-      );
-    }
-  }
-
-  move() {
-    if (this.#gameOver) return [];
-    let changes = [];
-    let foodEaten = false;
-    this.#headDirection;
-
-    this.#setPastMoveAt(this.#headPosition, this.#headDirection);
-
-    const [shiftRowHead, shiftColumnHead] = this.#getDirectionValue(
-      this.#headDirection
-    );
-
-    this.#setCellAt(this.#headPosition, 'body');
-    changes.push({
-      position: this.#headPosition,
-      status: 'body',
-      direction: [this.#lastMovedDirection, this.#headDirection],
-    });
-
-    const [nextRow, nextColumn] = [
-      this.#shiftIndex(this.#headPosition[0], shiftRowHead),
-      this.#shiftIndex(this.#headPosition[1], shiftColumnHead),
-    ];
-
-    if (
-      nextRow >= this.#size ||
-      nextColumn >= this.#size ||
-      nextRow < 0 ||
-      nextColumn < 0 ||
-      this.#getCellAt([nextRow, nextColumn]) === this.#getStatusValue('body') ||
-      this.#getCellAt([nextRow, nextColumn]) === this.#getStatusValue('tail')
-    ) {
-      this.#setGameOver();
-      return [];
-    } else if (
-      this.#getCellAt([nextRow, nextColumn]) === this.#getStatusValue('food')
-    ) {
-      foodEaten = true;
-    }
-
-    this.#headPosition = [nextRow, nextColumn];
-
-    this.#setCellAt(this.#headPosition, 'head');
-    changes.push({
-      position: this.#headPosition,
-      status: 'head',
-      direction: [this.#headDirection],
-    });
-
-    if (foodEaten) {
-      this.#lastMovedDirection = this.#headDirection;
-      this.#snakeLength++;
-      this.#score += this.#foodScoreValue;
-      if (this.#snakeLength === this.#totalCells) this.#setGameWon();
-      changes.push({
-        position: this.spawnFood(),
-        status: 'food',
-        direction: [],
-      });
-      return changes;
-    }
-
-    const [shiftRowTail, shiftColumnTail] = this.#getDirectionValue(
-      this.#getPastMoveAt(this.#tailPosition)
-    );
-
-    this.#setPastMoveAt(this.#tailPosition, null);
-    this.#setCellAt(this.#tailPosition, 'empty');
-    changes.push({
-      position: this.#tailPosition,
-      status: 'empty',
-      direction: [],
-    });
-
-    this.#tailPosition = [
-      this.#shiftIndex(this.#tailPosition[0], shiftRowTail),
-      this.#shiftIndex(this.#tailPosition[1], shiftColumnTail),
-    ];
-    this.#setCellAt(this.#tailPosition, 'tail');
-    changes.push({
-      position: this.#tailPosition,
-      status: 'tail',
-      direction: [this.#getPastMoveAt(this.#tailPosition)],
-    });
-    this.#lastMovedDirection = this.#headDirection;
-    return changes;
-  }
-
-  // get map() {
-  //   return this.#map.map(row => row.map(cell => this.#getStatusString(cell)));
-  // }
-  // get pastMoves() {
-  //   return this.#pastMoves.map(row =>
-  //     row.map(cell => this.#getDirectionString(cell))
-  //   );
-  // }
-
-  get headPosition() {
-    return this.#headPosition;
-  }
-
-  get score() {
-    return this.#score;
-  }
-
-  get snakeLength() {
-    return this.#snakeLength;
-  }
-
-  isGameOver() {
-    return this.#gameOver;
-  }
-
-  isGameWon() {
-    return this.#gameWon;
-  }
-
-  #setFood(i, j) {
-    if (this.#getCellAt([i, j]) !== this.#getStatusValue('empty')) {
-      return false;
-    }
-    this.#setCellAt([i, j], 'food');
-    return true;
-  }
-
-  setDirection(direction) {
-    const verticalDirections = ['up', 'down'];
-    const horizontalDirections = ['left', 'right'];
-    if (
-      (verticalDirections.includes(this.#lastMovedDirection) &&
-        verticalDirections.includes(direction)) ||
-      (horizontalDirections.includes(this.#lastMovedDirection) &&
-        horizontalDirections.includes(direction))
-    ) {
-      return;
-    }
-    this.#headDirection = direction;
-  }
-
-  stop() {
-    clearInterval(this.#scoreInterval);
-  }
-}
-
-SnakeGame.prototype.directions = new Map([
-  ['none', null],
-  ['up', [-1, 0]],
-  ['down', [1, 0]],
-  ['left', [0, -1]],
-  ['right', [0, 1]],
-]);
-
-SnakeGame.prototype.cellStatuses = new Map([
-  ['empty', 0],
-  ['head', 1],
-  ['body', 2],
-  ['tail', 3],
-  ['food', 4],
-]);
-
-class SnakeGameGUI {
+export class SnakeGameGUI {
   #container;
   #scoreDisplay;
   #highScoresDisplay;
@@ -322,6 +23,7 @@ class SnakeGameGUI {
 
   constructor(gameMode) {
     this.#gameMode = gameMode;
+    gameModesManager.saveLastGameMode(gameMode);
     const gameModeParams = this.#getGameModeParams(gameMode);
 
     this.#initGame(gameModeParams);
@@ -352,7 +54,7 @@ class SnakeGameGUI {
   }
 
   #getGameModeParams(gameMode) {
-    const params = this.modes.get(gameMode);
+    const params = configuration.gameModes[gameMode];
     if (!params) {
       throw new Error('Invalid game mode');
     }
@@ -441,7 +143,7 @@ class SnakeGameGUI {
     this.#gameModeSelection = document.createElement('div');
     this.#gameModeSelection.classList.add('snake-game-mode-selection');
     this.#gameModeButtons = new Map();
-    for (const mode of this.modes.keys()) {
+    for (const mode in configuration.gameModes) {
       const modeButton = document.createElement('button');
       this.#gameModeButtons.set(mode, modeButton);
       modeButton.classList.add(
@@ -570,6 +272,7 @@ class SnakeGameGUI {
     gameModeParams = this.#getGameModeParams(gameMode)
   ) {
     this.#gameMode = gameMode;
+    gameModesManager.saveLastGameMode(gameMode);
     this.#game.stop();
     this.stop();
     this.#container.classList.remove('game-over');
@@ -587,12 +290,16 @@ class SnakeGameGUI {
         button[1].classList.remove('selected');
       }
     }
-    this.#animationStyles.remove();
+    if (this.#animationStyles) {
+      this.#animationStyles.remove();
+      this.#animationStyles = null;
+    }
   }
 
   #initAnimations(
     moveTimeout = this.#getGameModeParams(this.#gameMode).moveTimeout
   ) {
+    if (!configuration.smoothAnimations) return;
     let styles = '';
     for (const direction of this.#game.directions.keys()) {
       const opposite =
@@ -606,7 +313,7 @@ class SnakeGameGUI {
       styles += `
       .${direction} {animation: move-${direction} ${
         moveTimeout + 10 // + 10 removes glitching effects
-      }ms linear;} 
+      }ms linear;}
       .head.${opposite}::after {animation: stretch-${direction} ${
         moveTimeout + 10
       }ms linear;}
@@ -637,7 +344,7 @@ class SnakeGameGUI {
 
   advanceGameMode() {
     if (this.isGameRunning()) return;
-    const gameModes = [...this.modes.keys()];
+    const gameModes = Object.keys(configuration.gameModes);
     this.#restart(
       gameModes[(gameModes.indexOf(this.#gameMode) + 1) % gameModes.length]
     );
@@ -645,104 +352,3 @@ class SnakeGameGUI {
 }
 
 SnakeGameGUI.prototype.countdownNumberDuration = 300;
-
-const gameModesManager = {
-  modes: {
-    easy: {
-      size: 12,
-      startingLength: 4,
-      moveTimeout: 200,
-    },
-    medium: {
-      size: 16,
-      startingLength: 4,
-      moveTimeout: 150,
-    },
-    hard: {
-      size: 20,
-      startingLength: 4,
-      moveTimeout: 100,
-    },
-  },
-  getGameModeParams(gameMode) {
-    return this.modes[gameMode];
-  },
-};
-
-SnakeGameGUI.prototype.modes = new Map();
-SnakeGameGUI.prototype.modes.set('easy', {
-  size: 12,
-  startingLength: 4,
-  moveTimeout: 200,
-});
-SnakeGameGUI.prototype.modes.set('medium', {
-  size: 16,
-  startingLength: 4,
-  moveTimeout: 150,
-});
-SnakeGameGUI.prototype.modes.set('hard', {
-  size: 20,
-  startingLength: 4,
-  moveTimeout: 100,
-});
-// SnakeGameGUI.prototype.modes.set('insane', {
-//   size: 24,
-//   startingLength: 3,
-//   moveTimeout: 30,
-// });
-
-const highScoreManager = {
-  gameModes: [...SnakeGameGUI.prototype.modes.keys()],
-  getHighScores(gameMode) {
-    if (!this.gameModes.includes(gameMode))
-      throw new Error('Invalid game mode');
-    if (!localStorage) return [];
-    return JSON.parse(localStorage.getItem(`highScores-${gameMode}`)) ?? [];
-  },
-  saveHighScore(gameMode, score) {
-    if (!this.gameModes.includes(gameMode))
-      throw new Error('Invalid game mode');
-    if (!localStorage) return [];
-    let highScores =
-      JSON.parse(localStorage.getItem(`highScores-${gameMode}`)) ?? [];
-    highScores.push(score);
-    highScores = highScores.sort((a, b) => b - a).slice(0, 10);
-    localStorage.setItem(`highScores-${gameMode}`, JSON.stringify(highScores));
-    return highScores;
-  },
-};
-
-function setupGame() {
-  const container = document.getElementById('snake-container');
-  let gui = new SnakeGameGUI('medium');
-  gui.attach(container);
-
-  window.addEventListener('keydown', event => {
-    switch (event.key) {
-      case 'ArrowUp':
-        gui.setDirection('up');
-        break;
-      case 'ArrowDown':
-        gui.setDirection('down');
-        break;
-      case 'ArrowLeft':
-        gui.setDirection('left');
-        break;
-      case 'ArrowRight':
-        gui.setDirection('right');
-        break;
-      case 'Enter':
-        gui.start();
-        break;
-      case ' ':
-        gui.advanceGameMode();
-        break;
-      default:
-        return;
-    }
-    event.preventDefault();
-  });
-  // if (window.innerHeight > window.innerWidth) {
-  //   window.scrollTo(0, document.getElementsByTagName('header')[0].scrollHeight);
-  // }
-}

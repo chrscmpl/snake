@@ -486,6 +486,11 @@ body {
   background: url('snake_assets/food.png') center/cover no-repeat;
 }
 
+.tail,
+.tail::after {
+  animation-fill-mode: forwards !important;
+}
+
 @keyframes move-right {
   0% {
     transform: translateX(-50%);

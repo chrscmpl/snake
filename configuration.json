@@ -1,0 +1,20 @@
+{
+  "gameModes": {
+    "easy": {
+      "size": 12,
+      "startingLength": 3,
+      "moveTimeout": 200
+    },
+    "medium": {
+      "size": 16,
+      "startingLength": 3,
+      "moveTimeout": 150
+    },
+    "hard": {
+      "size": 20,
+      "startingLength": 3,
+      "moveTimeout": 100
+    }
+  },
+  "smoothAnimations": true
+}

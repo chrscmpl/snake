@@ -18,7 +18,10 @@
     <meta name="msapplication-TileColor" content="#003d30" />
     <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="snake.css" />
-    <script defer src="snake.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/snakeGame.js"></script>
+    <script type="module" src="js/snakeGameGUI.js"></script>
+    <script type="module" src="js/main.js"></script>
     <link rel="preload" href="snake_assets/background.png" as="image" />
     <link rel="preload" href="snake_assets/tile.png" as="image" />
     <link rel="preload" href="snake_assets/body_bottomleft.png" as="image" />
@@ -74,7 +77,9 @@
         />
       </svg>
     </a>
-    <script>
+    <script type="module">
+      import { setupGame } from './js/main.js';
+
       window.onload = function () {
         'use strict';
         setupGame();
