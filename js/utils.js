@@ -2,33 +2,15 @@ export let configuration;
 
 export async function fetchConfiguration() {
   try {
-    const res = await fetch('configuration.json');
+    const res = await fetch('game-config.json');
     if (!res.ok) {
       throw new Error('No configuration file found');
     }
     const data = await res.json();
     configuration = data;
   } catch (err) {
-    configuration = {
-      gameModes: {
-        easy: {
-          size: 12,
-          startingLength: 3,
-          moveTimeout: 200,
-        },
-        medium: {
-          size: 16,
-          startingLength: 3,
-          moveTimeout: 150,
-        },
-        hard: {
-          size: 20,
-          startingLength: 3,
-          moveTimeout: 100,
-        },
-      },
-      smoothAnimations: true,
-    };
+    console.error(err);
+    alert('Failed to fetch configuration file. Please refresh the page.');
   }
 }
 

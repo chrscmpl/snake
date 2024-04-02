@@ -8,7 +8,7 @@ var filesToCache = [
   '/js/snakeGameGUI.js',
   '/js/utils.js',
   '/manifest.json',
-  '/configuration.json',
+  '/game-config.json',
   '/snake_assets/stage1/background.png',
   '/snake_assets/stage1/body_bottomleft.png',
   '/snake_assets/stage1/body_bottomright.png',
