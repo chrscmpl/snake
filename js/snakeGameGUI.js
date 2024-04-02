@@ -1,10 +1,5 @@
 import { SnakeGame } from './snakeGame.js';
-import {
-  configuration,
-  fetchConfiguration,
-  highScoreManager,
-  gameModesManager,
-} from './utils.js';
+import { configuration, highScoreManager, gameModesManager } from './utils.js';
 
 export class SnakeGameGUI {
   #container;
@@ -20,9 +15,10 @@ export class SnakeGameGUI {
   #gameMode;
   #lockStart;
   #animationStyles;
+  #GameModeStyles;
 
   constructor(gameMode) {
-    this.#gameMode = gameMode;
+    this.#setGameMode(gameMode);
     gameModesManager.saveLastGameMode(gameMode);
     const gameModeParams = this.#getGameModeParams(gameMode);
 
@@ -271,7 +267,7 @@ export class SnakeGameGUI {
     gameMode = this.#gameMode,
     gameModeParams = this.#getGameModeParams(gameMode)
   ) {
-    this.#gameMode = gameMode;
+    this.#setGameMode(gameMode);
     gameModesManager.saveLastGameMode(gameMode);
     this.#game.stop();
     this.stop();
@@ -322,6 +318,20 @@ export class SnakeGameGUI {
     this.#animationStyles = document.createElement('style');
     this.#animationStyles.textContent = styles;
     document.head.appendChild(this.#animationStyles);
+  }
+
+  #setGameMode(gameMode) {
+    this.#gameMode = gameMode;
+    if (this.#GameModeStyles) this.#GameModeStyles.remove();
+    this.#GameModeStyles = document.createElement('style');
+    let styles = '';
+    for (const variable of Object.entries(
+      configuration.gameModes[gameMode].styles
+    )) {
+      styles += `--${variable[0]}: ${variable[1]};`;
+    }
+    this.#GameModeStyles.textContent = `:root {${styles}}`;
+    document.head.appendChild(this.#GameModeStyles);
   }
 
   isGameStarted() {

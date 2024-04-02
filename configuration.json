@@ -1,19 +1,103 @@
 {
   "gameModes": {
-    "easy": {
+    "stage-1": {
       "size": 12,
       "startingLength": 3,
-      "moveTimeout": 200
+      "moveTimeout": 200,
+      "styles": {
+        "primary-color": "rgba(0, 61, 48, 0.5)",
+        "accent-color-1": "rgb(115, 192, 0)",
+        "accent-color-2": "#22d3ee",
+
+        "background": "url('snake_assets/stage1/background.png') repeat",
+        "background-mobile": "var(--background)",
+        "tile": "url('snake_assets/stage1/tile.png')",
+        "head-right": "url('snake_assets/stage1/head_right.png')",
+        "head-down": "url('snake_assets/stage1/head_down.png')",
+        "head-left": "url('snake_assets/stage1/head_left.png')",
+        "head-up": "url('snake_assets/stage1/head_up.png')",
+        "body-horizontal": "url('snake_assets/stage1/body_horizontal.png')",
+        "body-vertical": "url('snake_assets/stage1/body_vertical.png')",
+        "head-dead-right": "url('snake_assets/stage1/head_dead_right.png')",
+        "head-dead-down": "url('snake_assets/stage1/head_dead_down.png')",
+        "head-dead-left": "url('snake_assets/stage1/head_dead_left.png')",
+        "head-dead-up": "url('snake_assets/stage1/head_dead_up.png')",
+        "body-bottomleft": "url('snake_assets/stage1/body_bottomleft.png')",
+        "body-bottomright": "url('snake_assets/stage1/body_bottomright.png')",
+        "body-topleft": "url('snake_assets/stage1/body_topleft.png')",
+        "body-topright": "url('snake_assets/stage1/body_topright.png')",
+        "tail-left": "url('snake_assets/stage1/tail_left.png')",
+        "tail-up": "url('snake_assets/stage1/tail_up.png')",
+        "tail-right": "url('snake_assets/stage1/tail_right.png')",
+        "tail-down": "url('snake_assets/stage1/tail_down.png')",
+        "food": "url('snake_assets/stage1/food.png')"
+      }
     },
-    "medium": {
+    "stage-2": {
       "size": 16,
       "startingLength": 3,
-      "moveTimeout": 150
+      "moveTimeout": 150,
+      "styles": {
+        "primary-color": "rgba(63, 114, 175, 0.6)",
+        "accent-color-1": "#DBE2EF",
+        "accent-color-2": "#dc514c",
+
+        "background": "#112D4E",
+        "background-mobile": "var(--background)",
+        "tile": "url('snake_assets/stage2/tile.png')",
+        "head-right": "url('snake_assets/stage2/head_right.png')",
+        "head-down": "url('snake_assets/stage2/head_down.png')",
+        "head-left": "url('snake_assets/stage2/head_left.png')",
+        "head-up": "url('snake_assets/stage2/head_up.png')",
+        "body-horizontal": "url('snake_assets/stage2/body_horizontal.png')",
+        "body-vertical": "url('snake_assets/stage2/body_vertical.png')",
+        "head-dead-right": "url('snake_assets/stage2/head_dead_right.png')",
+        "head-dead-down": "url('snake_assets/stage2/head_dead_down.png')",
+        "head-dead-left": "url('snake_assets/stage2/head_dead_left.png')",
+        "head-dead-up": "url('snake_assets/stage2/head_dead_up.png')",
+        "body-bottomleft": "url('snake_assets/stage2/body_bottomleft.png')",
+        "body-bottomright": "url('snake_assets/stage2/body_bottomright.png')",
+        "body-topleft": "url('snake_assets/stage2/body_topleft.png')",
+        "body-topright": "url('snake_assets/stage2/body_topright.png')",
+        "tail-left": "url('snake_assets/stage2/tail_left.png')",
+        "tail-up": "url('snake_assets/stage2/tail_up.png')",
+        "tail-right": "url('snake_assets/stage2/tail_right.png')",
+        "tail-down": "url('snake_assets/stage2/tail_down.png')",
+        "food": "url('snake_assets/stage2/food.png')"
+      }
     },
-    "hard": {
+    "stage-3": {
       "size": 20,
       "startingLength": 3,
-      "moveTimeout": 100
+      "moveTimeout": 100,
+      "styles": {
+        "primary-color": "rgba(115, 115, 115, 0.5)",
+        "accent-color-1": "white",
+        "accent-color-2": "yellow",
+
+        "background": "black",
+        "background-mobile": "var(--background)",
+        "tile": "url('snake_assets/stage3/tile.png')",
+        "head-right": "url('snake_assets/stage3/head_right.png')",
+        "head-down": "url('snake_assets/stage3/head_down.png')",
+        "head-left": "url('snake_assets/stage3/head_left.png')",
+        "head-up": "url('snake_assets/stage3/head_up.png')",
+        "body-horizontal": "url('snake_assets/stage3/body_horizontal.png')",
+        "body-vertical": "url('snake_assets/stage3/body_vertical.png')",
+        "head-dead-right": "url('snake_assets/stage3/head_dead_right.png')",
+        "head-dead-down": "url('snake_assets/stage3/head_dead_down.png')",
+        "head-dead-left": "url('snake_assets/stage3/head_dead_left.png')",
+        "head-dead-up": "url('snake_assets/stage3/head_dead_up.png')",
+        "body-bottomleft": "url('snake_assets/stage3/body_bottomleft.png')",
+        "body-bottomright": "url('snake_assets/stage3/body_bottomright.png')",
+        "body-topleft": "url('snake_assets/stage3/body_topleft.png')",
+        "body-topright": "url('snake_assets/stage3/body_topright.png')",
+        "tail-left": "url('snake_assets/stage3/tail_left.png')",
+        "tail-up": "url('snake_assets/stage3/tail_up.png')",
+        "tail-right": "url('snake_assets/stage3/tail_right.png')",
+        "tail-down": "url('snake_assets/stage3/tail_down.png')",
+        "food": "url('snake_assets/stage3/food.png')"
+      }
     }
   },
   "smoothAnimations": true

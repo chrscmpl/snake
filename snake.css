@@ -3,13 +3,34 @@
   margin: 0;
 }
 
-:root {
+/* :root {
   --primary-color: rgba(0, 61, 48, 0.5);
   --accent-color-1: rgb(115, 192, 0);
   --accent-color-2: #22d3ee;
+
   --background: url('snake_assets/background.png') repeat;
   --background-mobile: var(--background);
-}
+  --tile: url('snake_assets/tile.png');
+  --head-right: url('snake_assets/head_right.png');
+  --head-down: url('snake_assets/head_down.png');
+  --head-left: url('snake_assets/head_left.png');
+  --head-up: url('snake_assets/head_up.png');
+  --body-horizontal: url('snake_assets/body_horizontal.png');
+  --body-vertical: url('snake_assets/body_vertical.png');
+  --head-dead-right: url('snake_assets/head_dead_right.png');
+  --head-dead-down: url('snake_assets/head_dead_down.png');
+  --head-dead-left: url('snake_assets/head_dead_left.png');
+  --head-dead-up: url('snake_assets/head_dead_up.png');
+  --body-bottomleft: url('snake_assets/body_bottomleft.png');
+  --body-bottomright: url('snake_assets/body_bottomright.png');
+  --body-topleft: url('snake_assets/body_topleft.png');
+  --body-topright: url('snake_assets/body_topright.png');
+  --tail-left: url('snake_assets/tail_left.png');
+  --tail-up: url('snake_assets/tail_up.png');
+  --tail-right: url('snake_assets/tail_right.png');
+  --tail-down: url('snake_assets/tail_down.png');
+  --food: url('snake_assets/food.png');
+} */
 
 h1,
 h2,
@@ -202,7 +223,7 @@ body {
 }
 
 .snake-board {
-  background: url('snake_assets/tile.png') repeat;
+  background: var(--tile) repeat;
   border: 5px solid var(--primary-color);
   border-top: none;
   grid-area: board;
@@ -359,19 +380,19 @@ body {
 }
 
 .head.right {
-  background: url('snake_assets/head_right.png') center/cover no-repeat;
+  background: var(--head-right) center/cover no-repeat;
 }
 
 .head.down {
-  background: url('snake_assets/head_down.png') center/cover no-repeat;
+  background: var(--head-down) center/cover no-repeat;
 }
 
 .head.left {
-  background: url('snake_assets/head_left.png') center/cover no-repeat;
+  background: var(--head-left) center/cover no-repeat;
 }
 
 .head.up {
-  background: url('snake_assets/head_up.png') center/cover no-repeat;
+  background: var(--head-up) center/cover no-repeat;
 }
 
 .head.right::after,
@@ -382,7 +403,7 @@ body {
   display: block;
   height: 100%;
   width: 50%;
-  background: url('snake_assets/body_horizontal.png') center/cover no-repeat;
+  background: var(--body-horizontal) center/cover no-repeat;
 }
 
 .head.right::after,
@@ -405,7 +426,7 @@ body {
   display: block;
   height: 50%;
   width: 100%;
-  background: url('snake_assets/body_vertical.png') center/cover no-repeat;
+  background: var(--body-vertical) center/cover no-repeat;
 }
 
 .head.down::after,
@@ -421,69 +442,69 @@ body {
 }
 
 .game-over .head.right {
-  background: url('snake_assets/head_dead_right.png') center/cover no-repeat;
+  background: var(--head-dead-right) center/cover no-repeat;
 }
 
 .game-over .head.down {
-  background: url('snake_assets/head_dead_down.png') center/cover no-repeat;
+  background: var(--head-dead-down) center/cover no-repeat;
 }
 
 .game-over .head.left {
-  background: url('snake_assets/head_dead_left.png') center/cover no-repeat;
+  background: var(--head-dead-left) center/cover no-repeat;
 }
 
 .game-over .head.up {
-  background: url('snake_assets/head_dead_up.png') center/cover no-repeat;
+  background: var(--head-dead-up) center/cover no-repeat;
 }
 
 .body.right-right,
 .body.left-left {
-  background: url('snake_assets/body_horizontal.png') center/contain repeat;
+  background: var(--body-horizontal) center/contain repeat;
 }
 
 .body.up-up,
 .body.down-down {
-  background: url('snake_assets/body_vertical.png') center/contain repeat;
+  background: var(--body-vertical) center/contain repeat;
 }
 
 .body.up-left,
 .body.right-down {
-  background: url('snake_assets/body_bottomleft.png') center/cover no-repeat;
+  background: var(--body-bottomleft) center/cover no-repeat;
 }
 
 .body.up-right,
 .body.left-down {
-  background: url('snake_assets/body_bottomright.png') center/cover no-repeat;
+  background: var(--body-bottomright) center/cover no-repeat;
 }
 
 .body.down-left,
 .body.right-up {
-  background: url('snake_assets/body_topleft.png') center/cover no-repeat;
+  background: var(--body-topleft) center/cover no-repeat;
 }
 
 .body.down-right,
 .body.left-up {
-  background: url('snake_assets/body_topright.png') center/cover no-repeat;
+  background: var(--body-topright) center/cover no-repeat;
 }
 
 .tail.right {
-  background: url('snake_assets/tail_left.png') center/cover no-repeat;
+  background: var(--tail-left) center/cover no-repeat;
 }
 
 .tail.down {
-  background: url('snake_assets/tail_up.png') center/cover no-repeat;
+  background: var(--tail-up) center/cover no-repeat;
 }
 
 .tail.left {
-  background: url('snake_assets/tail_right.png') center/cover no-repeat;
+  background: var(--tail-right) center/cover no-repeat;
 }
 
 .tail.up {
-  background: url('snake_assets/tail_down.png') center/cover no-repeat;
+  background: var(--tail-down) center/cover no-repeat;
 }
 
 .food {
-  background: url('snake_assets/food.png') center/cover no-repeat;
+  background: var(--food) center/cover no-repeat;
 }
 
 .tail,
@@ -604,7 +625,7 @@ body {
   width: 2ch;
   height: 2ch;
   content: '';
-  background: url('snake_assets/food.png') center/cover no-repeat;
+  background: var(--food) center/cover no-repeat;
   display: inline-block;
 }
 
