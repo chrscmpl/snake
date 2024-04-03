@@ -69,8 +69,7 @@ body {
   width: 100%;
 }
 
-.snake-container.game-over::after {
-  content: 'GAME OVER';
+.snake-container::after {
   grid-area: board;
   justify-self: center;
   align-self: center;
@@ -81,16 +80,17 @@ body {
   padding: 1rem;
 }
 
+.snake-container.game-over::after {
+  content: 'GAME OVER';
+}
+
 .snake-container.game-won::after {
   content: 'YOU WON!';
-  grid-area: board;
-  justify-self: center;
-  align-self: center;
-  font-size: 2rem;
-  font-weight: 900;
   color: var(--accent-color-2);
-  background-color: var(--primary-color);
-  padding: 1rem;
+}
+
+.snake-container.paused::after {
+  content: 'PAUSED';
 }
 
 table {

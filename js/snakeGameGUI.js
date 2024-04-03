@@ -19,6 +19,7 @@ export class SnakeGameGUI {
   #GameModeStyles;
   #AssetStyles;
   #countdownNumberDuration;
+  #started;
 
   constructor(gameMode) {
     this.#setGameMode(gameMode);
@@ -52,6 +53,7 @@ export class SnakeGameGUI {
     this.#updateScore();
     this.#createInputs();
     this.#countdownNumberDuration = configuration.countdownDuration / 3;
+    this.#started = false;
   }
 
   #getGameModeParams(gameMode) {
@@ -117,7 +119,7 @@ export class SnakeGameGUI {
     const startButton = document.createElement('button');
     startButton.classList.add('snake-start-button');
     startButton.textContent = 'START';
-    this.#addBtnEventListener(startButton, this.start);
+    this.#addBtnEventListener(startButton, this.pauseOrPlay);
     buttonsContainer.appendChild(startButton);
     inputContainer.appendChild(buttonsContainer);
     this.#container.appendChild(inputContainer);
@@ -221,6 +223,7 @@ export class SnakeGameGUI {
   }
 
   endGame(won = false) {
+    this.#started = false;
     this.#game.stop();
     this.stop();
     this.#container.classList.add(won ? 'game-won' : 'game-over');
@@ -231,7 +234,7 @@ export class SnakeGameGUI {
   }
 
   setDirection(direction) {
-    if (!this.isGameStarted()) return;
+    if (!this.wasGameStarted() || this.isGamePaused()) return;
     this.#game.setDirection(direction);
   }
 
@@ -274,11 +277,12 @@ export class SnakeGameGUI {
     if (this.#lockStart || this.isGameRunning()) return;
     this.#lockStart = true;
     const gameModeParams = this.#getGameModeParams(gameMode);
-    if (this.isGameStarted()) this.#restart(gameMode, gameModeParams);
+    if (this.wasGameStarted()) this.#restart(gameMode, gameModeParams);
     this.#gameModeSelection.disabled = true;
     this.#displayCountdown();
     setTimeout(() => {
       this.#game.start();
+      this.#started = true;
       this.#startIntervals(gameModeParams);
       this.#container.classList.add('playing');
       this.#spawnFood();
@@ -291,6 +295,7 @@ export class SnakeGameGUI {
     gameMode = this.#gameMode,
     gameModeParams = this.#getGameModeParams(gameMode)
   ) {
+    this.#started = false;
     this.#setGameMode(gameMode);
     this.#loadAssets(gameMode);
     gameModesManager.saveLastGameMode(gameMode);
@@ -374,16 +379,16 @@ export class SnakeGameGUI {
     document.head.appendChild(this.#AssetStyles);
   }
 
-  isGameStarted() {
-    return (
-      this.#moveInterval != null ||
-      this.#game.isGameOver() ||
-      this.#game.isGameWon()
-    );
+  wasGameStarted() {
+    return this.#started || this.#game.isGameOver() || this.#game.isGameWon();
+  }
+
+  isGamePaused() {
+    return this.#moveInterval == null && this.#started;
   }
 
   isGameRunning() {
-    return this.#moveInterval != null;
+    return this.#started;
   }
 
   stop() {
@@ -398,5 +403,17 @@ export class SnakeGameGUI {
     this.#restart(
       gameModes[(gameModes.indexOf(this.#gameMode) + 1) % gameModes.length]
     );
+  }
+
+  pauseOrPlay() {
+    if (this.isGameRunning() && !this.isGamePaused()) {
+      this.stop();
+      this.#container.classList.add('paused');
+    } else if (this.wasGameStarted() && this.isGamePaused()) {
+      this.#startIntervals(this.#getGameModeParams(this.#gameMode));
+      this.#container.classList.remove('paused');
+    } else {
+      this.start();
+    }
   }
 }

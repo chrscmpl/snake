@@ -22,7 +22,7 @@ export function setupGame() {
           gui.setDirection('right');
           break;
         case 'Enter':
-          gui.start();
+          gui.pauseOrPlay();
           break;
         case ' ':
           gui.advanceGameMode();
