@@ -16,9 +16,11 @@ export class SnakeGameGUI {
   #lockStart;
   #animationStyles;
   #GameModeStyles;
+  #AssetStyles;
 
   constructor(gameMode) {
     this.#setGameMode(gameMode);
+    this.#loadAssets(gameMode);
     gameModesManager.saveLastGameMode(gameMode);
     const gameModeParams = this.#getGameModeParams(gameMode);
 
@@ -269,6 +271,7 @@ export class SnakeGameGUI {
     gameModeParams = this.#getGameModeParams(gameMode)
   ) {
     this.#setGameMode(gameMode);
+    this.#loadAssets(gameMode);
     gameModesManager.saveLastGameMode(gameMode);
     this.#game.stop();
     this.stop();
@@ -333,6 +336,20 @@ export class SnakeGameGUI {
     }
     this.#GameModeStyles.textContent = `:root {${styles}}`;
     document.head.appendChild(this.#GameModeStyles);
+  }
+
+  #loadAssets(gameMode) {
+    const location = configuration.gameModes[gameMode].assetsLocation;
+    if (this.#AssetStyles) this.#AssetStyles.remove();
+    this.#AssetStyles = document.createElement('style');
+    let styles = '';
+    for (const asset of configuration.assets) {
+      const img = new Image();
+      img.src = `${location}/${asset.name}`;
+      styles += `--${asset.varName}: url(${location}/${asset.name});`;
+    }
+    this.#AssetStyles.textContent = `:root {${styles}}`;
+    document.head.appendChild(this.#AssetStyles);
   }
 
   isGameStarted() {

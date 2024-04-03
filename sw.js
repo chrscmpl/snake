@@ -1,5 +1,34 @@
-var cacheName = 'snake-cache';
-var filesToCache = [
+const cacheName = 'snake-cache';
+
+const locations = [
+  './snake_assets/stage1/',
+  './snake_assets/stage2/',
+  './snake_assets/stage3/',
+];
+
+const assets = [
+  'body_bottomleft.webp',
+  'body_bottomright.webp',
+  'body_horizontal.webp',
+  'body_topleft.webp',
+  'body_topright.webp',
+  'body_vertical.webp',
+  'food.webp',
+  'head_dead_down.webp',
+  'head_dead_left.webp',
+  'head_dead_right.webp',
+  'head_dead_up.webp',
+  'head_down.webp',
+  'head_left.webp',
+  'head_right.webp',
+  'head_up.webp',
+  'tail_down.webp',
+  'tail_left.webp',
+  'tail_right.webp',
+  'tail_up.webp',
+];
+
+let filesToCache = [
   '/',
   '/index.html',
   '/normalize.css',
@@ -9,70 +38,17 @@ var filesToCache = [
   '/js/utils.js',
   '/manifest.json',
   '/game-config.json',
-  '/snake_assets/stage1/background.png',
-  '/snake_assets/stage1/body_bottomleft.png',
-  '/snake_assets/stage1/body_bottomright.png',
-  '/snake_assets/stage1/body_horizontal.png',
-  '/snake_assets/stage1/body_topleft.png',
-  '/snake_assets/stage1/body_topright.png',
-  '/snake_assets/stage1/body_vertical.png',
-  '/snake_assets/stage1/food.png',
-  '/snake_assets/stage1/head_dead_down.png',
-  '/snake_assets/stage1/head_dead_left.png',
-  '/snake_assets/stage1/head_dead_right.png',
-  '/snake_assets/stage1/head_dead_up.png',
-  '/snake_assets/stage1/head_down.png',
-  '/snake_assets/stage1/head_left.png',
-  '/snake_assets/stage1/head_right.png',
-  '/snake_assets/stage1/head_up.png',
-  '/snake_assets/stage1/tail_down.png',
-  '/snake_assets/stage1/tail_left.png',
-  '/snake_assets/stage1/tail_right.png',
-  '/snake_assets/stage1/tail_up.png',
-  '/snake_assets/stage1/tile.png',
-
-  '/snake_assets/stage2/body_bottomleft.png',
-  '/snake_assets/stage2/body_bottomright.png',
-  '/snake_assets/stage2/body_horizontal.png',
-  '/snake_assets/stage2/body_topleft.png',
-  '/snake_assets/stage2/body_topright.png',
-  '/snake_assets/stage2/body_vertical.png',
-  '/snake_assets/stage2/food.png',
-  '/snake_assets/stage2/head_dead_down.png',
-  '/snake_assets/stage2/head_dead_left.png',
-  '/snake_assets/stage2/head_dead_right.png',
-  '/snake_assets/stage2/head_dead_up.png',
-  '/snake_assets/stage2/head_down.png',
-  '/snake_assets/stage2/head_left.png',
-  '/snake_assets/stage2/head_right.png',
-  '/snake_assets/stage2/head_up.png',
-  '/snake_assets/stage2/tail_down.png',
-  '/snake_assets/stage2/tail_left.png',
-  '/snake_assets/stage2/tail_right.png',
-  '/snake_assets/stage2/tail_up.png',
-  '/snake_assets/stage2/tile.png',
-
-  '/snake_assets/stage3/body_bottomleft.png',
-  '/snake_assets/stage3/body_bottomright.png',
-  '/snake_assets/stage3/body_horizontal.png',
-  '/snake_assets/stage3/body_topleft.png',
-  '/snake_assets/stage3/body_topright.png',
-  '/snake_assets/stage3/body_vertical.png',
-  '/snake_assets/stage3/food.png',
-  '/snake_assets/stage3/head_dead_down.png',
-  '/snake_assets/stage3/head_dead_left.png',
-  '/snake_assets/stage3/head_dead_right.png',
-  '/snake_assets/stage3/head_dead_up.png',
-  '/snake_assets/stage3/head_down.png',
-  '/snake_assets/stage3/head_left.png',
-  '/snake_assets/stage3/head_right.png',
-  '/snake_assets/stage3/head_up.png',
-  '/snake_assets/stage3/tail_down.png',
-  '/snake_assets/stage3/tail_left.png',
-  '/snake_assets/stage3/tail_right.png',
-  '/snake_assets/stage3/tail_up.png',
-  '/snake_assets/stage3/tile.png',
+  '/snake_assets/stage1/background.webp',
+  '/snake_assets/stage1/tile.webp',
+  '/snake_assets/stage2/tile.webp',
+  '/snake_assets/stage3/tile.webp',
 ];
+
+for (const asset of assets) {
+  for (const location of locations) {
+    filesToCache.push(location + asset);
+  }
+}
 
 /* Start the service worker and cache all of the app's content */
 self.addEventListener('install', function (e) {

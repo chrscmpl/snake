@@ -10,29 +10,11 @@
         "accent-color-1": "rgb(115, 192, 0)",
         "accent-color-2": "#22d3ee",
 
-        "background": "url('snake_assets/stage1/background.png') repeat",
+        "background": "url('snake_assets/stage1/background.webp') repeat",
         "background-mobile": "var(--background)",
-        "tile": "url('snake_assets/stage1/tile.png')",
-        "head-right": "url('snake_assets/stage1/head_right.png')",
-        "head-down": "url('snake_assets/stage1/head_down.png')",
-        "head-left": "url('snake_assets/stage1/head_left.png')",
-        "head-up": "url('snake_assets/stage1/head_up.png')",
-        "body-horizontal": "url('snake_assets/stage1/body_horizontal.png')",
-        "body-vertical": "url('snake_assets/stage1/body_vertical.png')",
-        "head-dead-right": "url('snake_assets/stage1/head_dead_right.png')",
-        "head-dead-down": "url('snake_assets/stage1/head_dead_down.png')",
-        "head-dead-left": "url('snake_assets/stage1/head_dead_left.png')",
-        "head-dead-up": "url('snake_assets/stage1/head_dead_up.png')",
-        "body-bottomleft": "url('snake_assets/stage1/body_bottomleft.png')",
-        "body-bottomright": "url('snake_assets/stage1/body_bottomright.png')",
-        "body-topleft": "url('snake_assets/stage1/body_topleft.png')",
-        "body-topright": "url('snake_assets/stage1/body_topright.png')",
-        "tail-left": "url('snake_assets/stage1/tail_left.png')",
-        "tail-up": "url('snake_assets/stage1/tail_up.png')",
-        "tail-right": "url('snake_assets/stage1/tail_right.png')",
-        "tail-down": "url('snake_assets/stage1/tail_down.png')",
-        "food": "url('snake_assets/stage1/food.png')"
-      }
+        "tile": "url('snake_assets/stage1/tile.webp')"
+      },
+      "assetsLocation": "snake_assets/stage1"
     },
     "stage-2": {
       "size": 16,
@@ -45,27 +27,9 @@
 
         "background": "#112D4E",
         "background-mobile": "var(--background)",
-        "tile": "url('snake_assets/stage2/tile.png')",
-        "head-right": "url('snake_assets/stage2/head_right.png')",
-        "head-down": "url('snake_assets/stage2/head_down.png')",
-        "head-left": "url('snake_assets/stage2/head_left.png')",
-        "head-up": "url('snake_assets/stage2/head_up.png')",
-        "body-horizontal": "url('snake_assets/stage2/body_horizontal.png')",
-        "body-vertical": "url('snake_assets/stage2/body_vertical.png')",
-        "head-dead-right": "url('snake_assets/stage2/head_dead_right.png')",
-        "head-dead-down": "url('snake_assets/stage2/head_dead_down.png')",
-        "head-dead-left": "url('snake_assets/stage2/head_dead_left.png')",
-        "head-dead-up": "url('snake_assets/stage2/head_dead_up.png')",
-        "body-bottomleft": "url('snake_assets/stage2/body_bottomleft.png')",
-        "body-bottomright": "url('snake_assets/stage2/body_bottomright.png')",
-        "body-topleft": "url('snake_assets/stage2/body_topleft.png')",
-        "body-topright": "url('snake_assets/stage2/body_topright.png')",
-        "tail-left": "url('snake_assets/stage2/tail_left.png')",
-        "tail-up": "url('snake_assets/stage2/tail_up.png')",
-        "tail-right": "url('snake_assets/stage2/tail_right.png')",
-        "tail-down": "url('snake_assets/stage2/tail_down.png')",
-        "food": "url('snake_assets/stage2/food.png')"
-      }
+        "tile": "url('snake_assets/stage2/tile.webp')"
+      },
+      "assetsLocation": "snake_assets/stage2"
     },
     "stage-3": {
       "size": 20,
@@ -78,27 +42,30 @@
 
         "background": "black",
         "background-mobile": "var(--background)",
-        "tile": "url('snake_assets/stage3/tile.png')",
-        "head-right": "url('snake_assets/stage3/head_right.png')",
-        "head-down": "url('snake_assets/stage3/head_down.png')",
-        "head-left": "url('snake_assets/stage3/head_left.png')",
-        "head-up": "url('snake_assets/stage3/head_up.png')",
-        "body-horizontal": "url('snake_assets/stage3/body_horizontal.png')",
-        "body-vertical": "url('snake_assets/stage3/body_vertical.png')",
-        "head-dead-right": "url('snake_assets/stage3/head_dead_right.png')",
-        "head-dead-down": "url('snake_assets/stage3/head_dead_down.png')",
-        "head-dead-left": "url('snake_assets/stage3/head_dead_left.png')",
-        "head-dead-up": "url('snake_assets/stage3/head_dead_up.png')",
-        "body-bottomleft": "url('snake_assets/stage3/body_bottomleft.png')",
-        "body-bottomright": "url('snake_assets/stage3/body_bottomright.png')",
-        "body-topleft": "url('snake_assets/stage3/body_topleft.png')",
-        "body-topright": "url('snake_assets/stage3/body_topright.png')",
-        "tail-left": "url('snake_assets/stage3/tail_left.png')",
-        "tail-up": "url('snake_assets/stage3/tail_up.png')",
-        "tail-right": "url('snake_assets/stage3/tail_right.png')",
-        "tail-down": "url('snake_assets/stage3/tail_down.png')",
-        "food": "url('snake_assets/stage3/food.png')"
-      }
+        "tile": "url('snake_assets/stage3/tile.webp')"
+      },
+      "assetsLocation": "snake_assets/stage3"
     }
-  }
+  },
+  "assets": [
+    { "varName": "head-right", "name": "head_right.webp" },
+    { "varName": "head-down", "name": "head_down.webp" },
+    { "varName": "head-left", "name": "head_left.webp" },
+    { "varName": "head-up", "name": "head_up.webp" },
+    { "varName": "body-horizontal", "name": "body_horizontal.webp" },
+    { "varName": "body-vertical", "name": "body_vertical.webp" },
+    { "varName": "head-dead-right", "name": "head_dead_right.webp" },
+    { "varName": "head-dead-down", "name": "head_dead_down.webp" },
+    { "varName": "head-dead-left", "name": "head_dead_left.webp" },
+    { "varName": "head-dead-up", "name": "head_dead_up.webp" },
+    { "varName": "body-bottomleft", "name": "body_bottomleft.webp" },
+    { "varName": "body-bottomright", "name": "body_bottomright.webp" },
+    { "varName": "body-topleft", "name": "body_topleft.webp" },
+    { "varName": "body-topright", "name": "body_topright.webp" },
+    { "varName": "tail-left", "name": "tail_left.webp" },
+    { "varName": "tail-up", "name": "tail_up.webp" },
+    { "varName": "tail-right", "name": "tail_right.webp" },
+    { "varName": "tail-down", "name": "tail_down.webp" },
+    { "varName": "food", "name": "food.webp" }
+  ]
 }
