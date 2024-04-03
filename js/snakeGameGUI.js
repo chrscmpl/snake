@@ -224,6 +224,7 @@ export class SnakeGameGUI {
     this.#game.stop();
     this.stop();
     this.#container.classList.add(won ? 'game-won' : 'game-over');
+    this.#gameModeSelection.disabled = false;
     this.#displayHighScores(
       highScoreManager.saveHighScore(this.#gameMode, this.#game.score)
     );
@@ -274,6 +275,7 @@ export class SnakeGameGUI {
     this.#lockStart = true;
     const gameModeParams = this.#getGameModeParams(gameMode);
     if (this.isGameStarted()) this.#restart(gameMode, gameModeParams);
+    this.#gameModeSelection.disabled = true;
     this.#displayCountdown();
     setTimeout(() => {
       this.#game.start();
