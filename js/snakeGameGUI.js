@@ -5,6 +5,7 @@ export class SnakeGameGUI {
   #container;
   #scoreDisplay;
   #highScoresDisplay;
+  #gameModeSelectionContainer;
   #gameModeSelection;
   #gameModeButtons;
   #board;
@@ -46,7 +47,7 @@ export class SnakeGameGUI {
     this.#scoreDisplay.classList.add('snake-score');
     topBar.appendChild(this.#scoreDisplay);
     this.#createGameModeSelection();
-    topBar.appendChild(this.#gameModeSelection);
+    topBar.appendChild(this.#gameModeSelectionContainer);
     this.#container.appendChild(topBar);
     this.#updateScore();
     this.#createInputs();
@@ -140,19 +141,19 @@ export class SnakeGameGUI {
   }
 
   #createGameModeSelection() {
-    this.#gameModeSelection = document.createElement('div');
-    this.#gameModeSelection.classList.add(
+    this.#gameModeSelectionContainer = document.createElement('div');
+    this.#gameModeSelectionContainer.classList.add(
       'snake-game-mode-selection-container'
     );
     const label = document.createElement('label');
     label.textContent = 'Select stage:';
     label.classList.add('snake-game-mode-label');
     label.htmlFor = 'snake-game-mode-selection';
-    this.#gameModeSelection.appendChild(label);
-    const select = document.createElement('select');
-    select.id = 'snake-game-mode-selection';
-    select.name = 'snake-game-mode-selection';
-    select.classList.add('snake-game-mode-selection');
+    this.#gameModeSelectionContainer.appendChild(label);
+    this.#gameModeSelection = document.createElement('select');
+    this.#gameModeSelection.id = 'snake-game-mode-selection';
+    this.#gameModeSelection.name = 'snake-game-mode-selection';
+    this.#gameModeSelection.classList.add('snake-game-mode-selection');
     this.#gameModeButtons = new Map();
     for (const mode of Object.keys(configuration.gameModes)) {
       const option = document.createElement('option');
@@ -166,13 +167,13 @@ export class SnakeGameGUI {
         .substring(1)
         .split('-')
         .join(' ')}`;
-      select.appendChild(option);
+      this.#gameModeSelection.appendChild(option);
     }
-    select.value = this.#gameMode;
-    this.#gameModeSelection.appendChild(select);
+    this.#gameModeSelection.value = this.#gameMode;
+    this.#gameModeSelectionContainer.appendChild(this.#gameModeSelection);
 
-    select.addEventListener('change', () => {
-      const mode = select.value;
+    this.#gameModeSelection.addEventListener('change', () => {
+      const mode = this.#gameModeSelection.value;
       if (!this.isGameRunning())
         this.#restart(mode, this.#getGameModeParams(mode));
     });
@@ -301,6 +302,7 @@ export class SnakeGameGUI {
     this.#container.replaceChild(this.#board, oldBoard);
     this.#updateScore();
     this.#displayHighScores(highScoreManager.getHighScores(this.#gameMode));
+    this.#gameModeSelection.value = gameMode;
     for (const button of this.#gameModeButtons.entries()) {
       if (button[0] === gameMode) {
         button[1].classList.add('selected');
