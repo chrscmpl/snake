@@ -15,6 +15,7 @@ export class SnakeGameGUI {
   #gameModeButtons;
   #pauseOrPlayButton;
   #availablePausesCounter;
+  #alert;
   #board;
   #game;
   #size;
@@ -65,6 +66,9 @@ export class SnakeGameGUI {
     this.#started = false;
     this.#infinitePause = cheatsManager.getCheat('infinite-pause');
     this.#setAvailablePauses(this.#gameMode);
+    this.#alert = document.createElement('div');
+    this.#alert.classList.add('snake-alert');
+    this.#container.appendChild(this.#alert);
   }
 
   #getGameModeParams(gameMode) {
@@ -262,7 +266,11 @@ export class SnakeGameGUI {
     const cheat = cheatsManager.inputDirection(direction);
     if (!cheat) return;
     this[`${cheat.action}`](cheat.value);
-    alert(`Cheat ${cheat.value ? '' : 'de'}activated: ${cheat.name}`);
+    this.#displayAlert(
+      `Cheat ${cheat.value ? '' : 'de'}activated: ${cheat.name
+        .split('-')
+        .join(' ')}`
+    );
   }
 
   #setDirection(direction) {
@@ -455,6 +463,14 @@ export class SnakeGameGUI {
     this.#restart(
       gameModes[(gameModes.indexOf(this.#gameMode) + 1) % gameModes.length]
     );
+  }
+
+  #displayAlert(str) {
+    this.#alert.textContent = str;
+    this.#alert.classList.add('shown');
+    setTimeout(() => {
+      this.#alert.classList.remove('shown');
+    }, 2000);
   }
 
   #pause() {

@@ -69,7 +69,8 @@ body {
   width: 100%;
 }
 
-.snake-container::after {
+.snake-container::after,
+.snake-alert {
   grid-area: board;
   justify-self: center;
   align-self: center;
@@ -78,6 +79,15 @@ body {
   color: var(--accent-color-1);
   background-color: var(--primary-color);
   padding: 1rem;
+  z-index: 10;
+}
+
+.snake-alert {
+  display: none;
+}
+
+.snake-alert.shown {
+  display: block;
 }
 
 .snake-container.game-over::after {
@@ -387,44 +397,17 @@ body {
   color: var(--primary-color);
 }
 
-.snake-container::after {
-  z-index: 1;
-}
-
 .snake-container.countdown-1::after {
   content: '1';
-  grid-area: board;
-  justify-self: center;
-  align-self: center;
-  font-size: 2rem;
-  font-weight: 900;
   color: var(--accent-color-2);
-  background-color: var(--primary-color);
-  padding: 1rem;
 }
 
 .snake-container.countdown-2::after {
   content: '2';
-  grid-area: board;
-  justify-self: center;
-  align-self: center;
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--accent-color-1);
-  background-color: var(--primary-color);
-  padding: 1rem;
 }
 
 .snake-container.countdown-3::after {
   content: '3';
-  grid-area: board;
-  justify-self: center;
-  align-self: center;
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--accent-color-1);
-  background-color: var(--primary-color);
-  padding: 1rem;
 }
 
 .head.right {
