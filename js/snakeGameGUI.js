@@ -13,6 +13,8 @@ export class SnakeGameGUI {
   #gameModeSelectionContainer;
   #gameModeSelection;
   #gameModeButtons;
+  #pauseOrPlayButton;
+  #availablePausesCounter;
   #board;
   #game;
   #size;
@@ -131,11 +133,11 @@ export class SnakeGameGUI {
 
     const buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add('snake-buttons-container');
-    const startButton = document.createElement('button');
-    startButton.classList.add('snake-start-button');
-    startButton.textContent = 'START';
-    this.#addBtnEventListener(startButton, this.pauseOrPlay);
-    buttonsContainer.appendChild(startButton);
+    this.#pauseOrPlayButton = document.createElement('button');
+    this.#pauseOrPlayButton.classList.add('snake-start-button');
+    this.#pauseOrPlayButton.textContent = 'START';
+    this.#addBtnEventListener(this.#pauseOrPlayButton, this.pauseOrPlay);
+    buttonsContainer.appendChild(this.#pauseOrPlayButton);
     inputContainer.appendChild(buttonsContainer);
     this.#container.appendChild(inputContainer);
   }
@@ -315,8 +317,10 @@ export class SnakeGameGUI {
       this.#startIntervals(gameModeParams);
       this.#container.classList.add('playing');
       this.#spawnFood();
-      this.#lockStart = false;
       this.#initAnimations(gameModeParams.moveTimeout);
+      this.#stylePauseButton();
+      this.#updateAvailablePausesCounter();
+      this.#lockStart = false;
     }, this.#countdownNumberDuration * 3);
   }
 
@@ -381,6 +385,24 @@ export class SnakeGameGUI {
     document.head.appendChild(this.#animationStyles);
   }
 
+  #stylePauseButton() {
+    this.#pauseOrPlayButton.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause" viewBox="0 0 16 16"><path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5"/></svg>';
+    this.#availablePausesCounter = document.createElement('span');
+    this.#availablePausesCounter.classList.add('snake-available-pauses');
+    this.#availablePausesCounter.textContent = this.#availablePauses;
+    this.#pauseOrPlayButton.appendChild(this.#availablePausesCounter);
+  }
+
+  #updateAvailablePausesCounter() {
+    this.#availablePausesCounter.textContent = this.#infinitePause
+      ? ''
+      : this.#availablePauses;
+    if (!this.#infinitePause && this.#availablePauses === 0) {
+      this.#pauseOrPlayButton.classList.add('no-pauses-left');
+    }
+  }
+
   #setGameMode(gameMode) {
     this.#gameMode = gameMode;
     if (this.#GameModeStyles) this.#GameModeStyles.remove();
@@ -436,9 +458,9 @@ export class SnakeGameGUI {
   }
 
   #pause() {
-    console.log('pause: ', this.#availablePauses);
     if (this.#availablePauses === 0) return;
     this.#availablePauses--;
+    this.#updateAvailablePausesCounter();
     this.stop();
     this.#container.classList.add('paused');
   }
@@ -463,5 +485,6 @@ export class SnakeGameGUI {
     this.#availablePauses = enabled
       ? Infinity
       : configuration.gameModes[this.#gameMode].pauseLimit;
+    if (this.isGameRunning()) this.#updateAvailablePausesCounter();
   }
 }

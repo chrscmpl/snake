@@ -6,7 +6,7 @@
       "size": 12,
       "startingLength": 3,
       "moveTimeout": 200,
-      "pauseLimit": 999,
+      "pauseLimit": 5,
       "styles": {
         "primary-color": "rgba(0, 61, 48, 0.5)",
         "accent-color-1": "rgb(115, 192, 0)",
@@ -22,7 +22,7 @@
       "size": 16,
       "startingLength": 3,
       "moveTimeout": 150,
-      "pauseLimit": 999,
+      "pauseLimit": 3,
       "styles": {
         "primary-color": "rgba(63, 114, 175, 0.6)",
         "accent-color-1": "#DBE2EF",
@@ -38,7 +38,7 @@
       "size": 20,
       "startingLength": 3,
       "moveTimeout": 100,
-      "pauseLimit": 999,
+      "pauseLimit": 1,
       "styles": {
         "primary-color": "rgba(115, 115, 115, 0.5)",
         "accent-color-1": "white",

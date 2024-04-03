@@ -365,6 +365,18 @@ body {
   cursor: pointer;
   padding: 0.5rem 1rem;
   width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  gap: 1ch;
+  align-items: center;
+}
+
+.snake-inputs .snake-start-button > svg {
+  fill: var(--accent-color-1);
+  background-color: var(--primary-color);
+  height: 2rem;
+  width: 2rem;
 }
 
 .snake-inputs .snake-start-button:active,
@@ -784,6 +796,12 @@ body {
     justify-content: center;
     align-content: center;
     border: none;
+    gap: 0.5rem;
+  }
+
+  .snake-inputs .snake-start-button > svg {
+    height: 3rem;
+    width: 3rem;
   }
 
   .snake-inputs .snake-start-button:active,
