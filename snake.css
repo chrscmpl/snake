@@ -79,7 +79,14 @@ body {
   color: var(--accent-color-1);
   background-color: var(--primary-color);
   padding: 1rem;
+}
+
+.snake-container::after {
   z-index: 10;
+}
+
+.snake-alert {
+  z-index: 11;
 }
 
 .snake-alert {
