@@ -141,25 +141,41 @@ export class SnakeGameGUI {
 
   #createGameModeSelection() {
     this.#gameModeSelection = document.createElement('div');
-    this.#gameModeSelection.classList.add('snake-game-mode-selection');
+    this.#gameModeSelection.classList.add(
+      'snake-game-mode-selection-container'
+    );
+    const label = document.createElement('label');
+    label.textContent = 'Select stage:';
+    label.classList.add('snake-game-mode-label');
+    label.htmlFor = 'snake-game-mode-selection';
+    this.#gameModeSelection.appendChild(label);
+    const select = document.createElement('select');
+    select.id = 'snake-game-mode-selection';
+    select.name = 'snake-game-mode-selection';
+    select.classList.add('snake-game-mode-selection');
     this.#gameModeButtons = new Map();
     for (const mode of Object.keys(configuration.gameModes)) {
-      const modeButton = document.createElement('button');
-      this.#gameModeButtons.set(mode, modeButton);
-      modeButton.classList.add(
-        'snake-game-mode-button',
-        `snake-${mode}-button`
-      );
+      const option = document.createElement('option');
+      this.#gameModeButtons.set(mode, option);
+      option.classList.add('snake-game-mode-option');
+      option.value = mode;
       if (mode === this.#gameMode) {
-        modeButton.classList.add('selected');
+        option.classList.add('selected');
       }
-      modeButton.textContent = mode.toUpperCase().split('-').join(' ');
-      modeButton.addEventListener('click', () => {
-        if (!this.isGameRunning())
-          this.#restart(mode, this.#getGameModeParams(mode));
-      });
-      this.#gameModeSelection.appendChild(modeButton);
+      option.textContent = `${mode.charAt(0).toUpperCase()}${mode
+        .substring(1)
+        .split('-')
+        .join(' ')}`;
+      select.appendChild(option);
     }
+    select.value = this.#gameMode;
+    this.#gameModeSelection.appendChild(select);
+
+    select.addEventListener('change', () => {
+      const mode = select.value;
+      if (!this.isGameRunning())
+        this.#restart(mode, this.#getGameModeParams(mode));
+    });
   }
 
   #updateScore() {

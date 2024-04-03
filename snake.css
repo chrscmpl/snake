@@ -163,27 +163,43 @@ body {
   color: var(--accent-color-2);
 }
 
-.snake-game-mode-selection {
+.snake-game-mode-selection-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
   font-size: 1.5rem;
-  gap: 0.5ch;
-  height: 100%;
+  gap: 1ch;
 }
 
-.snake-game-mode-selection .snake-game-mode-button {
+.snake-game-mode-label {
+  font-size: 0.7em;
+  width: max-content;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.snake-game-mode-selection {
+  flex: 1;
+  height: 100%;
+  border: 2px solid var(--accent-color-2);
+  color: var(--accent-color-2);
+  background-color: var(--primary-color);
+  border-radius: 0.3rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.snake-game-mode-selection .snake-game-mode-option {
   font-size: 1.5rem;
   font-weight: 900;
   color: var(--accent-color-1);
   background-color: var(--primary-color);
   border: none;
-  cursor: pointer;
   width: max-content;
-  padding: 0 0.5rem;
-  height: 100%;
 }
 
-.snake-game-mode-selection .snake-game-mode-button.selected {
+.snake-game-mode-selection .snake-game-mode-option.selected {
   color: var(--accent-color-2);
   border: 1px solid var(--accent-color-2);
 }
@@ -787,17 +803,6 @@ body {
     align-items: flex-start;
     font-size: 1.5rem;
     padding: 0.5rem 2ch;
-  }
-
-  .snake-game-mode-selection {
-    width: 100%;
-    justify-content: space-between;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  .snake-game-mode-selection .snake-game-mode-button {
-    font-size: 1.3rem;
   }
 
   .snake-high-scores {
