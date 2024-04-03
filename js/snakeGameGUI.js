@@ -17,6 +17,7 @@ export class SnakeGameGUI {
   #animationStyles;
   #GameModeStyles;
   #AssetStyles;
+  #countdownNumberDuration;
 
   constructor(gameMode) {
     this.#setGameMode(gameMode);
@@ -49,6 +50,7 @@ export class SnakeGameGUI {
     this.#container.appendChild(topBar);
     this.#updateScore();
     this.#createInputs();
+    this.#countdownNumberDuration = configuration.countdownDuration / 3;
   }
 
   #getGameModeParams(gameMode) {
@@ -141,7 +143,7 @@ export class SnakeGameGUI {
     this.#gameModeSelection = document.createElement('div');
     this.#gameModeSelection.classList.add('snake-game-mode-selection');
     this.#gameModeButtons = new Map();
-    for (const mode in configuration.gameModes) {
+    for (const mode of Object.keys(configuration.gameModes)) {
       const modeButton = document.createElement('button');
       this.#gameModeButtons.set(mode, modeButton);
       modeButton.classList.add(
@@ -225,7 +227,7 @@ export class SnakeGameGUI {
       setTimeout(() => {
         this.#container.classList.remove(`countdown-${i}`);
         if (i > 1) this.#container.classList.add(`countdown-${i - 1}`);
-      }, this.countdownNumberDuration * (4 - i));
+      }, this.#countdownNumberDuration * (4 - i));
     }
   }
 
@@ -263,7 +265,7 @@ export class SnakeGameGUI {
       this.#spawnFood();
       this.#lockStart = false;
       this.#initAnimations(gameModeParams.moveTimeout);
-    }, this.countdownNumberDuration * 3);
+    }, this.#countdownNumberDuration * 3);
   }
 
   #restart(
@@ -378,5 +380,3 @@ export class SnakeGameGUI {
     );
   }
 }
-
-SnakeGameGUI.prototype.countdownNumberDuration = 300;

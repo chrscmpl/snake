@@ -32,8 +32,5 @@ export function setupGame() {
       }
       event.preventDefault();
     });
-    // if (window.innerHeight > window.innerWidth) {
-    //   window.scrollTo(0, document.getElementsByTagName('header')[0].scrollHeight);
-    // }
   });
 }

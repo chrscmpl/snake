@@ -1,5 +1,6 @@
 {
   "smoothAnimations": true,
+  "countdownDuration": 900,
   "gameModes": {
     "stage-1": {
       "size": 12,
