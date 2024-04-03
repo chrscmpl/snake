@@ -484,6 +484,7 @@ export class SnakeGameGUI {
   #unpause() {
     this.#startIntervals(this.#getGameModeParams(this.#gameMode));
     this.#container.classList.remove('paused');
+    this.#container.classList.add('playing');
   }
 
   pauseOrPlay() {
