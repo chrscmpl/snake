@@ -54,3 +54,47 @@ export const highScoreManager = {
     return highScores;
   },
 };
+
+export const cheatsManager = (function () {
+  let cheatStatuses;
+
+  return {
+    init() {
+      cheatStatuses = [];
+      for (let i = 0; i < configuration.cheats.length; i++) {
+        cheatStatuses.push({ cheatIndex: i, currentIndex: 0 });
+      }
+    },
+
+    getCheat(cheatName) {
+      if (!localStorage) return false;
+      return localStorage.getItem(cheatName) === 'true';
+    },
+
+    setCheat(cheatName, value) {
+      if (!localStorage) return;
+      localStorage.setItem(cheatName, value);
+    },
+
+    inputDirection(direction) {
+      if (!localStorage) return null;
+      let ret = null;
+      for (let cheatStatus of cheatStatuses) {
+        const cheat = configuration.cheats[cheatStatus.cheatIndex];
+        if (direction === cheat.sequence[cheatStatus.currentIndex]) {
+          cheatStatus.currentIndex++;
+          if (cheatStatus.currentIndex === cheat.sequence.length) {
+            cheatStatus.currentIndex = 0;
+            const newValue = !this.getCheat(cheat.name);
+            localStorage.setItem(cheat.name, newValue);
+            ret = { ...cheat };
+            ret.value = newValue;
+          }
+        } else {
+          cheatStatus.currentIndex = 0;
+        }
+      }
+      return ret;
+    },
+  };
+})();

@@ -1,5 +1,10 @@
 import { SnakeGame } from './snakeGame.js';
-import { configuration, highScoreManager, gameModesManager } from './utils.js';
+import {
+  configuration,
+  highScoreManager,
+  gameModesManager,
+  cheatsManager,
+} from './utils.js';
 
 export class SnakeGameGUI {
   #container;
@@ -20,6 +25,8 @@ export class SnakeGameGUI {
   #AssetStyles;
   #countdownNumberDuration;
   #started;
+  #availablePauses;
+  #infinitePause;
 
   constructor(gameMode) {
     this.#setGameMode(gameMode);
@@ -54,6 +61,8 @@ export class SnakeGameGUI {
     this.#createInputs();
     this.#countdownNumberDuration = configuration.countdownDuration / 3;
     this.#started = false;
+    this.#infinitePause = cheatsManager.getCheat('infinite-pause');
+    this.#setAvailablePauses(this.#gameMode);
   }
 
   #getGameModeParams(gameMode) {
@@ -98,6 +107,12 @@ export class SnakeGameGUI {
     ].classList.add('tail', 'right');
   }
 
+  #setAvailablePauses(gameMode) {
+    this.#availablePauses = this.#infinitePause
+      ? Infinity
+      : configuration.gameModes[gameMode].pauseLimit;
+  }
+
   #createInputs() {
     const inputContainer = document.createElement('div');
     inputContainer.classList.add('snake-inputs');
@@ -109,7 +124,7 @@ export class SnakeGameGUI {
       arrowBtn.classList.add('snake-arrow-button', `snake-${direction}-button`);
       arrowBtn.innerHTML =
         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/> </svg>';
-      this.#addBtnEventListener(arrowBtn, this.setDirection, direction);
+      this.#addBtnEventListener(arrowBtn, this.directionInput, direction);
       arrowContainer.appendChild(arrowBtn);
     }
     inputContainer.appendChild(arrowContainer);
@@ -233,8 +248,22 @@ export class SnakeGameGUI {
     );
   }
 
-  setDirection(direction) {
-    if (!this.wasGameStarted() || this.isGamePaused()) return;
+  directionInput(direction) {
+    if (this.isGameRunning() && !this.isGamePaused()) {
+      this.#setDirection(direction);
+    } else {
+      this.#cheatInput(direction);
+    }
+  }
+
+  #cheatInput(direction) {
+    const cheat = cheatsManager.inputDirection(direction);
+    if (!cheat) return;
+    this[`${cheat.action}`](cheat.value);
+    alert(`Cheat ${cheat.value ? '' : 'de'}activated: ${cheat.name}`);
+  }
+
+  #setDirection(direction) {
     this.#game.setDirection(direction);
   }
 
@@ -310,6 +339,7 @@ export class SnakeGameGUI {
     this.#updateScore();
     this.#displayHighScores(highScoreManager.getHighScores(this.#gameMode));
     this.#gameModeSelection.value = gameMode;
+    this.#setAvailablePauses(this.#gameMode);
     for (const button of this.#gameModeButtons.entries()) {
       if (button[0] === gameMode) {
         button[1].classList.add('selected');
@@ -405,15 +435,33 @@ export class SnakeGameGUI {
     );
   }
 
+  #pause() {
+    console.log('pause: ', this.#availablePauses);
+    if (this.#availablePauses === 0) return;
+    this.#availablePauses--;
+    this.stop();
+    this.#container.classList.add('paused');
+  }
+
+  #unpause() {
+    this.#startIntervals(this.#getGameModeParams(this.#gameMode));
+    this.#container.classList.remove('paused');
+  }
+
   pauseOrPlay() {
     if (this.isGameRunning() && !this.isGamePaused()) {
-      this.stop();
-      this.#container.classList.add('paused');
+      this.#pause();
     } else if (this.wasGameStarted() && this.isGamePaused()) {
-      this.#startIntervals(this.#getGameModeParams(this.#gameMode));
-      this.#container.classList.remove('paused');
+      this.#unpause();
     } else {
       this.start();
     }
+  }
+
+  setInfinitePause(enabled) {
+    this.#infinitePause = enabled;
+    this.#availablePauses = enabled
+      ? Infinity
+      : configuration.gameModes[this.#gameMode].pauseLimit;
   }
 }

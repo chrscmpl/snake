@@ -1,25 +1,30 @@
-import { fetchConfiguration, gameModesManager } from './utils.js';
+import {
+  fetchConfiguration,
+  gameModesManager,
+  cheatsManager,
+} from './utils.js';
 import { SnakeGameGUI } from './snakeGameGUI.js';
 
 export function setupGame() {
   const container = document.getElementById('snake-container');
   fetchConfiguration().then(() => {
+    cheatsManager.init();
     let gui = new SnakeGameGUI(gameModesManager.getLastGameMode());
     gui.attach(container);
 
     window.addEventListener('keydown', event => {
       switch (event.key) {
         case 'ArrowUp':
-          gui.setDirection('up');
+          gui.directionInput('up');
           break;
         case 'ArrowDown':
-          gui.setDirection('down');
+          gui.directionInput('down');
           break;
         case 'ArrowLeft':
-          gui.setDirection('left');
+          gui.directionInput('left');
           break;
         case 'ArrowRight':
-          gui.setDirection('right');
+          gui.directionInput('right');
           break;
         case 'Enter':
           gui.pauseOrPlay();
