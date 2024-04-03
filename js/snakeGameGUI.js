@@ -252,6 +252,7 @@ export class SnakeGameGUI {
     this.#displayHighScores(
       highScoreManager.saveHighScore(this.#gameMode, this.#game.score)
     );
+    this.#pauseOrPlayButton.innerHTML = 'START';
   }
 
   directionInput(direction) {
