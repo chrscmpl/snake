@@ -189,6 +189,7 @@ body {
   border-radius: 0.3rem;
   font-weight: 900;
   cursor: pointer;
+  text-align: end;
 }
 
 .snake-game-mode-selection .snake-game-mode-option {
