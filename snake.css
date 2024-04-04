@@ -182,7 +182,7 @@ body {
 
 .snake-game-mode-selection-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
   align-items: center;
   font-size: 1.5rem;
@@ -198,7 +198,6 @@ body {
 }
 
 .snake-game-mode-selection {
-  flex: 1;
   height: 100%;
   border: 2px solid var(--accent-color-2);
   color: var(--accent-color-2);
@@ -207,6 +206,7 @@ body {
   font-weight: 900;
   cursor: pointer;
   text-align: end;
+  min-width: 10ch;
 }
 
 .snake-game-mode-selection .snake-game-mode-option {
@@ -812,7 +812,7 @@ body {
     flex-direction: column-reverse;
     align-items: flex-start;
     font-size: 1.5rem;
-    padding: 0.5rem 2ch;
+    padding: 0.5rem 1ch;
   }
 
   .snake-high-scores {
@@ -848,7 +848,7 @@ body {
   .snake-top-bar::after {
     content: "Web Tech's Snake Game";
     position: absolute;
-    right: 1rem;
+    right: 1.1ch;
     bottom: 1rem;
     width: clamp(10ch, 25ch, 40%);
     font-size: 50%;
