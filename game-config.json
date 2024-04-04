@@ -50,7 +50,7 @@
       },
       "assetsLocation": "snake_assets/stage3"
     },
-    "miao": {
+    "meow": {
       "size": 10,
       "startingLength": 3,
       "moveTimeout": 120,
