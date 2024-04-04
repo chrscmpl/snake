@@ -381,20 +381,33 @@ body {
   background-color: var(--primary-color);
   border: var(--accent-color-1) solid 1px;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  height: 3rem;
   width: 100%;
   overflow: hidden;
-  display: flex;
+  display: grid;
+  grid-template: '. icon counter' / 1fr auto 1fr;
   justify-content: center;
-  gap: 1ch;
   align-items: center;
 }
 
 .snake-inputs .snake-start-button > svg {
+  grid-area: icon;
   fill: var(--accent-color-1);
+  height: 3rem;
+  width: 3rem;
+  overflow: hidden;
+}
+
+.snake-inputs .snake-start-button > span {
+  grid-area: counter;
+  width: 80%;
+  height: 80%;
+  font-size: 2rem;
   background-color: var(--primary-color);
-  height: 2rem;
-  width: 2rem;
+  border-radius: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .snake-inputs .snake-start-button:active,
@@ -783,16 +796,25 @@ body {
     border: 5px solid var(--accent-color-1);
     font-size: 1.3rem;
     overflow: hidden;
-    display: grid;
+    border: none;
+    gap: 0;
+    grid-template:
+      'icon' auto
+      'counter' 1fr / 1fr;
     justify-content: center;
     align-content: center;
-    border: none;
-    gap: 0.5rem;
+    align-items: center;
+    justify-items: center;
   }
 
   .snake-inputs .snake-start-button > svg {
     height: 3rem;
     width: 3rem;
+  }
+  .snake-inputs .snake-start-button > span {
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 1.5rem;
   }
 
   .snake-inputs .snake-start-button:active,
