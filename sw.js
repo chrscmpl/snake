@@ -4,6 +4,7 @@ const locations = [
   './snake_assets/stage1/',
   './snake_assets/stage2/',
   './snake_assets/stage3/',
+  './snake_assets/stage-special/',
 ];
 
 const assets = [
@@ -42,6 +43,7 @@ let filesToCache = [
   '/snake_assets/stage1/tile.webp',
   '/snake_assets/stage2/tile.webp',
   '/snake_assets/stage3/tile.webp',
+  '/snake_assets/stage-special/tile.webp',
 ];
 
 for (const asset of assets) {

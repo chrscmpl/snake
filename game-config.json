@@ -38,7 +38,7 @@
       "size": 20,
       "startingLength": 3,
       "moveTimeout": 100,
-      "pauseLimit": 1,
+      "pauseLimit": 2,
       "styles": {
         "primary-color": "rgba(115, 115, 115, 0.5)",
         "accent-color-1": "white",
@@ -49,6 +49,22 @@
         "tile": "url('snake_assets/stage3/tile.webp')"
       },
       "assetsLocation": "snake_assets/stage3"
+    },
+    "miao": {
+      "size": 10,
+      "startingLength": 3,
+      "moveTimeout": 120,
+      "pauseLimit": 1,
+      "styles": {
+        "primary-color": "rgba(255, 0, 162,0.2)",
+        "accent-color-1": "lightblue",
+        "accent-color-2": "lightgreen",
+
+        "background": "grey",
+        "background-mobile": "var(--background)",
+        "tile": "url('snake_assets/stage-special/tile.webp')"
+      },
+      "assetsLocation": "snake_assets/stage-special"
     }
   },
   "assets": [
