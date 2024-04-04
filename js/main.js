@@ -2,6 +2,7 @@ import {
   fetchConfiguration,
   gameModesManager,
   cheatsManager,
+  audioManager,
 } from './utils.js';
 import { SnakeGameGUI } from './snakeGameGUI.js';
 
@@ -9,6 +10,7 @@ export function setupGame() {
   const container = document.getElementById('snake-container');
   fetchConfiguration().then(() => {
     cheatsManager.init();
+    audioManager.init();
     let gui = new SnakeGameGUI(gameModesManager.getLastGameMode());
     gui.attach(container);
 

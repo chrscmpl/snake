@@ -4,6 +4,7 @@ import {
   highScoreManager,
   gameModesManager,
   cheatsManager,
+  audioManager,
 } from './utils.js';
 
 export class SnakeGameGUI {
@@ -68,6 +69,7 @@ export class SnakeGameGUI {
     this.#setAvailablePauses(this.#gameMode);
     this.#alert = document.createElement('div');
     this.#alert.classList.add('snake-alert');
+    audioManager.setTheme(gameModeParams.audio.theme);
     this.#container.appendChild(this.#alert);
   }
 
@@ -254,6 +256,7 @@ export class SnakeGameGUI {
     );
     this.#pauseOrPlayButton.innerHTML = 'START';
     this.#pauseOrPlayButton.classList.remove('pause');
+    audioManager.pauseTheme();
   }
 
   directionInput(direction) {
@@ -330,6 +333,7 @@ export class SnakeGameGUI {
       this.#initAnimations(gameModeParams.moveTimeout);
       this.#stylePauseButton();
       this.#updateAvailablePausesCounter();
+      audioManager.playTheme();
       this.#lockStart = false;
     }, this.#countdownNumberDuration * 3);
   }
@@ -365,6 +369,7 @@ export class SnakeGameGUI {
       this.#animationStyles.remove();
       this.#animationStyles = null;
     }
+    audioManager.setTheme(gameModeParams.audio.theme);
   }
 
   #initAnimations(
@@ -482,12 +487,14 @@ export class SnakeGameGUI {
     this.#updateAvailablePausesCounter();
     this.stop();
     this.#container.classList.add('paused');
+    audioManager.pauseTheme();
   }
 
   #unpause() {
     this.#startIntervals(this.#getGameModeParams(this.#gameMode));
     this.#container.classList.remove('paused');
     this.#container.classList.add('playing');
+    audioManager.playTheme();
   }
 
   pauseOrPlay() {

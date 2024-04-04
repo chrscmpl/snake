@@ -98,3 +98,39 @@ export const cheatsManager = (function () {
     },
   };
 })();
+
+export const audioManager = (function () {
+  let volumeValue = 0.5;
+  let audio = document.createElement('audio');
+  document.body.appendChild(audio);
+  audio.volume = volumeValue;
+
+  return {
+    init() {
+      volumeValue = configuration.volume;
+      audio.volume = volumeValue;
+    },
+    setTheme(src) {
+      try {
+        audio.src = src;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    playTheme() {
+      audio.play();
+    },
+    pauseTheme() {
+      audio.pause();
+    },
+    mute() {
+      audio.volume = 0;
+    },
+    unmute() {
+      audio.volume = volumeValue;
+    },
+    toggleMute() {
+      audio.volume = audio.volume === 0 ? volumeValue : 0;
+    },
+  };
+})();

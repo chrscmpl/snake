@@ -1,6 +1,7 @@
 {
   "smoothAnimations": true,
   "countdownDuration": 900,
+  "volume": 0.5,
   "gameModes": {
     "stage-1": {
       "size": 12,
@@ -16,7 +17,10 @@
         "background-mobile": "var(--background)",
         "tile": "url('snake_assets/stage1/tile.webp')"
       },
-      "assetsLocation": "snake_assets/stage1"
+      "assetsLocation": "snake_assets/stage1",
+      "audio": {
+        "theme": "snake_assets/stage1/theme.mp3"
+      }
     },
     "stage-2": {
       "size": 16,
@@ -32,7 +36,10 @@
         "background-mobile": "var(--background)",
         "tile": "url('snake_assets/stage2/tile.webp')"
       },
-      "assetsLocation": "snake_assets/stage2"
+      "assetsLocation": "snake_assets/stage2",
+      "audio": {
+        "theme": "snake_assets/stage2/theme.mp3"
+      }
     },
     "stage-3": {
       "size": 20,
@@ -48,7 +55,10 @@
         "background-mobile": "var(--background)",
         "tile": "url('snake_assets/stage3/tile.webp')"
       },
-      "assetsLocation": "snake_assets/stage3"
+      "assetsLocation": "snake_assets/stage3",
+      "audio": {
+        "theme": "snake_assets/stage3/theme.mp3"
+      }
     },
     "meow": {
       "size": 10,
@@ -64,7 +74,10 @@
         "background-mobile": "var(--background)",
         "tile": "url('snake_assets/stage-special/tile.webp')"
       },
-      "assetsLocation": "snake_assets/stage-special"
+      "assetsLocation": "snake_assets/stage-special",
+      "audio": {
+        "theme": "snake_assets/stage-special/theme.mp3"
+      }
     }
   },
   "assets": [

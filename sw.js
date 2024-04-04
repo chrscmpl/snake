@@ -44,6 +44,10 @@ let filesToCache = [
   '/snake_assets/stage2/tile.webp',
   '/snake_assets/stage3/tile.webp',
   '/snake_assets/stage-special/tile.webp',
+  '/snake_assets/stage1/theme.mp3',
+  '/snake_assets/stage2/theme.mp3',
+  '/snake_assets/stage3/theme.mp3',
+  // '/snake_assets/stage-special/theme.mp3'
 ];
 
 for (const asset of assets) {
