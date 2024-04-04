@@ -253,6 +253,7 @@ export class SnakeGameGUI {
       highScoreManager.saveHighScore(this.#gameMode, this.#game.score)
     );
     this.#pauseOrPlayButton.innerHTML = 'START';
+    this.#pauseOrPlayButton.classList.remove('pause');
   }
 
   directionInput(direction) {
@@ -395,6 +396,7 @@ export class SnakeGameGUI {
   }
 
   #stylePauseButton() {
+    this.#pauseOrPlayButton.classList.add('pause');
     this.#pauseOrPlayButton.innerHTML =
       '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause" viewBox="0 0 16 16"><path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5"/></svg>';
     this.#availablePausesCounter = document.createElement('span');
