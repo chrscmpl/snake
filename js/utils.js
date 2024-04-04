@@ -105,6 +105,10 @@ export const audioManager = (function () {
   document.body.appendChild(audio);
   audio.volume = volumeValue;
 
+  audio.addEventListener('ended', () => {
+    audio.play();
+  });
+
   return {
     init() {
       volumeValue = configuration.volume;
