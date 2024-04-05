@@ -1,7 +1,9 @@
 {
   "smoothAnimations": true,
   "countdownDuration": 900,
-  "volume": 0.5,
+  "mainVolume": 0.5,
+  "musicVolume": 1,
+  "soundVolume": 1,
   "gameModes": {
     "stage-1": {
       "size": 12,
@@ -19,7 +21,37 @@
       },
       "assetsLocation": "snake_assets/stage1",
       "audio": {
-        "theme": "snake_assets/stage1/theme.mp3"
+        "theme": { "src": "snake_assets/stage1/theme.mp3", "volume": 1 }
+      },
+      "effects": {
+        "onNearFood": {
+          "sounds": [
+            { "src": "snake_assets/stage1/near-food.mp3", "volume": 10 }
+          ],
+          "styles": []
+        },
+        "onEat": {
+          "sounds": [{ "src": "snake_assets/stage1/on-eat.mp3", "volume": 10 }],
+          "styles": []
+        },
+        "onPause": {
+          "sounds": [
+            { "src": "snake_assets/stage1/on-pause.mp3", "volume": 10 }
+          ],
+          "styles": []
+        },
+        "onUnpause": {
+          "sounds": [
+            { "src": "snake_assets/stage1/on-unpause.mp3", "volume": 10 }
+          ],
+          "styles": []
+        },
+        "onGameOver": {
+          "sounds": [
+            { "src": "snake_assets/stage1/on-game-over.mp3", "volume": 10 }
+          ],
+          "styles": []
+        }
       }
     },
     "stage-2": {
@@ -38,8 +70,9 @@
       },
       "assetsLocation": "snake_assets/stage2",
       "audio": {
-        "theme": "snake_assets/stage2/theme.mp3"
-      }
+        "theme": { "src": "snake_assets/stage2/theme.mp3", "volume": 0.5 }
+      },
+      "effects": {}
     },
     "stage-3": {
       "size": 20,
@@ -57,8 +90,9 @@
       },
       "assetsLocation": "snake_assets/stage3",
       "audio": {
-        "theme": "snake_assets/stage3/theme.mp3"
-      }
+        "theme": { "src": "snake_assets/stage3/theme.mp3", "volume": 1 }
+      },
+      "effects": {}
     },
     "meow": {
       "size": 10,
@@ -76,8 +110,9 @@
       },
       "assetsLocation": "snake_assets/stage-special",
       "audio": {
-        "theme": "snake_assets/stage-special/theme.mp3"
-      }
+        "theme": { "src": "snake_assets/stage-special/theme.mp3", "volume": 1 }
+      },
+      "effects": {}
     }
   },
   "assets": [

@@ -47,7 +47,11 @@ let filesToCache = [
   '/snake_assets/stage1/theme.mp3',
   '/snake_assets/stage2/theme.mp3',
   '/snake_assets/stage3/theme.mp3',
-  // '/snake_assets/stage-special/theme.mp3'
+  '/snake_assets/stage1/near-food.mp3',
+  '/snake_assets/stage1/on-eat.mp3',
+  '/snake_assets/stage1/on-game-over.mp3',
+  '/snake_assets/stage1/on-pause.mp3',
+  '/snake_assets/stage1/on-unpause.mp3',
 ];
 
 for (const asset of assets) {

@@ -228,6 +228,7 @@ export class SnakeGameGUI {
 
   move() {
     if (this.#game.isGameOver() || this.#game.isGameWon()) return;
+    const scoreBefore = this.#game.score;
     const changes = this.#game.move();
     changes.forEach(change => {
       const [i, j] = change.position;
@@ -242,7 +243,12 @@ export class SnakeGameGUI {
     } else if (this.#game.isGameOver()) {
       this.endGame(false);
     }
-    this.#updateScore();
+    if (this.#game.score > scoreBefore) {
+      this.#updateScore();
+      this.#playEffect('onEat');
+    } else if (this.#game.isNearFood()) {
+      this.#playEffect('onNearFood');
+    }
   }
 
   endGame(won = false) {
@@ -257,6 +263,7 @@ export class SnakeGameGUI {
     this.#pauseOrPlayButton.innerHTML = 'START';
     this.#pauseOrPlayButton.classList.remove('pause');
     audioManager.pauseTheme();
+    this.#playEffect(won ? 'onGameWon' : 'onGameOver');
   }
 
   directionInput(direction) {
@@ -488,6 +495,7 @@ export class SnakeGameGUI {
     this.stop();
     this.#container.classList.add('paused');
     audioManager.pauseTheme();
+    this.#playEffect('onPause');
   }
 
   #unpause() {
@@ -495,6 +503,7 @@ export class SnakeGameGUI {
     this.#container.classList.remove('paused');
     this.#container.classList.add('playing');
     audioManager.playTheme();
+    this.#playEffect('onUnpause');
   }
 
   pauseOrPlay() {
@@ -504,6 +513,16 @@ export class SnakeGameGUI {
       this.#unpause();
     } else {
       this.start();
+    }
+  }
+
+  #playEffect(name) {
+    const effect = configuration.gameModes[this.#gameMode].effects[name];
+    if (!effect) return;
+    if (effect.sounds) {
+      effect.sounds.forEach(sound => {
+        audioManager.playSound(sound);
+      });
     }
   }
 

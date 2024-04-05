@@ -4,6 +4,7 @@ export class SnakeGame {
   #headPosition;
   #tailPosition;
   #headDirection;
+  #foodPosition;
   #pastMoves;
   #lastMovedDirection;
   #gameOver;
@@ -91,8 +92,8 @@ export class SnakeGame {
     return [(i + shiftRow) % this.#size][(j + shiftColumn) % this.#size];
   }
 
-  #getCellAt(position) {
-    return position.reduce((arr, index) => arr[index], this.#map);
+  #getCellAt([i, j]) {
+    return this.#map[i][j];
   }
 
   #setCellAt(position, value) {
@@ -127,6 +128,7 @@ export class SnakeGame {
       const i = Math.floor(Math.random() * this.#size);
       const j = Math.floor(Math.random() * this.#size);
       if (this.#setFood(i, j)) {
+        this.#foodPosition = [i, j];
         return [i, j];
       }
     }
@@ -193,6 +195,7 @@ export class SnakeGame {
     });
 
     if (foodEaten) {
+      this.#foodPosition = null;
       this.#lastMovedDirection = this.#headDirection;
       this.#snakeLength++;
       this.#score += this.#foodScoreValue;
@@ -258,6 +261,12 @@ export class SnakeGame {
 
   isGameWon() {
     return this.#gameWon;
+  }
+
+  isNearFood() {
+    const [headI, headJ] = this.#headPosition;
+    const [foodI, foodJ] = this.#foodPosition;
+    return Math.abs(headI - foodI) + Math.abs(headJ - foodJ) < 4;
   }
 
   #setFood(i, j) {

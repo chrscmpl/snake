@@ -100,41 +100,114 @@ export const cheatsManager = (function () {
 })();
 
 export const audioManager = (function () {
-  let volumeValue = 0.5;
-  let audio = document.createElement('audio');
-  document.body.appendChild(audio);
-  audio.volume = volumeValue;
+  let mainVolume = 0;
+  let soundVolume = 0;
+  let musicVolume = 0;
 
-  audio.addEventListener('ended', () => {
-    audio.play();
-  });
+  let muteMusic = localStorage.getItem('muteMusic') === 'true';
+  let muteSounds = localStorage.getItem('muteSounds') === 'true';
+
+  let themeAudio;
+  let soundAudios = [];
+
+  const updateLocalStorage = () => {
+    if (!localStorage) return;
+    localStorage.setItem('muteMusic', muteMusic);
+    localStorage.setItem('muteSounds', muteSounds);
+  };
+
+  class Audio {
+    #volume;
+    #audio;
+    constructor(src, volume, loop, muted) {
+      this.#audio = document.createElement('audio');
+      if (src) this.#audio.src = src;
+      this.volume = volume;
+      this.#audio.volume = muted ? 0 : this.#volume;
+      if (loop) {
+        this.#audio.loop = true;
+      } else {
+        soundAudios.push(this);
+        this.#audio.addEventListener('ended', () => {
+          this.#audio.remove();
+          soundAudios = soundAudios.filter(audio => audio !== this);
+        });
+      }
+      document.body.appendChild(this.#audio);
+    }
+    set volume(vol) {
+      this.#volume = vol > 1 ? 1 : vol < 0 ? 0 : vol;
+    }
+    play() {
+      this.#audio.play();
+    }
+    pause() {
+      this.#audio.pause();
+    }
+    mute() {
+      this.#audio.volume = 0;
+    }
+    unmute() {
+      this.#audio.volume = this.#volume;
+    }
+    isMuted() {
+      return this.#audio.volume === 0;
+    }
+    switch(src, volume) {
+      this.#audio.src = src;
+      this.volume = volume;
+      this.#audio.volume = volume;
+    }
+  }
 
   return {
     init() {
-      volumeValue = configuration.volume;
-      audio.volume = volumeValue;
+      mainVolume = configuration.mainVolume;
+      soundVolume = configuration.soundVolume;
+      musicVolume = configuration.musicVolume;
+      themeAudio = new Audio(null, mainVolume * musicVolume, true, muteMusic);
     },
-    setTheme(src) {
+    setTheme(track) {
       try {
-        audio.src = src;
+        themeAudio.switch(track.src, mainVolume * musicVolume * track.volume);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     },
     playTheme() {
-      audio.play();
+      themeAudio.play();
     },
     pauseTheme() {
-      audio.pause();
+      themeAudio.pause();
     },
-    mute() {
-      audio.volume = 0;
+    muteTheme() {
+      themeAudio.mute();
+      muteMusic = true;
+      updateLocalStorage();
     },
-    unmute() {
-      audio.volume = volumeValue;
+    unmuteTheme() {
+      themeAudio.unmute();
+      muteMusic = false;
+      updateLocalStorage();
     },
-    toggleMute() {
-      audio.volume = audio.volume === 0 ? volumeValue : 0;
+    playSound(track) {
+      const sound = new Audio(
+        track.src,
+        mainVolume * soundVolume * track.volume,
+        false,
+        muteSounds
+      );
+      sound.play();
+    },
+    muteSounds() {
+      soundAudios.forEach(audio => audio.mute());
+      muteSounds = true;
+      updateLocalStorage();
+    },
+    unmuteSounds() {
+      soundAudios.forEach(audio => audio.unmute());
+      muteSounds = false;
+      updateLocalStorage();
     },
   };
 })();
