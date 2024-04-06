@@ -27,6 +27,7 @@ export class SnakeGame {
   #animationStyles;
   #GameModeStyles;
   #effectStyles;
+  #effectTimeouts;
   #AssetStyles;
   #countdownNumberDuration;
   #started;
@@ -409,13 +410,14 @@ export class SnakeGame {
   }
 
   #initEffects() {
+    this.#effectTimeouts = {};
     let styles = '';
     const assetsLocation =
       configuration.gameModes[this.#gameMode].assetsLocation;
-    for (const effect of Object.values(
+    for (const effect of Object.entries(
       configuration.gameModes[this.#gameMode].effects
     )) {
-      for (const style of effect.styles) {
+      for (const style of effect[1].styles) {
         for (const selector of style.selectors ?? ['']) {
           styles += `.${style.className} ${selector},`;
         }
@@ -548,6 +550,7 @@ export class SnakeGame {
   #playEffect(name) {
     const effect = configuration.gameModes[this.#gameMode].effects[name];
     if (!effect) return;
+    this.#stopEffectRemoval(name);
     if (effect.sounds) {
       effect.sounds.forEach(sound => {
         audioManager.playSound(sound);
@@ -557,8 +560,9 @@ export class SnakeGame {
       effect.styles.forEach(style => {
         this.#container.classList.add(style.className);
         if (style.duration)
-          setTimeout(() => {
+          this.#effectTimeouts[name] = setTimeout(() => {
             this.#container.classList.remove(style.className);
+            this.#effectTimeouts[name] = null;
           }, style.duration);
       });
     }
@@ -567,10 +571,18 @@ export class SnakeGame {
   #undoEffect(name) {
     const effect = configuration.gameModes[this.#gameMode].effects[name];
     if (!effect) return;
+    this.#stopEffectRemoval(name);
     if (effect.styles) {
       effect.styles.forEach(style => {
         this.#container.classList.remove(style.className);
       });
+    }
+  }
+
+  #stopEffectRemoval(name) {
+    if (this.#effectTimeouts[name]) {
+      clearTimeout(this.#effectTimeouts[name]);
+      this.#effectTimeouts[name] = null;
     }
   }
 
