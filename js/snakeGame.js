@@ -416,14 +416,14 @@ export class SnakeGame {
       configuration.gameModes[this.#gameMode].effects
     )) {
       for (const style of effect.styles) {
-        const selectors = style.selectors ?? [''];
-        for (const selector of selectors) {
-          styles += `.${style.className} ${selector}{`;
-          for (const rule of style.rules) {
-            styles += `${rule.property ?? `--${rule.variable}`}: ${
-              rule.value ?? `url(${assetsLocation}/${rule.url})`
-            };`;
-          }
+        for (const selector of style.selectors ?? ['']) {
+          styles += `.${style.className} ${selector},`;
+        }
+        styles = styles.slice(0, -1) + '{';
+        for (const rule of style.rules) {
+          styles += `${rule.property ?? `--${rule.variable}`}: ${
+            rule.value ?? `url(${assetsLocation}/${rule.url})`
+          };`;
         }
         styles += '}';
       }
