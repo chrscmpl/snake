@@ -4,35 +4,35 @@ import {
   cheatsManager,
   audioManager,
 } from './utils.js';
-import { SnakeGameGUI } from './snakeGameGUI.js';
+import { SnakeGame } from './snakeGame.js';
 
 export function setupGame() {
   const container = document.getElementById('snake-container');
   fetchConfiguration().then(() => {
     cheatsManager.init();
     audioManager.init();
-    let gui = new SnakeGameGUI(gameModesManager.getLastGameMode());
-    gui.attach(container);
+    let game = new SnakeGame(gameModesManager.getLastGameMode());
+    game.attach(container);
 
     window.addEventListener('keydown', event => {
       switch (event.key) {
         case 'ArrowUp':
-          gui.directionInput('up');
+          game.directionInput('up');
           break;
         case 'ArrowDown':
-          gui.directionInput('down');
+          game.directionInput('down');
           break;
         case 'ArrowLeft':
-          gui.directionInput('left');
+          game.directionInput('left');
           break;
         case 'ArrowRight':
-          gui.directionInput('right');
+          game.directionInput('right');
           break;
         case 'Enter':
-          gui.pauseOrPlay();
+          game.pauseOrPlay();
           break;
         case ' ':
-          gui.advanceGameMode();
+          game.advanceGameMode();
           break;
         default:
           return;
