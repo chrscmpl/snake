@@ -142,12 +142,58 @@ export class SnakeGame {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add('snake-buttons-container');
     this.#pauseOrPlayButton = document.createElement('button');
-    this.#pauseOrPlayButton.classList.add('snake-start-button');
+    this.#pauseOrPlayButton.classList.add('snake-button', 'snake-start-button');
     this.#pauseOrPlayButton.textContent = 'START';
     this.#addBtnEventListener(this.#pauseOrPlayButton, this.pauseOrPlay);
     buttonsContainer.appendChild(this.#pauseOrPlayButton);
+
+    buttonsContainer.appendChild(
+      this.#createMuteButton(
+        'music',
+        audioManager.muteTheme,
+        audioManager.unmuteTheme,
+        audioManager.isThemeMuted
+      )
+    );
+    buttonsContainer.appendChild(
+      this.#createMuteButton(
+        'sounds',
+        audioManager.muteSounds,
+        audioManager.unmuteSounds,
+        audioManager.areSoundsMuted
+      )
+    );
+
     inputContainer.appendChild(buttonsContainer);
     this.#container.appendChild(inputContainer);
+  }
+
+  #createMuteButton(name, mute, unmute, isMuted) {
+    const upperCaseName = name.toUpperCase();
+    const muteButton = document.createElement('button');
+    muteButton.classList.add('snake-button', `snake-mute-${name}-button`);
+    if (isMuted()) {
+      muteButton.classList.add('muted');
+      muteButton.textContent = `UNMUTE ${upperCaseName}`;
+    } else {
+      muteButton.classList.add('unmuted');
+      muteButton.textContent = `MUTE ${upperCaseName}`;
+    }
+
+    this.#addBtnEventListener(muteButton, () => {
+      if (!isMuted()) {
+        muteButton.classList.remove('unmuted');
+        muteButton.classList.add('muted');
+        muteButton.textContent = `UNMUTE ${upperCaseName}`;
+        mute();
+      } else {
+        muteButton.classList.remove('muted');
+        muteButton.classList.add('unmuted');
+        muteButton.textContent = `MUTE ${upperCaseName}`;
+        unmute();
+      }
+    });
+    return muteButton;
   }
 
   #addBtnEventListener(btn, functionIn, ...args) {

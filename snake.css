@@ -372,9 +372,10 @@ body {
   display: flex;
   gap: 1rem;
   width: 100%;
+  flex-direction: column;
 }
 
-.snake-inputs .snake-start-button {
+.snake-buttons-container .snake-button {
   font-size: 1.5rem;
   font-weight: 900;
   color: var(--accent-color-1);
@@ -384,6 +385,7 @@ body {
   height: 3rem;
   width: 100%;
   overflow: hidden;
+  min-width: 15ch;
 }
 
 .snake-inputs .snake-start-button.pause {
@@ -885,5 +887,25 @@ body {
 
   .snake-high-scores .high-score::before {
     padding-right: 0;
+  }
+
+  .snake-buttons-container .snake-mute-music-button,
+  .snake-buttons-container .snake-mute-sounds-button {
+    position: absolute;
+    left: 1rem;
+    bottom: 0.5rem;
+    min-width: 8ch;
+    width: min-content;
+    height: fit-content;
+    padding: 0.3rem;
+    font-size: 0.7rem;
+  }
+
+  .snake-buttons-container .snake-mute-music-button {
+    bottom: 3.3rem;
+  }
+
+  .snake-buttons-container .snake-unmute-sounds-button {
+    bottom: 0.5rem;
   }
 }

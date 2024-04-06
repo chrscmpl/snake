@@ -156,7 +156,7 @@ export const audioManager = (function () {
     switch(src, volume) {
       this.#audio.src = src;
       this.volume = volume;
-      this.#audio.volume = volume;
+      this.#audio.volume = this.#audio.volume ? volume : 0;
     }
   }
 
@@ -190,6 +190,9 @@ export const audioManager = (function () {
       muteMusic = false;
       updateLocalStorage();
     },
+    isThemeMuted() {
+      return muteMusic;
+    },
     playSound(track) {
       const sound = new Audio(
         track.src,
@@ -208,6 +211,9 @@ export const audioManager = (function () {
       soundAudios.forEach(audio => audio.unmute());
       muteSounds = false;
       updateLocalStorage();
+    },
+    areSoundsMuted() {
+      return muteSounds;
     },
   };
 })();
