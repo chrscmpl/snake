@@ -26,6 +26,7 @@ export class SnakeGame {
   #lockStart;
   #animationStyles;
   #GameModeStyles;
+  #effectStyles;
   #AssetStyles;
   #countdownNumberDuration;
   #started;
@@ -245,6 +246,7 @@ export class SnakeGame {
     }
     if (this.#core.score > scoreBefore) {
       this.#updateScore();
+      this.#undoEffect('onNearFood');
       this.#playEffect('onEat');
     } else if (this.#core.isNearFood()) {
       this.#playEffect('onNearFood');
@@ -355,8 +357,7 @@ export class SnakeGame {
     gameModesManager.saveLastGameMode(gameMode);
     this.#core.stop();
     this.stop();
-    this.#container.classList.remove('game-over');
-    this.#container.classList.remove('game-won');
+    this.#container.className = 'snake-container';
     this.#initCore(gameModeParams);
     const oldBoard = this.#board;
     this.#createBoard(gameModeParams.size, gameModeParams.startingLength);
@@ -407,6 +408,24 @@ export class SnakeGame {
     document.head.appendChild(this.#animationStyles);
   }
 
+  #initEffects() {
+    let styles = '';
+    for (const effect of Object.values(
+      configuration.gameModes[this.#gameMode].effects
+    )) {
+      for (const style of effect.styles) {
+        styles += `.${style.className} {`;
+        for (const variable of Object.entries(style.variables)) {
+          styles += `--${variable[0]}: ${variable[1]};`;
+        }
+        styles += '}';
+      }
+    }
+    this.#effectStyles = document.createElement('style');
+    this.#effectStyles.textContent = styles;
+    document.head.appendChild(this.#effectStyles);
+  }
+
   #stylePauseButton() {
     this.#pauseOrPlayButton.classList.add('pause');
     this.#pauseOrPlayButton.innerHTML =
@@ -427,6 +446,7 @@ export class SnakeGame {
   }
 
   #setGameMode(gameMode) {
+    if (this.#gameMode === gameMode) return;
     this.#gameMode = gameMode;
     if (this.#GameModeStyles) this.#GameModeStyles.remove();
     this.#GameModeStyles = document.createElement('style');
@@ -438,6 +458,8 @@ export class SnakeGame {
     }
     this.#GameModeStyles.textContent = `:root {${styles}}`;
     document.head.appendChild(this.#GameModeStyles);
+    this.#effectStyles?.remove();
+    this.#initEffects();
   }
 
   #loadAssets(gameMode) {
@@ -522,6 +544,25 @@ export class SnakeGame {
     if (effect.sounds) {
       effect.sounds.forEach(sound => {
         audioManager.playSound(sound);
+      });
+    }
+    if (effect.styles) {
+      effect.styles.forEach(style => {
+        this.#container.classList.add(style.className);
+        if (style.duration)
+          setTimeout(() => {
+            this.#container.classList.remove(style.className);
+          }, style.duration);
+      });
+    }
+  }
+
+  #undoEffect(name) {
+    const effect = configuration.gameModes[this.#gameMode].effects[name];
+    if (!effect) return;
+    if (effect.styles) {
+      effect.styles.forEach(style => {
+        this.#container.classList.remove(style.className);
       });
     }
   }

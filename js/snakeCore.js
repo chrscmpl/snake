@@ -266,7 +266,7 @@ export class SnakeCore {
   isNearFood() {
     const [headI, headJ] = this.#headPosition;
     const [foodI, foodJ] = this.#foodPosition;
-    return Math.abs(headI - foodI) + Math.abs(headJ - foodJ) < 4;
+    return Math.abs(headI - foodI) + Math.abs(headJ - foodJ) === 3;
   }
 
   #setFood(i, j) {
