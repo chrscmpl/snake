@@ -410,13 +410,20 @@ export class SnakeGame {
 
   #initEffects() {
     let styles = '';
+    const assetsLocation =
+      configuration.gameModes[this.#gameMode].assetsLocation;
     for (const effect of Object.values(
       configuration.gameModes[this.#gameMode].effects
     )) {
       for (const style of effect.styles) {
-        styles += `.${style.className} {`;
-        for (const variable of Object.entries(style.variables)) {
-          styles += `--${variable[0]}: ${variable[1]};`;
+        const selectors = style.selectors ?? [''];
+        for (const selector of selectors) {
+          styles += `.${style.className} ${selector}{`;
+          for (const rule of style.rules) {
+            styles += `${rule.property ?? `--${rule.variable}`}: ${
+              rule.value ?? `url(${assetsLocation}/${rule.url})`
+            };`;
+          }
         }
         styles += '}';
       }
