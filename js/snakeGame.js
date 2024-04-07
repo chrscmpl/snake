@@ -463,6 +463,7 @@ export class SnakeGame {
     for (const effect of Object.entries(
       configuration.gameModes[this.#gameMode].effects
     )) {
+      if (!effect[1].styles) continue;
       for (const style of effect[1].styles) {
         for (const selector of style.selectors ?? ['']) {
           styles += `.${style.className} ${selector},`;

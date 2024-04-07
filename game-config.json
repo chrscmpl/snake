@@ -2,7 +2,7 @@
   "smoothAnimations": true,
   "countdownDuration": 900,
   "mainVolume": 0.5,
-  "musicVolume": 1,
+  "musicVolume": 0.04,
   "soundVolume": 1,
   "gameModes": {
     "stage-1": {
@@ -21,36 +21,39 @@
       },
       "assetsLocation": "snake_assets/stage1",
       "audio": {
-        "theme": { "src": "snake_assets/stage1/theme.mp3", "volume": 1 }
+        "theme": { "src": "snake_assets/audio/stage1/theme.mp3", "volume": 1 }
       },
       "effects": {
         "onNearFood": {
           "sounds": [
-            { "src": "snake_assets/stage1/near-food.mp3", "volume": 10 }
-          ],
-          "styles": []
+            { "src": "snake_assets/audio/stage1/near-food.mp3", "volume": 10 }
+          ]
         },
         "onEat": {
-          "sounds": [{ "src": "snake_assets/stage1/on-eat.mp3", "volume": 10 }],
-          "styles": []
+          "sounds": [
+            { "src": "snake_assets/audio/stage1/on-eat.mp3", "volume": 10 }
+          ]
         },
         "onPause": {
           "sounds": [
-            { "src": "snake_assets/stage1/on-pause.mp3", "volume": 10 }
-          ],
-          "styles": []
+            { "src": "snake_assets/audio/common/on-pause.mp3", "volume": 0.01 }
+          ]
         },
         "onUnpause": {
           "sounds": [
-            { "src": "snake_assets/stage1/on-unpause.mp3", "volume": 10 }
-          ],
-          "styles": []
+            {
+              "src": "snake_assets/audio/common/on-unpause.mp3",
+              "volume": 0.025
+            }
+          ]
         },
         "onGameOver": {
           "sounds": [
-            { "src": "snake_assets/stage1/on-game-over.mp3", "volume": 10 }
-          ],
-          "styles": []
+            {
+              "src": "snake_assets/audio/common/on-game-over.mp3",
+              "volume": 10
+            }
+          ]
         }
       }
     },
@@ -70,9 +73,31 @@
       },
       "assetsLocation": "snake_assets/stage2",
       "audio": {
-        "theme": { "src": "snake_assets/stage2/theme.mp3", "volume": 0.5 }
+        "theme": { "src": "snake_assets/audio/stage2/theme.mp3", "volume": 0.3 }
       },
-      "effects": {}
+      "effects": {
+        "onPause": {
+          "sounds": [
+            { "src": "snake_assets/audio/common/on-pause.mp3", "volume": 0.01 }
+          ]
+        },
+        "onUnpause": {
+          "sounds": [
+            {
+              "src": "snake_assets/audio/common/on-unpause.mp3",
+              "volume": 0.025
+            }
+          ]
+        },
+        "onGameOver": {
+          "sounds": [
+            {
+              "src": "snake_assets/audio/common/on-game-over.mp3",
+              "volume": 10
+            }
+          ]
+        }
+      }
     },
     "stage-3": {
       "size": 20,
@@ -90,9 +115,46 @@
       },
       "assetsLocation": "snake_assets/stage3",
       "audio": {
-        "theme": { "src": "snake_assets/stage3/theme.mp3", "volume": 1 }
+        "theme": { "src": "snake_assets/audio/stage3/theme.mp3", "volume": 1 }
       },
-      "effects": {}
+      "effects": {
+        "onEat": {
+          "styles": [
+            {
+              "className": "snk-eat",
+              "duration": 300,
+              "selectors": [".snake-score"],
+              "rules": [
+                {
+                  "variable": "food",
+                  "url": "food-on-near.webp"
+                }
+              ]
+            }
+          ]
+        },
+        "onPause": {
+          "sounds": [
+            { "src": "snake_assets/audio/common/on-pause.mp3", "volume": 0.01 }
+          ]
+        },
+        "onUnpause": {
+          "sounds": [
+            {
+              "src": "snake_assets/audio/common/on-unpause.mp3",
+              "volume": 0.025
+            }
+          ]
+        },
+        "onGameOver": {
+          "sounds": [
+            {
+              "src": "snake_assets/audio/common/on-game-over.mp3",
+              "volume": 10
+            }
+          ]
+        }
+      }
     },
     "meow": {
       "size": 10,
@@ -110,9 +172,34 @@
       },
       "assetsLocation": "snake_assets/stage-special",
       "audio": {
-        "theme": { "src": "snake_assets/stage-special/theme.mp3", "volume": 1 }
+        "theme": {
+          "src": "snake_assets/audio/stage-special/theme.mp3",
+          "volume": 1
+        }
       },
-      "effects": {}
+      "effects": {
+        "onPause": {
+          "sounds": [
+            { "src": "snake_assets/audio/common/on-pause.mp3", "volume": 0.01 }
+          ]
+        },
+        "onUnpause": {
+          "sounds": [
+            {
+              "src": "snake_assets/audio/common/on-unpause.mp3",
+              "volume": 0.025
+            }
+          ]
+        },
+        "onGameOver": {
+          "sounds": [
+            {
+              "src": "snake_assets/audio/common/on-game-over.mp3",
+              "volume": 10
+            }
+          ]
+        }
+      }
     }
   },
   "assets": [
