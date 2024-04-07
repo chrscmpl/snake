@@ -27,6 +27,30 @@
         "onNearFood": {
           "sounds": [
             { "src": "snake_assets/audio/stage1/near-food.mp3", "volume": 10 }
+          ],
+          "styles": [
+            {
+              "className": "snk-nf",
+              "duration": 2000,
+              "rules": [
+                {
+                  "variable": "head-down",
+                  "url": "head_eating_down.webp"
+                },
+                {
+                  "variable": "head-left",
+                  "url": "head_eating_left.webp"
+                },
+                {
+                  "variable": "head-up",
+                  "url": "head_eating_up.webp"
+                },
+                {
+                  "variable": "head-right",
+                  "url": "head_eating_right.webp"
+                }
+              ]
+            }
           ]
         },
         "onEat": {
@@ -162,7 +186,7 @@
       "moveTimeout": 120,
       "pauseLimit": 1,
       "styles": {
-        "primary-color": "rgba(255, 0, 162,0.2)",
+        "primary-color": "rgba(255, 0, 162,0.7)",
         "accent-color-1": "lightblue",
         "accent-color-2": "lightgreen",
 
@@ -178,6 +202,14 @@
         }
       },
       "effects": {
+        "onEat": {
+          "sounds": [
+            {
+              "src": "snake_assets/audio/stage-special/on-eat.mp3",
+              "volume": 0.5
+            }
+          ]
+        },
         "onPause": {
           "sounds": [
             { "src": "snake_assets/audio/common/on-pause.mp3", "volume": 0.01 }
@@ -195,6 +227,10 @@
           "sounds": [
             {
               "src": "snake_assets/audio/common/on-game-over.mp3",
+              "volume": 10
+            },
+            {
+              "src": "snake_assets/audio/stage-special/on-game-over.mp3",
               "volume": 10
             }
           ]
