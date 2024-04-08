@@ -77,6 +77,10 @@ export class SnakeGame {
     this.#container.appendChild(this.#alert);
   }
 
+  get score() {
+    return this.#core.score;
+  }
+
   #getGameModeParams(gameMode) {
     const params = configuration.gameModes[gameMode];
     if (!params) {
@@ -631,11 +635,13 @@ export class SnakeGame {
     this.#stopEffectRemoval(name);
     if (effect.sounds) {
       effect.sounds.forEach(sound => {
+        if (sound.condition && !eval(sound.condition)) return;
         audioManager.playSound(sound);
       });
     }
     if (effect.styles) {
       effect.styles.forEach(style => {
+        if (style.condition && !eval(style.condition)) return;
         this.#container.classList.add(style.className);
         if (style.duration)
           this.#effectTimeouts[name] = setTimeout(() => {
