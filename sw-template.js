@@ -4,12 +4,9 @@ let filesToCache = [
   '/',
   '/index.html',
   '/normalize.css',
-  '/js/main.js',
-  '/js/snakeCore.js',
-  '/js/snakeGame.js',
-  '/js/utils.js',
   '/manifest.json',
   '/game-config.json',
+  #JS#
   #ASSETS#
 ];
 
