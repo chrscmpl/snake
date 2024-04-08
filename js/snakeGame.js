@@ -636,6 +636,12 @@ export class SnakeGame {
     const effect = configuration.gameModes[this.#gameMode].effects[name];
     if (!effect) return;
     this.#stopEffectRemoval(name);
+    if (effect.actions) {
+      effect.actions.forEach(action => {
+        if (action.condition && !eval(action.condition)) return;
+        this[action.action](action.value);
+      });
+    }
     if (effect.sounds) {
       effect.sounds.forEach(sound => {
         if (sound.condition && !eval(sound.condition)) return;
@@ -683,5 +689,10 @@ export class SnakeGame {
       ? Infinity
       : configuration.gameModes[this.#gameMode].pauseLimit;
     if (this.isGameRunning()) this.#updateAvailablePausesCounter();
+  }
+
+  rand;
+  setRand() {
+    this.rand = Math.random();
   }
 }

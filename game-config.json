@@ -203,6 +203,7 @@
       },
       "effects": {
         "onEat": {
+          "actions": [{ "action": "setRand" }],
           "sounds": [
             {
               "src": "snake_assets/audio/stage-special/on-eat-1.mp3",
@@ -252,7 +253,8 @@
                   "property": "background-size",
                   "value": "cover"
                 }
-              ]
+              ],
+              "condition": "this.rand < 0.25"
             },
             {
               "className": "snk-eat-bg-2",
@@ -269,7 +271,7 @@
                   "value": "cover"
                 }
               ],
-              "condition": "this.score % 2 === 0 && this.score % 4 !== 0"
+              "condition": "this.rand >= 0.25 && this.rand < 0.5"
             },
             {
               "className": "snk-eat-bg-3",
@@ -286,7 +288,7 @@
                   "value": "cover"
                 }
               ],
-              "condition": "this.score % 3 === 0"
+              "condition": "this.rand >= 0.5 && this.rand < 0.75"
             },
             {
               "className": "snk-eat-bg-4",
@@ -303,7 +305,7 @@
                   "value": "cover"
                 }
               ],
-              "condition": "this.score % 4 === 0"
+              "condition": "this.rand >= 0.75"
             }
           ]
         },
