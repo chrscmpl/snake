@@ -319,7 +319,7 @@
                   "url": "food.webp"
                 }
               ],
-              "condition": "$2 < 0.33"
+              "condition": "$2 < 0.25"
             },
             {
               "className": "snk-eat-fd-2",
@@ -330,7 +330,7 @@
                   "url": "food-2.webp"
                 }
               ],
-              "condition": "$2 >= 0.33 && $2 < 0.66"
+              "condition": "$2 >= 0.25 && $2 < 0.5"
             },
             {
               "className": "snk-eat-fd-3",
@@ -341,7 +341,18 @@
                   "url": "food-3.webp"
                 }
               ],
-              "condition": "$2 >= 0.66"
+              "condition": "$2 >= 0.5 && $2 < 0.75"
+            },
+            {
+              "className": "snk-eat-fd-4",
+              "dynamicUpdate": true,
+              "rules": [
+                {
+                  "variable": "food",
+                  "url": "food-4.webp"
+                }
+              ],
+              "condition": "$2 >= 0.75"
             }
           ]
         },
