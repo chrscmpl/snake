@@ -177,6 +177,9 @@
       },
       "effects": {
         "onEat": {
+          "sounds": [
+            { "src": "snake_assets/audio/stage3/on-eat.mp3", "volume": 0.5 }
+          ],
           "styles": [
             {
               "className": "snk-eat",
@@ -239,18 +242,19 @@
         "onEat": {
           "actions": [
             { "action": "$1 = Math.random()" },
-            { "action": "$2 = Math.random()" }
+            { "action": "$2 = Math.random()" },
+            { "action": "$3 = Math.random()" }
           ],
           "sounds": [
             {
               "src": "snake_assets/audio/stage-special/on-eat-1.mp3",
               "volume": 10,
-              "condition": "this.score % 2 !== 0"
+              "condition": "$3 < 0.5"
             },
             {
               "src": "snake_assets/audio/stage-special/on-eat-2.mp3",
               "volume": 2,
-              "condition": "this.score % 2 === 0"
+              "condition": "$3 >= 0.5"
             }
           ],
           "styles": [
