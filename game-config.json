@@ -203,7 +203,7 @@
       },
       "effects": {
         "onEat": {
-          "actions": [{ "action": "setRand" }],
+          "actions": [{ "action": "$1 = Math.random()" }],
           "sounds": [
             {
               "src": "snake_assets/audio/stage-special/on-eat-1.mp3",
@@ -254,7 +254,7 @@
                   "value": "cover"
                 }
               ],
-              "condition": "this.rand < 0.25"
+              "condition": "$1 < 0.25"
             },
             {
               "className": "snk-eat-bg-2",
@@ -271,7 +271,7 @@
                   "value": "cover"
                 }
               ],
-              "condition": "this.rand >= 0.25 && this.rand < 0.5"
+              "condition": "$1 >= 0.25 && $1 < 0.5"
             },
             {
               "className": "snk-eat-bg-3",
@@ -288,7 +288,7 @@
                   "value": "cover"
                 }
               ],
-              "condition": "this.rand >= 0.5 && this.rand < 0.75"
+              "condition": "$1 >= 0.5 && $1 < 0.75"
             },
             {
               "className": "snk-eat-bg-4",
@@ -305,7 +305,7 @@
                   "value": "cover"
                 }
               ],
-              "condition": "this.rand >= 0.75"
+              "condition": "$1 >= 0.75"
             }
           ]
         },

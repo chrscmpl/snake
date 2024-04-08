@@ -35,6 +35,7 @@ export class SnakeGame {
   #started;
   #availablePauses;
   #infinitePause;
+  effectsTemporaries;
 
   constructor(gameMode) {
     this.#setGameMode(gameMode);
@@ -73,6 +74,7 @@ export class SnakeGame {
     this.#setAvailablePauses(this.#gameMode);
     this.#alert = document.createElement('div');
     this.#alert.classList.add('snake-alert');
+    this.effectsTemporaries = [];
     this.#container.appendChild(this.#alert);
   }
 
@@ -422,6 +424,7 @@ export class SnakeGame {
     this.#displayHighScores(highScoreManager.getHighScores(this.#gameMode));
     this.#gameModeSelection.value = gameMode;
     this.#setAvailablePauses(this.#gameMode);
+    this.effectsTemporaries = [];
     for (const button of this.#gameModeButtons.entries()) {
       if (button[0] === gameMode) {
         button[1].classList.add('selected');
@@ -638,13 +641,18 @@ export class SnakeGame {
     this.#stopEffectRemoval(name);
     if (effect.actions) {
       effect.actions.forEach(action => {
-        if (action.condition && !eval(action.condition)) return;
-        this[action.action](action.value);
+        if (
+          action.condition &&
+          !eval(this.#parseEffectAction(action.condition))
+        )
+          return;
+        eval(this.#parseEffectAction(action.action));
       });
     }
     if (effect.sounds) {
       effect.sounds.forEach(sound => {
-        if (sound.condition && !eval(sound.condition)) return;
+        if (sound.condition && !eval(this.#parseEffectAction(sound.condition)))
+          return;
         audioManager.playSound(sound);
       });
     }
@@ -652,7 +660,8 @@ export class SnakeGame {
       effect.styles.forEach(style => {
         if (style.dynamicUpdate)
           this.#container.classList.remove(style.className);
-        if (style.condition && !eval(style.condition)) return;
+        if (style.condition && !eval(this.#parseEffectAction(style.condition)))
+          return;
         this.#container.classList.add(style.className);
         if (style.duration)
           this.#effectTimeouts[name].push(
@@ -683,16 +692,18 @@ export class SnakeGame {
     this.#effectTimeouts[name] = [];
   }
 
+  #parseEffectAction(action) {
+    return action.replace(
+      /\$(\d+)/g,
+      (_, n) => `this.effectsTemporaries[${n}]`
+    );
+  }
+
   setInfinitePause(enabled) {
     this.#infinitePause = enabled;
     this.#availablePauses = enabled
       ? Infinity
       : configuration.gameModes[this.#gameMode].pauseLimit;
     if (this.isGameRunning()) this.#updateAvailablePausesCounter();
-  }
-
-  rand;
-  setRand() {
-    this.rand = Math.random();
   }
 }
