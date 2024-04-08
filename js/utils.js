@@ -117,6 +117,8 @@ export const audioManager = (function () {
   let themeGainNode;
   let soundsGainNode;
 
+  let initialized = false;
+
   const createContext = () => {
     mainAudioContext = new AudioContext();
 
@@ -182,7 +184,10 @@ export const audioManager = (function () {
       themeGainNode.gain.value = musicVolume;
       soundsGainNode.gain.value = soundVolume;
       themeAudio = new EasyAudio(themeGainNode, null, musicVolume, true);
-      this.isInitialized = true;
+      initialized = true;
+    },
+    get isInitialized() {
+      return initialized;
     },
     setTheme(track) {
       try {
@@ -198,12 +203,12 @@ export const audioManager = (function () {
       themeAudio.pause();
     },
     muteTheme() {
-      themeGainNode.gain.value = 0;
+      if (initialized) themeGainNode.gain.value = 0;
       muteMusic = true;
       updateLocalStorage();
     },
     unmuteTheme() {
-      themeGainNode.gain.value = musicVolume;
+      if (initialized) themeGainNode.gain.value = musicVolume;
       muteMusic = false;
       updateLocalStorage();
     },
@@ -220,12 +225,12 @@ export const audioManager = (function () {
       sound.play();
     },
     muteSounds() {
-      soundsGainNode.gain.value = 0;
+      if (initialized) soundsGainNode.gain.value = 0;
       muteSounds = true;
       updateLocalStorage();
     },
     unmuteSounds() {
-      soundsGainNode.gain.value = soundVolume;
+      if (initialized) soundsGainNode.gain.value = soundVolume;
       muteSounds = false;
       updateLocalStorage();
     },
