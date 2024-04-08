@@ -644,13 +644,17 @@ export class SnakeGame {
     }
     if (effect.styles) {
       effect.styles.forEach(style => {
+        if (style.dynamicUpdate)
+          this.#container.classList.remove(style.className);
         if (style.condition && !eval(style.condition)) return;
         this.#container.classList.add(style.className);
         if (style.duration)
-          this.#effectTimeouts[name] = setTimeout(() => {
-            this.#container.classList.remove(style.className);
-            this.#effectTimeouts[name] = null;
-          }, style.duration);
+          this.#effectTimeouts[name].push(
+            setTimeout(() => {
+              this.#container.classList.remove(style.className);
+              this.#effectTimeouts[name] = null;
+            }, style.duration)
+          );
       });
     }
   }
@@ -668,9 +672,9 @@ export class SnakeGame {
 
   #stopEffectRemoval(name) {
     if (this.#effectTimeouts[name]) {
-      clearTimeout(this.#effectTimeouts[name]);
-      this.#effectTimeouts[name] = null;
+      this.#effectTimeouts[name].forEach(timeout => clearTimeout(timeout));
     }
+    this.#effectTimeouts[name] = [];
   }
 
   setInfinitePause(enabled) {
