@@ -104,11 +104,31 @@ export const audioManager = (function () {
   let soundVolume = 0;
   let musicVolume = 0;
 
-  let muteMusic = localStorage.getItem('muteMusic') === 'true';
-  let muteSounds = localStorage.getItem('muteSounds') === 'true';
+  let muteMusic = localStorage
+    ? localStorage.getItem('muteMusic') === 'true'
+    : false;
+  let muteSounds = localStorage
+    ? localStorage.getItem('muteSounds') === 'true'
+    : false;
 
   let themeAudio;
-  let soundAudios = [];
+  let mainAudioContext;
+  let mainGainNode;
+  let themeGainNode;
+  let soundsGainNode;
+
+  const createContext = () => {
+    mainAudioContext = new AudioContext();
+
+    mainGainNode = mainAudioContext.createGain();
+    mainGainNode.connect(mainAudioContext.destination);
+
+    themeGainNode = mainAudioContext.createGain();
+    themeGainNode.connect(mainGainNode);
+
+    soundsGainNode = mainAudioContext.createGain();
+    soundsGainNode.connect(mainGainNode);
+  };
 
   const updateLocalStorage = () => {
     if (!localStorage) return;
@@ -116,27 +136,28 @@ export const audioManager = (function () {
     localStorage.setItem('muteSounds', muteSounds);
   };
 
-  class Audio {
-    #volume;
+  class EasyAudio {
     #audio;
-    constructor(src, volume, loop, muted) {
-      this.#audio = document.createElement('audio');
-      if (src) this.#audio.src = src;
+    #src;
+    #gainNode;
+    constructor(destination, src, volume, loop) {
+      this.#audio = src ? new Audio(src) : new Audio();
+      this.#gainNode = mainAudioContext.createGain();
+      this.#gainNode.connect(destination);
+      this.#src = mainAudioContext.createMediaElementSource(this.#audio);
+      this.#src.connect(this.#gainNode);
       this.volume = volume;
-      this.#audio.volume = muted ? 0 : this.#volume;
       if (loop) {
         this.#audio.loop = true;
       } else {
-        soundAudios.push(this);
         this.#audio.addEventListener('ended', () => {
-          this.#audio.remove();
-          soundAudios = soundAudios.filter(audio => audio !== this);
+          this.#src.disconnect();
+          this.#gainNode.disconnect();
         });
       }
-      document.body.appendChild(this.#audio);
     }
     set volume(vol) {
-      this.#volume = vol > 1 ? 1 : vol < 0 ? 0 : vol;
+      this.#gainNode.gain.value = vol;
     }
     play() {
       this.#audio.play();
@@ -144,32 +165,28 @@ export const audioManager = (function () {
     pause() {
       this.#audio.pause();
     }
-    mute() {
-      this.#audio.volume = 0;
-    }
-    unmute() {
-      this.#audio.volume = this.#volume;
-    }
-    isMuted() {
-      return this.#audio.volume === 0;
-    }
     switch(src, volume) {
       this.#audio.src = src;
       this.volume = volume;
-      this.#audio.volume = this.#audio.volume ? volume : 0;
     }
   }
 
   return {
+    isInitialized: false,
     init() {
+      createContext();
       mainVolume = configuration.mainVolume;
       soundVolume = configuration.soundVolume;
       musicVolume = configuration.musicVolume;
-      themeAudio = new Audio(null, mainVolume * musicVolume, true, muteMusic);
+      mainGainNode.gain.value = mainVolume;
+      themeGainNode.gain.value = musicVolume;
+      soundsGainNode.gain.value = soundVolume;
+      themeAudio = new EasyAudio(themeGainNode, null, musicVolume, true);
+      this.isInitialized = true;
     },
     setTheme(track) {
       try {
-        themeAudio.switch(track.src, mainVolume * musicVolume * track.volume);
+        themeAudio.switch(track.src, track.volume);
       } catch (e) {
         console.error(e);
       }
@@ -181,12 +198,12 @@ export const audioManager = (function () {
       themeAudio.pause();
     },
     muteTheme() {
-      themeAudio.mute();
+      themeGainNode.gain.value = 0;
       muteMusic = true;
       updateLocalStorage();
     },
     unmuteTheme() {
-      themeAudio.unmute();
+      themeGainNode.gain.value = musicVolume;
       muteMusic = false;
       updateLocalStorage();
     },
@@ -194,21 +211,21 @@ export const audioManager = (function () {
       return muteMusic;
     },
     playSound(track) {
-      const sound = new Audio(
+      const sound = new EasyAudio(
+        soundsGainNode,
         track.src,
-        mainVolume * soundVolume * track.volume,
-        false,
-        muteSounds
+        track.volume,
+        false
       );
       sound.play();
     },
     muteSounds() {
-      soundAudios.forEach(audio => audio.mute());
+      soundsGainNode.gain.value = 0;
       muteSounds = true;
       updateLocalStorage();
     },
     unmuteSounds() {
-      soundAudios.forEach(audio => audio.unmute());
+      soundsGainNode.gain.value = soundVolume;
       muteSounds = false;
       updateLocalStorage();
     },

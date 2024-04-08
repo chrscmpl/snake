@@ -73,7 +73,6 @@ export class SnakeGame {
     this.#setAvailablePauses(this.#gameMode);
     this.#alert = document.createElement('div');
     this.#alert.classList.add('snake-alert');
-    audioManager.setTheme(gameModeParams.audio.theme);
     this.#container.appendChild(this.#alert);
   }
 
@@ -383,6 +382,10 @@ export class SnakeGame {
     if (this.#lockStart || this.isGameRunning()) return;
     this.#lockStart = true;
     const gameModeParams = this.#getGameModeParams(gameMode);
+    if (!audioManager.isInitialized) {
+      audioManager.init();
+      audioManager.setTheme(gameModeParams.audio.theme);
+    }
     if (this.wasGameStarted()) this.#restart(gameMode, gameModeParams);
     this.#gameModeSelection.disabled = true;
     this.#displayCountdown();
