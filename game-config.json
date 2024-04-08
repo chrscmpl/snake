@@ -2,7 +2,7 @@
   "smoothAnimations": true,
   "countdownDuration": 900,
   "mainVolume": 0.5,
-  "musicVolume": 0.04,
+  "musicVolume": 0.08,
   "soundVolume": 1,
   "gameModes": {
     "stage-1": {
@@ -187,10 +187,10 @@
       "pauseLimit": 1,
       "styles": {
         "primary-color": "rgba(255, 0, 162,0.7)",
-        "accent-color-1": "lightblue",
-        "accent-color-2": "lightgreen",
+        "accent-color-1": "yellow",
+        "accent-color-2": "cyan",
 
-        "background": "grey",
+        "background": "radial-gradient(circle, rgba(227,0,214,1) 0%, rgba(200,223,70,1) 9%, rgba(255,0,234,1) 22%, rgba(200,223,70,1) 30%, rgba(255,0,234,1) 37%, rgba(200,223,70,1) 45%, rgba(255,0,234,1) 50%, rgba(200,223,70,1) 58%, rgba(255,0,234,1) 73%, rgba(200,223,70,1) 83%, rgba(255,0,234,1) 100%);",
         "background-mobile": "var(--background)",
         "tile": "url('snake_assets/stage-special/tile.webp')"
       },
@@ -198,7 +198,7 @@
       "audio": {
         "theme": {
           "src": "snake_assets/audio/stage-special/theme.mp3",
-          "volume": 1
+          "volume": 3
         }
       },
       "effects": {
@@ -207,6 +207,30 @@
             {
               "src": "snake_assets/audio/stage-special/on-eat.mp3",
               "volume": 0.5
+            }
+          ],
+          "styles": [
+            {
+              "className": "snk-eat",
+              "duration": 500,
+              "rules": [
+                {
+                  "variable": "head-down",
+                  "url": "head_eaten_down.webp"
+                },
+                {
+                  "variable": "head-left",
+                  "url": "head_eaten_left.webp"
+                },
+                {
+                  "variable": "head-up",
+                  "url": "head_eaten_up.webp"
+                },
+                {
+                  "variable": "head-right",
+                  "url": "head_eaten_right.webp"
+                }
+              ]
             }
           ]
         },
@@ -231,7 +255,7 @@
             },
             {
               "src": "snake_assets/audio/stage-special/on-game-over.mp3",
-              "volume": 10
+              "volume": 0.5
             }
           ]
         }
