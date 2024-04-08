@@ -276,7 +276,7 @@ body {
 }
 
 .snake-board {
-  background: var(--tile) repeat;
+  background: var(--tile);
   border: 5px solid var(--primary-color);
   border-top: none;
   grid-area: board;

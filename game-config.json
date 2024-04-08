@@ -206,7 +206,7 @@
           "sounds": [
             {
               "src": "snake_assets/audio/stage-special/on-eat-1.mp3",
-              "volume": 0.5,
+              "volume": 1,
               "condition": "this.score % 2 !== 0"
             },
             {
@@ -239,26 +239,67 @@
               ]
             },
             {
-              "className": "snk-eat-2",
-              "duration": 200,
+              "className": "snk-eat-bg-1",
+              "duration": 500,
+              "selectors": [".snake-board"],
               "rules": [
                 {
                   "variable": "tile",
-                  "value": "yellow"
+                  "url": "bg-1.webp"
+                },
+                {
+                  "property": "background-size",
+                  "value": "cover"
                 }
-              ],
-              "condition": "this.score % 2 !== 0"
+              ]
             },
             {
-              "className": "snk-eat-3",
-              "duration": 200,
+              "className": "snk-eat-bg-2",
+              "duration": 500,
+              "selectors": [".snake-board"],
               "rules": [
                 {
                   "variable": "tile",
-                  "value": "blue"
+                  "url": "bg-2.webp"
+                },
+                {
+                  "property": "background-size",
+                  "value": "cover"
                 }
               ],
-              "condition": "this.score % 2 === 0"
+              "condition": "this.score % 2 === 0 && this.score % 4 !== 0"
+            },
+            {
+              "className": "snk-eat-bg-3",
+              "duration": 500,
+              "selectors": [".snake-board"],
+              "rules": [
+                {
+                  "variable": "tile",
+                  "url": "bg-3.webp"
+                },
+                {
+                  "property": "background-size",
+                  "value": "cover"
+                }
+              ],
+              "condition": "this.score % 3 === 0"
+            },
+            {
+              "className": "snk-eat-bg-4",
+              "duration": 500,
+              "selectors": [".snake-board"],
+              "rules": [
+                {
+                  "variable": "tile",
+                  "url": "bg-4.webp"
+                },
+                {
+                  "property": "background-size",
+                  "value": "cover"
+                }
+              ],
+              "condition": "this.score % 4 === 0"
             }
           ]
         },
