@@ -226,3 +226,12 @@ export const imagePreloader = (function () {
     },
   };
 })();
+
+export const audioPreloader = (function () {
+  return {
+    async preloadAudio(url) {
+      let audio = new Audio();
+      audio.src = url;
+    },
+  };
+})();

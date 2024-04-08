@@ -6,6 +6,7 @@ import {
   cheatsManager,
   audioManager,
   imagePreloader,
+  audioPreloader,
 } from './utils.js';
 
 export class SnakeGame {
@@ -528,11 +529,16 @@ export class SnakeGame {
       imagePreloader.preloadImage(`${location}/${asset.name}`);
       styles += `--${asset.varName}: url(${location}/${asset.name});`;
     }
-
-    this.#loadEffectAssets(gameMode);
-
     this.#AssetStyles.textContent = `:root {${styles}}`;
     document.head.appendChild(this.#AssetStyles);
+
+    for (const audio of Object.values(
+      configuration.gameModes[gameMode].audio
+    )) {
+      audioPreloader.preloadAudio(audio);
+    }
+
+    this.#loadEffectAssets(gameMode);
   }
 
   #loadEffectAssets(gameMode) {
@@ -540,12 +546,18 @@ export class SnakeGame {
     if (!effects) return;
     const location = configuration.gameModes[gameMode].assetsLocation;
     for (const effect of Object.values(effects)) {
-      if (!effect.styles) continue;
-      for (const style of effect.styles) {
-        for (const rule of style.rules) {
-          if (rule.url) {
-            imagePreloader.preloadImage(`${location}/${rule.url}`);
+      if (effect.styles) {
+        for (const style of effect.styles) {
+          for (const rule of style.rules) {
+            if (rule.url) {
+              imagePreloader.preloadImage(`${location}/${rule.url}`);
+            }
           }
+        }
+      }
+      if (effect.sounds) {
+        for (const sound of effect.sounds) {
+          audioPreloader.preloadAudio(sound.src);
         }
       }
     }
