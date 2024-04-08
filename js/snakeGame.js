@@ -436,6 +436,7 @@ export class SnakeGame {
       this.#animationStyles.remove();
       this.#animationStyles = null;
     }
+    if (!audioManager.isInitialized) audioManager.init();
     audioManager.setTheme(gameModeParams.audio.theme);
   }
 
@@ -545,7 +546,7 @@ export class SnakeGame {
     for (const audio of Object.values(
       configuration.gameModes[gameMode].audio
     )) {
-      audioPreloader.preloadAudio(audio);
+      audioPreloader.preloadAudio(audio.src);
     }
 
     this.#loadEffectAssets(gameMode);
