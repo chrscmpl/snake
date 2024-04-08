@@ -5,6 +5,7 @@ import {
   gameModesManager,
   cheatsManager,
   audioManager,
+  imagePreloader,
 } from './utils.js';
 
 export class SnakeGame {
@@ -524,12 +525,30 @@ export class SnakeGame {
     this.#AssetStyles = document.createElement('style');
     let styles = '';
     for (const asset of configuration.assets) {
-      const img = new Image();
-      img.src = `${location}/${asset.name}`;
+      imagePreloader.preloadImage(`${location}/${asset.name}`);
       styles += `--${asset.varName}: url(${location}/${asset.name});`;
     }
+
+    this.#loadEffectAssets(gameMode);
+
     this.#AssetStyles.textContent = `:root {${styles}}`;
     document.head.appendChild(this.#AssetStyles);
+  }
+
+  #loadEffectAssets(gameMode) {
+    const effects = configuration.gameModes[gameMode].effects;
+    if (!effects) return;
+    const location = configuration.gameModes[gameMode].assetsLocation;
+    for (const effect of Object.values(effects)) {
+      if (!effect.styles) continue;
+      for (const style of effect.styles) {
+        for (const rule of style.rules) {
+          if (rule.url) {
+            imagePreloader.preloadImage(`${location}/${rule.url}`);
+          }
+        }
+      }
+    }
   }
 
   wasGameStarted() {
