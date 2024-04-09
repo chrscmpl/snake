@@ -277,8 +277,9 @@ export const MathUtils = (function () {
       return _random(a, b);
     },
     randomDifferentThan(a, b, x) {
-      if ((x && (x < a || x > b || Math.floor(x) !== x)) || a === b)
+      if ((x && (x < a || x > b || Math.floor(x) !== x)) || a >= b)
         throw new Error('randomDifferentThan(): invalid inputs');
+      if (b - a === 1) return x === a ? b : a;
       return _randomDifferentThan(a, b, x);
     },
   };
