@@ -71,21 +71,9 @@ export class SnakeCore {
     return this.cellStatuses.get(string);
   }
 
-  // #getStatusString(value) {
-  //   return [...this.cellStatuses.entries()].find(
-  //     ([key, val]) => val === value
-  //   )[0];
-  // }
-
   #getDirectionValue(string) {
     return this.directions.get(string);
   }
-
-  // #getDirectionString(value) {
-  //   return [...this.directions.entries()].find(
-  //     ([key, val]) => val === value
-  //   )[0];
-  // }
 
   #getCellIndexesAtDirection([i, j], direction) {
     const [shiftRow, shiftColumn] = this.#getDirectionValue(direction);
@@ -233,15 +221,6 @@ export class SnakeCore {
     this.#lastMovedDirection = this.#headDirection;
     return changes;
   }
-
-  // get map() {
-  //   return this.#map.map(row => row.map(cell => this.#getStatusString(cell)));
-  // }
-  // get pastMoves() {
-  //   return this.#pastMoves.map(row =>
-  //     row.map(cell => this.#getDirectionString(cell))
-  //   );
-  // }
 
   get headPosition() {
     return this.#headPosition;
