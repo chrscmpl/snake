@@ -248,7 +248,7 @@
               "action": "$2 = MathUtils.randomDifferentThan(0, 3, $2)"
             },
             {
-              "action": "$3 = MathUtils.randomDifferentThan(0, 1, $3)"
+              "action": "$3 = MathUtils.random(0, 1)"
             }
           ],
           "sounds": [
