@@ -7,6 +7,7 @@ import {
   audioManager,
   imagePreloader,
   audioPreloader,
+  MathUtils,
 } from './utils.js';
 
 export class SnakeGame {

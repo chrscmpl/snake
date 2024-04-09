@@ -257,3 +257,29 @@ export const audioPreloader = (function () {
     },
   };
 })();
+
+export const MathUtils = (function () {
+  const _random = (a, b) => {
+    return Math.floor(Math.random() * (b - a + 1) + a);
+  };
+
+  const _randomDifferentThan = (a, b, x) => {
+    let n;
+    do {
+      n = _random(a, b);
+    } while (n == x);
+    return n;
+  };
+
+  return {
+    random(a, b) {
+      if (a > b) throw new Error('random(): invalid inputs');
+      return _random(a, b);
+    },
+    randomDifferentThan(a, b, x) {
+      if ((x && (x < a || x > b || Math.floor(x) !== x)) || a === b)
+        throw new Error('randomDifferentThan(): invalid inputs');
+      return _randomDifferentThan(a, b, x);
+    },
+  };
+})();
