@@ -31,12 +31,13 @@ export class SnakeGame {
   #GameModeStyles;
   #effectStyles;
   #effectTimeouts;
+  effectsTemporaries;
   #AssetStyles;
   #countdownNumberDuration;
   #started;
   #availablePauses;
   #infinitePause;
-  effectsTemporaries;
+  #godMode;
 
   constructor(gameMode) {
     this.#setGameMode(gameMode);
@@ -72,6 +73,7 @@ export class SnakeGame {
     this.#countdownNumberDuration = configuration.countdownDuration / 3;
     this.#started = false;
     this.#infinitePause = cheatsManager.getCheat('infinite-pause');
+    this.#godMode = cheatsManager.getCheat('god-mode');
     this.#setAvailablePauses(this.#gameMode);
     this.#alert = document.createElement('div');
     this.#alert.classList.add('snake-alert');
@@ -310,6 +312,7 @@ export class SnakeGame {
   }
 
   endGame(won = false) {
+    if (!won && this.#godMode) return;
     this.#started = false;
     this.#core.stop();
     this.stop();
@@ -325,6 +328,7 @@ export class SnakeGame {
   }
 
   directionInput(direction) {
+    if (this.#godMode && this.#core.isGameOver()) this.#core.revive();
     if (this.isGameRunning() && !this.isGamePaused()) {
       this.#setDirection(direction);
     } else {
@@ -709,5 +713,9 @@ export class SnakeGame {
       ? Infinity
       : configuration.gameModes[this.#gameMode].pauseLimit;
     if (this.isGameRunning()) this.#updateAvailablePausesCounter();
+  }
+
+  setGodMode(enabled) {
+    this.#godMode = enabled;
   }
 }

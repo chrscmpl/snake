@@ -273,6 +273,11 @@ export class SnakeCore {
   stop() {
     clearInterval(this.#scoreInterval);
   }
+
+  revive() {
+    this.#gameOver = false;
+    this.#gameWon = false;
+  }
 }
 
 SnakeCore.prototype.directions = new Map([

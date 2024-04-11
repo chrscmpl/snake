@@ -471,6 +471,11 @@
       "name": "infinite-pause",
       "sequence": ["down", "down", "left", "up", "right"],
       "action": "setInfinitePause"
+    },
+    {
+      "name": "god-mode",
+      "sequence": ["down", "down", "up", "up", "left", "right", "right"],
+      "action": "setGodMode"
     }
   ]
 }
