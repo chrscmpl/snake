@@ -169,7 +169,7 @@
 
         "background": "black",
         "background-mobile": "var(--background)",
-        "tile": "url('snake_assets/stage3/tile.webp')"
+        "tile": "black url('snake_assets/stage3/tile.webp')"
       },
       "assetsLocation": "snake_assets/stage3",
       "audio": {
@@ -177,6 +177,23 @@
       },
       "effects": {
         "onEat": {
+          "actions": [
+            {
+              "action": "$0 = document.querySelector('.snake-board')",
+              "condition": "!$0"
+            },
+            {
+              "action": "[$1, $2, $3] = getComputedStyle($0).backgroundColor.split('(')[1].split(')')[0].split(',').map(x => parseInt(x))"
+            },
+            {
+              "action": "$0.style.backgroundColor = `rgb(0, ${$2 + 1}, ${$3 + 2})`",
+              "condition": "this.score > 10 && this.score <= 20"
+            },
+            {
+              "action": "$0.style.backgroundColor = `rgb(${Math.min(255, $1 + 1)}, ${Math.min(255, $2 + 2)}, ${Math.min(255, $3 + 3)})`",
+              "condition": "this.score > 20"
+            }
+          ],
           "sounds": [
             { "src": "snake_assets/audio/stage3/on-eat.mp3", "volume": 0.5 }
           ],

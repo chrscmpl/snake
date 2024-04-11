@@ -77,6 +77,7 @@ export class SnakeGame {
     this.#alert.classList.add('snake-alert');
     this.effectsTemporaries = [];
     this.#container.appendChild(this.#alert);
+    this.#playEffect('onInit');
   }
 
   get score() {
@@ -439,6 +440,7 @@ export class SnakeGame {
     }
     if (!audioManager.isInitialized) audioManager.init();
     audioManager.setTheme(gameModeParams.audio.theme);
+    this.#playEffect('onInit');
   }
 
   #initAnimations(
